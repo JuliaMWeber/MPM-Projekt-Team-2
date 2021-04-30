@@ -1,0 +1,28 @@
+# System files
+# ------------
+Icon
+.DS_Store
+.DS_Store?
+
+# Git
+# ---------------
+!.keep
+!.gitkeep
+
+# Temporary files
+# ---------------
+node_modules/
+
+# Lock files
+# ---------------
+.lock
+
+# Editors
+# ---------------
+*.sublime-project
+*.sublime-workspace
+./.vscode
+./.idea
+
+# Securtiy files (configs etc.)
+# ---------------
