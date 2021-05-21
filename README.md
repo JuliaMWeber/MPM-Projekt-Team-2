@@ -15,3 +15,6 @@
   Developer
 - **Benjamin Einert** ([@u11839](https://git.thm.de/u11839))  
   Product Owner
+
+## Externe Dateien & Referenzen
+- [Google Drive Ordner](https://drive.google.com/drive/folders/19W8PwGEv4_02BczPSCY18Ag7Ha4xm0PS)
