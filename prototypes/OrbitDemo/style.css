@@ -1,0 +1,17 @@
+svg {
+    background-color: #222121;
+}
+
+.orbit {
+    stroke: #635755;
+    stroke-width: 2px;
+    fill-opacity: 0%;
+}
+
+.planet {
+    fill: #018F52;
+}
+
+#sun {
+    fill: #DE950D;
+}
