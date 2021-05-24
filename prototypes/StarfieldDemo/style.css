@@ -1,0 +1,15 @@
+body {
+    margin: 0px;
+}
+
+svg {
+    background-color: #201B1E;
+}
+
+.star1 {
+    fill: red;
+}
+
+.star2 {
+    fill: blue;
+}
