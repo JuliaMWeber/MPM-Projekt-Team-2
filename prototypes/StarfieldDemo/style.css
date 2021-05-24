@@ -2,14 +2,23 @@ body {
     margin: 0px;
 }
 
+#starfieldDiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 svg {
+    width: 100%;
+    height: 100vh;
     background-color: #201B1E;
 }
 
 .star1 {
-    fill: red;
+    fill: #1C7674;
+    filter: blur(1.5px);
 }
 
 .star2 {
-    fill: blue;
+    fill: #478888;
 }
