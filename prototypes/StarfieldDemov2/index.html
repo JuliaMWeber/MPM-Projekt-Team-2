@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="description" class="no-js">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>MIB-MPM-SS21 | Starfield Demo v2</title>
+    <link rel="stylesheet" href="./styles.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.6.1/gsap.min.js"></script>
+
+    <style>
+      #app {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        display: block;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        overflow: hidden;
+        background: rgb(29,24,53);
+        background: radial-gradient(circle, rgba(29,24,53,1) 0%, rgba(37,20,68,1) 22%, rgba(32,27,30,1) 50%, rgba(43,31,39,1) 100%);
+      }
+
+      #stars {
+        top: 0;
+        position: absolute;
+      }
+
+      .element {
+        width: 1px;
+        height: 1px;
+        position: absolute;
+        background-color: #fff;
+        border-radius: 100%;
+        opacity: 0.6;
+        transition: box-shadow 0.8s ease-in-out;
+      }
+      .color-1 {
+        background-color: #1c7674;
+      }
+      .color-2 {
+        background-color: #478888;
+      }
+      .color-3 {
+        background-color: #607cac;
+      }
+      .color-4 {
+        background-color: #74b0d8;
+      }
+      .shine {
+        box-shadow: 0 0 15px 2px #36dcd9;
+      }
+      .color-1.move {
+        box-shadow: 0 0 20px 2px rgba(28, 118, 116, 0.7);
+      }
+      .color-2.move {
+        box-shadow: 0 0 20px 2px rgba(71, 136, 136, 0.7);
+      }
+      .color-3.move {
+        box-shadow: 0 0 20px 2px rgba(96, 124, 172, 0.7);
+      }
+      .color-4.move {
+        box-shadow: 0 0 20px 2px rgba(116, 176, 216, 0.7);
+      }
+    </style>
+
+  </head>
+  <body>
+    <main id="app">
+      <svg id="thmlogo" style="opacity:0;" width="1667px" height="575px" viewBox="0 0 1667 575" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <g transform="translate(0.000000, 0.000000)" fill="#000000">
+          <polygon id="logo-t" points="272.558 104.54 272.558 574.887 156.041 574.887 156.041 104.54 0 104.54 0 0 428.599 0 428.599 104.54"></polygon>
+          <polygon id="logo-h" points="877.957 574.887 877.957 334.666 675.834 334.666 675.834 574.887 559.26 574.887 559.26 0 675.834 0 675.834 231.437 877.957 231.437 877.957 0 994.531 0 994.531 574.887"></polygon>
+          <polygon id="logo-m" points="1549.57 574.887 1549.57 249.118 1438.19 470.346 1353.89 470.346 1241.77 249.118 1241.77 574.887 1125.19 574.887 1125.19 0 1240.11 0 1396.1 322.974 1551.22 0 1666.14 0 1666.14 574.887"></polygon>
+        </g>
+      </svg>
+      <svg id="tmp" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve"></svg>
+      <section id="stars"></section>
+    </main>
+    <script src="./script.js"></script>
+  </body>
+</html>
