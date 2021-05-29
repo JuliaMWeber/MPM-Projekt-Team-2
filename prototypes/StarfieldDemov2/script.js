@@ -1,4 +1,4 @@
-let quantity = 8000;
+let quantity = 2000;
 let app = document.getElementById("app");
 let mainsvg = document.getElementById("thmlogo");
 let starbg = document.getElementById("stars");
@@ -21,15 +21,11 @@ let animEase = "back.inOut(1)";
 const svgtest = document.getElementById("logo-t");
 const svgtmp = document.getElementById("tmp");
 
-let grid = 8;
+let grid = 10;
 
-let destPositions = getPointsInPath(svgtest, grid);
-console.log(destPositions.length);
-destPositions = destPositions
+let destPositions = getPointsInPath(document.getElementById("logo-t"), grid)
 .concat(getPointsInPath(document.getElementById("logo-h"), grid))
 .concat(getPointsInPath(document.getElementById("logo-m"), grid));
-
-console.log(destPositions.length);
 
 for (let i = 0; i < quantity; i++) {
   generateStartPosition();
@@ -40,8 +36,9 @@ randomAnimate();
 function randomAnimate() {
   let tmp = elements;
 
-  let scale = 1.1;
+  let scale = 1.5;
 
+  // Bissi CSS
   for (let i = 0; i < elements.length; i++) {
     if (i % 5 == 0) {
       elements[i].classList.add('color-1');
@@ -59,24 +56,34 @@ function randomAnimate() {
   }
 
   for(let i=0; i < destPositions.length; i++) {
-    let index = randomBetween(0, tmp.length);
-    let e = tmp[index];
-
-    if(e && Math.random() > 0.5) {
-      gsap.to(e, {
-        x: destPositions[i].x + (device.width - mainsvg.clientWidth) / 2,
-        y: destPositions[i].y + (device.height - mainsvg.clientHeight) / 2,
-        scaleX:scale, 
-        scaleY:scale,
-        duration: animDuration,
-        ease: animEase,
-        delay: animDelay
-      });
-      setTimeout(function(){ 
-        e.classList.add('move');
-      }, (animDuration * 1000) + 400);
+    // ohne sterne brauchen wir nicht weitermachen
+    if(tmp.length <= 0) {
+      return;
     }
 
+    if(Math.random() < 0.3) {
+      let index = randomBetween(0, tmp.length);
+      let e = tmp[index];
+
+      if(e) {
+        // array bereinigen, damit wir keinen stern doppelt treffen
+        if (index > -1) {
+          tmp.splice(index, 1);
+        }
+        gsap.to(e, {
+          x: destPositions[i].x + (device.width - mainsvg.clientWidth) / 2,
+          y: destPositions[i].y + (device.height - mainsvg.clientHeight) / 2,
+          duration: animDuration,
+          ease: animEase,
+          delay: animDelay
+        })
+        if(e && Math.random() < 0.5) {
+          setTimeout(function(){
+            e.classList.add('move');
+          }, (animDuration * 1000) + 1000 );
+        }
+      }
+    }
   }
 
 }
