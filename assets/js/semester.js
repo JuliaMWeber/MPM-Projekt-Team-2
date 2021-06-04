@@ -69,13 +69,24 @@ $.getJSON("./assets/data/MH.json", function (data) {
                 let startLength = Math.random()*ellipse.getTotalLength();
                 let startPos = ellipse.getPointAtLength(startLength);
                 let planetLink = planets.splice(gsap.utils.random(0, planets.length-1, 1), 1)[0].getAttribute("href");
-                let planet = document.createElement("object");
-                planet.classList.add("planet");
-                planet.data = planetLink;
-                planet.style.height = planetSize + "px";
-                planet.style.width = planetSize + "px";
+
+                let planetSVG = document.createElement("object");
+                planetSVG.data = planetLink;
+                planetSVG.style.height = planetSize + "px";
+                planetSVG.style.width = planetSize + "px";
+
+                let shadowSVG = document.createElement("object");
+                shadowSVG.data = "./assets/svg/Schatten.svg";
+                shadowSVG.style.height = planetSize + "px";
+                shadowSVG.style.width = planetSize + "px";
+
+                let planet = document.createElement("g");
+                planet.appendChild(planetSVG);
+                planet.appendChild(shadowSVG);
                 planet.style.left = startPos.x-planetSize/2 + "px";
                 planet.style.top = startPos.y-planetSize/2 + "px";
+                planet.classList.add("planet");
+
                 planetGroup.appendChild(planet);
                 let orbit = {"orbit": ellipse, "planet": planet, "pos": startLength};
                 orbits[i] = orbit;
@@ -101,7 +112,9 @@ function animateOrbits(){
         orbits[i].planet.style.left = nextPos.x-planetSize/2 + "px";
         orbits[i].planet.style.top = nextPos.y-planetSize/2 + "px";
 
+        let rotate = (nextLength/orbits[i].orbit.getTotalLength())*360 + "deg";
 
+        gsap.set(orbits[i].planet.lastChild, {rotation: rotate})
     }
 }
 
