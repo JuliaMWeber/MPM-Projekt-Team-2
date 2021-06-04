@@ -28,6 +28,17 @@
     display: block;
     will-change: left, top, transform;
     transition: transform 1s;
+    animation: fade-in 1s ease;
+}
+
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }
 
 .planet * {
@@ -52,6 +63,7 @@
     stroke: #635755;
     stroke-width: 2px;
     fill-opacity: 0%;
+    animation: fade-in 1s ease;
 }
 
 #sun {
