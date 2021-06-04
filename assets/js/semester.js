@@ -1,7 +1,7 @@
-var svg = document.getElementById("orbitSvg");
-var planetGroup = document.getElementById("planets");
-var clientWidth = document.documentElement.clientWidth;
-var clientHeight = document.documentElement.clientHeight;
+var svg;
+var planetGroup;
+var clientWidth;
+var clientHeight;
 
 //System Settings
 let semester = 1;
@@ -19,81 +19,93 @@ var distanceImpact = 0.1;
 var orbits = [];
 var modules = [];
 
+function resetOrbit(){
+    orbits.length = 0;
+    modules.length = 0;
+}
 
-$.getJSON("./assets/data/MH.json", function (data) {
-    var orbitCount = 0;
+function displayOrbit(){
+    svg = document.getElementById("orbitSvg");
+    planetGroup = document.getElementById("planets");
+    clientWidth = document.documentElement.clientWidth;
+    clientHeight = document.documentElement.clientHeight;
 
-    $.ajax({
-        url: "./assets/svg/Planets",
-        success: function(planetData){
-            var planets= $(planetData).find("a:contains(.svg)");
 
-            for(var i=0; i<data.length;i++){
-                if(data[i].Semester==semester){
-                    orbitCount++;
-                    modules.push(data[i]);
+    $.getJSON("./assets/data/MH.json", function (data) {
+        var orbitCount = 0;
+
+        $.ajax({
+            url: "./assets/svg/Planets",
+            success: function(planetData){
+                var planets= $(planetData).find("a:contains(.svg)");
+
+                for(var i=0; i<data.length;i++){
+                    if(data[i].Semester==semester){
+                        orbitCount++;
+                        modules.push(data[i]);
+                    }
+                }
+                
+                //Sun
+                let sun = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+                sun.setAttribute("r", sunSize/2);
+                sun.setAttribute("id", "sun");
+                sun.setAttribute("cx", clientWidth/2);
+                sun.setAttribute("cy", clientHeight/2);        
+                svg.appendChild(sun);
+
+                var viewportAspect = clientHeight/clientWidth;
+                
+                var availableSpace;
+                if(viewportAspect<aspectRatio){ //resized for height
+                    availableSpace = (clientHeight-borderSpace*2-sunSize)/2;
+                    orbitSpacing = (availableSpace/(orbitCount+0.5))/aspectRatio;
+                } else { //resized for width
+                    availableSpace = (clientWidth-borderSpace*2-sunSize)/2;
+                    orbitSpacing = availableSpace/(orbitCount+0.5);
+                }
+                planetSize = orbitSpacing*aspectRatio-planetSpacing;
+                
+                
+                
+                for(let i=0;i<orbitCount;i++){
+                    let ellipse = document.createElementNS("http://www.w3.org/2000/svg", "ellipse");
+                    ellipse.setAttribute("class", "orbit");
+                    ellipse.setAttribute("cx", clientWidth/2);
+                    ellipse.setAttribute("cy", clientHeight/2);
+                    ellipse.setAttribute("rx", (sunSize/2)+(orbitSpacing*(i+1)));
+                    ellipse.setAttribute("ry", ellipse.getAttribute("rx")*aspectRatio);
+                    svg.appendChild(ellipse);
+                
+                    let startLength = Math.random()*ellipse.getTotalLength();
+                    let startPos = ellipse.getPointAtLength(startLength);
+                    let planetLink = planets.splice(gsap.utils.random(0, planets.length-1, 1), 1)[0].getAttribute("href");
+
+                    let planetSVG = document.createElement("object");
+                    planetSVG.data = planetLink;
+                    planetSVG.style.height = planetSize + "px";
+                    planetSVG.style.width = planetSize + "px";
+
+                    let shadowSVG = document.createElement("object");
+                    shadowSVG.data = "./assets/svg/Schatten.svg";
+                    shadowSVG.style.height = planetSize + "px";
+                    shadowSVG.style.width = planetSize + "px";
+
+                    let planet = document.createElement("g");
+                    planet.appendChild(planetSVG);
+                    planet.appendChild(shadowSVG);
+                    planet.style.left = startPos.x-planetSize/2 + "px";
+                    planet.style.top = startPos.y-planetSize/2 + "px";
+                    planet.classList.add("planet");
+
+                    planetGroup.appendChild(planet);
+                    let orbit = {"orbit": ellipse, "planet": planet, "pos": startLength};
+                    orbits[i] = orbit;
                 }
             }
-            
-            //Sun
-            let sun = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-            sun.setAttribute("r", sunSize/2);
-            sun.setAttribute("id", "sun");
-            sun.setAttribute("cx", clientWidth/2);
-            sun.setAttribute("cy", clientHeight/2);        
-            svg.appendChild(sun);
-
-            var viewportAspect = clientHeight/clientWidth;
-            
-            var availableSpace;
-            if(viewportAspect<aspectRatio){ //resized for height
-                availableSpace = (clientHeight-borderSpace*2-sunSize)/2;
-                orbitSpacing = (availableSpace/(orbitCount+0.5))/aspectRatio;
-            } else { //resized for width
-                availableSpace = (clientWidth-borderSpace*2-sunSize)/2;
-                orbitSpacing = availableSpace/(orbitCount+0.5);
-            }
-            planetSize = orbitSpacing*aspectRatio-planetSpacing;
-            
-            
-            
-            for(let i=0;i<orbitCount;i++){
-                let ellipse = document.createElementNS("http://www.w3.org/2000/svg", "ellipse");
-                ellipse.setAttribute("class", "orbit");
-                ellipse.setAttribute("cx", clientWidth/2);
-                ellipse.setAttribute("cy", clientHeight/2);
-                ellipse.setAttribute("rx", (sunSize/2)+(orbitSpacing*(i+1)));
-                ellipse.setAttribute("ry", ellipse.getAttribute("rx")*aspectRatio);
-                svg.appendChild(ellipse);
-            
-                let startLength = Math.random()*ellipse.getTotalLength();
-                let startPos = ellipse.getPointAtLength(startLength);
-                let planetLink = planets.splice(gsap.utils.random(0, planets.length-1, 1), 1)[0].getAttribute("href");
-
-                let planetSVG = document.createElement("object");
-                planetSVG.data = planetLink;
-                planetSVG.style.height = planetSize + "px";
-                planetSVG.style.width = planetSize + "px";
-
-                let shadowSVG = document.createElement("object");
-                shadowSVG.data = "./assets/svg/Schatten.svg";
-                shadowSVG.style.height = planetSize + "px";
-                shadowSVG.style.width = planetSize + "px";
-
-                let planet = document.createElement("g");
-                planet.appendChild(planetSVG);
-                planet.appendChild(shadowSVG);
-                planet.style.left = startPos.x-planetSize/2 + "px";
-                planet.style.top = startPos.y-planetSize/2 + "px";
-                planet.classList.add("planet");
-
-                planetGroup.appendChild(planet);
-                let orbit = {"orbit": ellipse, "planet": planet, "pos": startLength};
-                orbits[i] = orbit;
-            }
-        }
+        });
     });
-});
+}
 
 
 function animateOrbits(){
