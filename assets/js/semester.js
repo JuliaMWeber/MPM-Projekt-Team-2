@@ -36,7 +36,7 @@ function displayOrbit(){
 
         $.ajax({
             url: "./assets/svg/Planets",
-            success: function(planetData){
+            success: async function(planetData){
                 var planets= $(planetData).find("a:contains(.svg)");
 
                 for(var i=0; i<data.length;i++){
@@ -58,7 +58,7 @@ function displayOrbit(){
                 sunCaption.id = "semNumber";
                 sunCaption.textContent = arabicToRoman(semester);
                 sunCaption.style.textAnchor = "middle";
-                sunCaption.style.fontSize = sunSize*0.8; //*0.8 to try and keep Text inside Sun
+                sunCaption.style.fontSize = (sunSize*0.8) + "px"; //*0.8 to try and keep Text inside Sun
                 sunCaption.setAttribute("x", clientWidth/2);
                 sunCaption.setAttribute("y", clientHeight/2+sunSize/3.5); //sunSize/3.5 to try and center   
                 svg.appendChild(sunCaption);
@@ -110,6 +110,8 @@ function displayOrbit(){
                     planetGroup.appendChild(planet);
                     let orbit = {"orbit": ellipse, "planet": planet, "pos": startLength};
                     orbits[i] = orbit;
+
+                    await sleep(250);
                 }
             }
         });
@@ -141,6 +143,10 @@ function animateOrbits(){
     }
 }
 
+function sleep(milliseconds) {
+    return new Promise(resolve => setTimeout(resolve, milliseconds));
+}
+
 function arabicToRoman(arabic){
     switch(arabic){
         case 1:
@@ -159,9 +165,9 @@ function arabicToRoman(arabic){
             return "VII";
         case 8:
             return "VIII";
-        case 7:
+        case 9:
             return "IX";
-        case 8:
+        case 10:
             return "X";
     }
 }
