@@ -58,6 +58,12 @@
     fill: #DE950D;
 }
 
+#semNumber {
+    font-family: Arial, Helvetica, sans-serif;
+    fill: #6C070F;
+    opacity: 70%;
+}
+
 /* RESET */
 
 /* FONT */
