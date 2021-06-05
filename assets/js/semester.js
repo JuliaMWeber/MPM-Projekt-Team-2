@@ -2,6 +2,8 @@ var svg;
 var planetGroup;
 var clientWidth;
 var clientHeight;
+var focusedPlanet;
+var paused = false;
 
 //System Settings
 let semester = 3;
@@ -50,8 +52,8 @@ function displayOrbit(){
                 let sun = document.createElementNS("http://www.w3.org/2000/svg", "circle");
                 sun.setAttribute("r", sunSize/2);
                 sun.setAttribute("id", "sun");
-                sun.setAttribute("cx", clientWidth/2);
-                sun.setAttribute("cy", clientHeight/2);        
+                sun.setAttribute("cx", clientWidth/2 + "px");
+                sun.setAttribute("cy", clientHeight/2 + "px");        
                 svg.appendChild(sun);
 
                 let sunCaption = document.createElementNS("http://www.w3.org/2000/svg", "text");
@@ -75,13 +77,11 @@ function displayOrbit(){
                 }
                 planetSize = orbitSpacing*aspectRatio-planetSpacing;
                 
-                
-                
                 for(let i=0;i<orbitCount;i++){
                     let ellipse = document.createElementNS("http://www.w3.org/2000/svg", "ellipse");
                     ellipse.setAttribute("class", "orbit");
-                    ellipse.setAttribute("cx", clientWidth/2);
-                    ellipse.setAttribute("cy", clientHeight/2);
+                    ellipse.setAttribute("cx", clientWidth/2 + "px");
+                    ellipse.setAttribute("cy", clientHeight/2 + "px");
                     ellipse.setAttribute("rx", (sunSize/2)+(orbitSpacing*(i+1)));
                     ellipse.setAttribute("ry", ellipse.getAttribute("rx")*aspectRatio);
                     svg.appendChild(ellipse);
@@ -101,11 +101,14 @@ function displayOrbit(){
                     shadowSVG.style.width = planetSize + "px";
 
                     let planet = document.createElement("g");
+                    planet.style.height = planetSize + "px";
+                    planet.style.width = planetSize + "px";
                     planet.appendChild(planetSVG);
                     planet.appendChild(shadowSVG);
                     planet.style.left = startPos.x-planetSize/2 + "px";
                     planet.style.top = startPos.y-planetSize/2 + "px";
                     planet.classList.add("planet");
+                    planet.onclick = planetClick;
 
                     planetGroup.appendChild(planet);
                     let orbit = {"orbit": ellipse, "planet": planet, "pos": startLength};
@@ -119,7 +122,6 @@ function displayOrbit(){
 
     gsap.ticker.add(animateOrbits);
 }
-
 
 function animateOrbits(){
     for(let i=0;i<orbits.length;i++){
@@ -137,9 +139,68 @@ function animateOrbits(){
         orbits[i].planet.style.left = nextPos.x-planetSize/2 + "px";
         orbits[i].planet.style.top = nextPos.y-planetSize/2 + "px";
 
-        let rotate = (nextLength/orbits[i].orbit.getTotalLength())*360 + "deg";
+        let rotate = (nextLength/orbits[i].orbit.getTotalLength())*360 + "deg";+
 
         gsap.set(orbits[i].planet.lastChild, {rotation: rotate})
+    }
+}
+
+
+function pauseAnimation(state){
+    if(state){
+        gsap.ticker.remove(animateOrbits);
+        paused = true;
+    } else if(!state) {
+        gsap.ticker.add(animateOrbits);
+        paused = false;
+    }
+}
+
+function planetClick(event){
+
+    var planet = event.srcElement;
+    focusedPlanet = planet;
+    var centerx = parseFloat(planet.style.left.replace("px", "")) + parseFloat(planet.style.width.replace("px", ""))/2;
+    var centery = parseFloat(planet.style.top.replace("px", "")) + parseFloat(planet.style.height.replace("px", ""))/2;
+    var zoomFactor = clientHeight / parseInt(planet.style.width.replace("px", ""),10);
+
+    var sun = document.getElementById("sun");
+    var x = parseFloat(sun.getAttribute("cx").replace("px", "")) - centerx;
+    var y = parseFloat(sun.getAttribute("cy").replace("px", "")) - centery;
+
+    //Settings
+    var zoomOffset = 10;
+    var zoomPositionOffsetx = -1*parseFloat(planet.style.width.replace("px", ""))/2.5;
+    var zoomPositionOffsety = 0;
+
+    zoomFactor += zoomOffset;
+    x += zoomPositionOffsetx;
+    y += zoomPositionOffsety;
+
+    if(paused){
+        pauseAnimation(false);
+        planetZoom(0, 0, 1);
+        focusedPlanet.classList.remove("clicked");
+        svg.classList.remove("clicked");
+    } else {
+        pauseAnimation(true);
+        planetZoom(x, y, zoomFactor);
+        planet.classList.add("clicked");
+        svg.classList.add("clicked");
+    }
+}
+
+function planetZoom(x, y, zoomlvl){
+    var sunSystem = document.getElementById("sunSystem").children;
+
+    for(let i=0; i<sunSystem.length;i++) {
+        var zoomTranslate;
+        if(zoomlvl==1){
+            zoomTranslate = "";
+        } else {
+            zoomTranslate = " translate(" + x + "px, " + y + "px)"
+        }
+        sunSystem[i].style.transform = "scale(" + zoomlvl + "," + zoomlvl + ")" + zoomTranslate;
     }
 }
 
