@@ -36,7 +36,7 @@ function displayOrbit(semesterNum) {
     clientWidth = document.documentElement.clientWidth;
     clientHeight = document.documentElement.clientHeight;
 
-    $.getJSON("./assets/data/MH_update.json", function (data) {
+    $.getJSON("./assets/data/modulhandbuch.json", function (data) {
         var orbitCount = 0;
 
         $.ajax({
