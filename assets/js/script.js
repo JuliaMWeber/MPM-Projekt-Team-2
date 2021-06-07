@@ -6,9 +6,7 @@
 *
 */
 document.getElementById("app").innerHTML = document.getElementById("semester").innerHTML;
-let hash = window.location.hash.substr(1);
-let anchor = hash.replace("sem", "");
-displayOrbit( parseInt(hash.replace("sem", "")));
+displayOrbit( getSemesterNumberByHash() );
 
 // Checken ob onHashChange möglich ist
 if ("onhashchange" in window) {
@@ -16,7 +14,15 @@ if ("onhashchange" in window) {
   window.onhashchange = function () {
     // Daten werden neu reingeladen
     document.getElementById("app").innerHTML = document.getElementById("semester").innerHTML;
-    hash = window.location.hash.substr(1);
-    displayOrbit(parseInt(hash.replace("sem", "")));
+    displayOrbit( getSemesterNumberByHash() );
   }
-} 
+}
+
+function getSemesterNumberByHash() {
+  let hash = window.location.hash.substr(1);
+  let number = parseInt( hash.replace("sem", "") ) || 0;
+  if(number > 0 ) {
+    return number;
+  }
+  return 1;
+}
