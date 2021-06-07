@@ -1,0 +1,68 @@
+[
+  {
+    "name": "Planet_v1_1.svg",
+    "path": "./assets/svg/Planets/Planet_v1_1.svg",
+    "modules": ["MIB1","MIB14","MIB26","MIB38"]
+  },
+  {
+    "name": "Planet_v1_2.svg",
+    "path": "./assets/svg/Planets/Planet_v1_2.svg",
+    "modules": ["MIB2a","MIB2b","MIB27","MIB39"]
+    
+  },
+  {
+    "name": "Planet_v1_3.svg",
+    "path": "./assets/svg/Planets/Planet_v1_3.svg",
+    "modules": ["MIB3","MIB15","MIB28","MIB23a","MIB23b"]
+  },
+  {
+    "name": "Planet_v2_1.svg",
+    "path": "./assets/svg/Planets/Planet_v2_1.svg",
+    "modules": ["MIB4a","MIB4b","MIB29","MIB24a"]
+  },
+  {
+    "name": "Planet_v2_2svg",
+    "path": "./assets/svg/Planets/Planet_v2_2.svg",
+    "modules": ["MIB5","MIB16","MIB30","MIB24b"]
+  },
+  {
+    "name": "Planet_v2_3.svg",
+    "path": "./assets/svg/Planets/Planet_v2_3.svg",
+    "modules": ["MIB6","MIB17a", "MIB17b"]
+  },
+  {
+    "name": "Planet_v3_1.svg",
+    "path": "./assets/svg/Planets/Planet_v3_1.svg",
+    "modules": ["MIB7","MIB18","MIB31"]
+  },
+  {
+    "name": "Planet_v3_2.svg",
+    "path": "./assets/svg/Planets/Planet_v3_2.svg",
+    "modules": ["MIB8","MIB19","MIB32"]
+  },
+  {
+    "name": "Planet_v3_3.svg",
+    "path": "./assets/svg/Planets/Planet_v3_3.svg",
+    "modules": ["MIB9","MIB20","MIB33"]
+  },
+  {
+    "name": "Planet_v4_1.svg",
+    "path": "./assets/svg/Planets/Planet_v4_1.svg",
+    "modules": ["MIB10","MIB21","MIB34"]
+  },
+  {
+    "name": "Planet_v4_2.svg",
+    "path": "./assets/svg/Planets/Planet_v4_2.svg",
+    "modules": ["MIB11","MIB22","MIB35"]
+  },
+  {
+    "name": "Planet_v4_3.svg",
+    "path": "./assets/svg/Planets/Planet_v4_3.svg",
+    "modules": ["MIB12a","MIB12b","MIB36"]
+  },
+  {
+    "name": "Planet_v4_4.svg",
+    "path": "./assets/svg/Planets/Planet_v4_4.svg",
+    "modules": ["MIB13","MIB25","MIB37"]
+  }
+]
