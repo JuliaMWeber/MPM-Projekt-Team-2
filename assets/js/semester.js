@@ -6,7 +6,7 @@ var focusedPlanet;
 var paused = false;
 
 //System Settings
-let semester = 3;
+//let semester = 2; // obsulet (wird nun als Parameter in displayOrbit() übergeben)
 var planetSpacing = 5;
 var borderSpace = 5;
 var aspectRatio = 0.8; //Compress Orbit y-Size by this Value
@@ -25,25 +25,34 @@ function resetOrbit(){
     orbits.length = 0;
     modules.length = 0;
 }
-
-function displayOrbit(){
+/**
+ * Generiert den Orbit anhand der Semester-Nummer
+ *
+ * @param int semesterNum
+ */
+function displayOrbit(semesterNum) {
     svg = document.getElementById("orbitSvg");
     planetGroup = document.getElementById("planets");
     clientWidth = document.documentElement.clientWidth;
     clientHeight = document.documentElement.clientHeight;
 
-
-    $.getJSON("./assets/data/MH.json", function (data) {
+    $.getJSON("./assets/data/MH_update.json", function (data) {
         var orbitCount = 0;
 
         $.ajax({
-            url: "./assets/svg/Planets",
+            url: "./assets/data/planets.json",
             success: async function(planetData){
-                var planets= $(planetData).find("a:contains(.svg)");
 
-                for(var i=0; i<data.length;i++){
-                    if(data[i].Semester==semester){
+                // Module durchlaufen auf Basis des Semesters
+                for(var i=0; i < data.length;i++){
+                    if(data[i].Semester == semesterNum) {
                         orbitCount++;
+                        // Planeten-Zuweisung an Module anhängen
+                        for(var j=0; j < planetData.length; j++) {
+                            if(planetData[j]['modules'].indexOf(data[i]['Kuerzel']) >= 0) {
+                                data[i]['planetPath'] = planetData[j]['path'];
+                            }
+                        }
                         modules.push(data[i]);
                     }
                 }
@@ -58,7 +67,7 @@ function displayOrbit(){
 
                 let sunCaption = document.createElementNS("http://www.w3.org/2000/svg", "text");
                 sunCaption.id = "semNumber";
-                sunCaption.textContent = arabicToRoman(semester);
+                sunCaption.textContent = convertDecimalToRoman(semesterNum);
                 sunCaption.style.textAnchor = "middle";
                 sunCaption.style.fontSize = (sunSize*0.8) + "px"; //*0.8 to try and keep Text inside Sun
                 sunCaption.setAttribute("x", clientWidth/2);
@@ -77,7 +86,7 @@ function displayOrbit(){
                 }
                 planetSize = orbitSpacing*aspectRatio-planetSpacing;
                 
-                for(let i=0;i<orbitCount;i++){
+                for(let i=0;i < modules.length;i++){
                     let ellipse = document.createElementNS("http://www.w3.org/2000/svg", "ellipse");
                     ellipse.setAttribute("class", "orbit");
                     ellipse.setAttribute("cx", clientWidth/2 + "px");
@@ -88,18 +97,22 @@ function displayOrbit(){
                 
                     let startLength = Math.random()*ellipse.getTotalLength();
                     let startPos = ellipse.getPointAtLength(startLength);
-                    let planetLink = planets.splice(gsap.utils.random(0, planets.length-1, 1), 1)[0].getAttribute("href");
+                    // SVG zuweisen
+                    let planetLink = modules[i]['planetPath'];
 
+                    // Planeten SVG erstellen
                     let planetSVG = document.createElement("object");
                     planetSVG.data = planetLink;
                     planetSVG.style.height = planetSize + "px";
                     planetSVG.style.width = planetSize + "px";
 
+                    // Planeten Schatten erstellen
                     let shadowSVG = document.createElement("object");
                     shadowSVG.data = "./assets/svg/Schatten.svg";
                     shadowSVG.style.height = planetSize + "px";
                     shadowSVG.style.width = planetSize + "px";
 
+                    // Planeten Gruppe (Planet + Schatten) erstellen
                     let planet = document.createElement("g");
                     planet.style.height = planetSize + "px";
                     planet.style.width = planetSize + "px";
@@ -108,6 +121,7 @@ function displayOrbit(){
                     planet.style.left = startPos.x-planetSize/2 + "px";
                     planet.style.top = startPos.y-planetSize/2 + "px";
                     planet.classList.add("planet");
+                    planet.setAttribute('title', modules[i]['Modulname']);
                     planet.onclick = planetClick;
 
                     planetGroup.appendChild(planet);
@@ -144,7 +158,6 @@ function animateOrbits(){
         gsap.set(orbits[i].planet.lastChild, {rotation: rotate})
     }
 }
-
 
 function pauseAnimation(state){
     if(state){
@@ -208,27 +221,20 @@ function sleep(milliseconds) {
     return new Promise(resolve => setTimeout(resolve, milliseconds));
 }
 
-function arabicToRoman(arabic){
-    switch(arabic){
-        case 1:
-            return "I";
-        case 2:
-            return "II";
-        case 3:
-            return "III";
-        case 4:
-            return "IV";
-        case 5:
-            return "V";
-        case 6:
-            return "VI";
-        case 7:
-            return "VII";
-        case 8:
-            return "VIII";
-        case 9:
-            return "IX";
-        case 10:
-            return "X";
+/**
+ * Konvert eine Dezimalzahl in Römische Zeichen
+ *
+ * @param int decimal
+ * @return string 
+ */
+function convertDecimalToRoman(decimal) {
+    let roman = { M: 1000, CM: 900, D: 500, CD: 400, C: 100, XC: 90, L: 50, XL: 40, X: 10, IX: 9, V: 5, IV: 4, I: 1};
+    let str = '';
+  
+    for (let i of Object.keys(roman)) {
+      let q = Math.floor(decimal / roman[i]);
+      decimal -= q * roman[i];
+      str += i.repeat(q);
     }
+    return str;
 }
