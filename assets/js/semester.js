@@ -31,6 +31,9 @@ function resetOrbit(){
  * @param int semesterNum
  */
 function displayOrbit(semesterNum) {
+    // erstmal resetten - safety first
+    resetOrbit();
+
     svg = document.getElementById("orbitSvg");
     planetGroup = document.getElementById("planets");
     clientWidth = document.documentElement.clientWidth;
