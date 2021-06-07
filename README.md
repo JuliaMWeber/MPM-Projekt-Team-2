@@ -1,5 +1,9 @@
 # MIB18 Medien-Projekt: Schwerpunkt Web&Mobile (SoSe 2021) - Team 2
 
+## Stages
+- [Netlify: MP-Team2](https://mpteam2.netlify.app/)  
+  *Deployment alle 5min*
+
 ## Team
 - **Antony Zwickl** ([@azwk67](https://git.thm.de/azwk67))   
   Developer
