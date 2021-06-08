@@ -1,3 +1,7 @@
-//Temporary to Test Semester before Intro is implemented
-document.getElementById("app").innerHTML = document.getElementById("semester").innerHTML;
-displayOrbit(1);
+document.getElementById("app").innerHTML = document.getElementById("intro").innerHTML;
+displayIntro();
+
+function animateToSemester(semester){
+    document.getElementById("app").innerHTML = document.getElementById("semester").innerHTML;
+    displayOrbit(semester);
+}

@@ -21,6 +21,37 @@
     background-color: #222121;
 }
 
+/* INTRO */
+
+#logo * {
+    opacity: 5%;
+    position: absolute;
+    /**padding: 10vmin;**/
+    height: 100%;
+    width: 100%;
+    display: block;
+    top: 0;
+    left: 0;
+    bottom: 0;
+}
+
+#stars {
+    top: 0;
+    left: 0;
+    position: absolute;
+}
+
+.star {
+width: 1px;
+height: 1px;
+position: absolute;
+background-color: #fff;
+border-radius: 100%;
+opacity: 0.6;
+transition: box-shadow 0.2s ease-in-out;
+will-change: transform, box-shadow;
+}
+
 /* SEMESTER */
 
 
