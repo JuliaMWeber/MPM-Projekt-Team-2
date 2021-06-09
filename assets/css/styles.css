@@ -34,37 +34,57 @@
 }
 
 #logo > object {
+    opacity: 0%;
+}
+
+#logosvg {
+    display: flex;
+}
+
+#logosvg #outline{
     opacity: 5%;
+}
+
+#logosvg #wireframe{
+    opacity: 8%;
+}
+
+#stars,#logobase {
     position: absolute;
-    /**padding: 10vmin;**/
-    height: 100%;
+    display: block;
+    top: 0;
+    left: 0;
+    bottom: 0;
     width: 100%;
-    display: block;
-    top: 0;
-    left: 0;
-    bottom: 0;
+    height: 100%;
 }
 
-#stars,#logostars {
-    position: absolute;
-    display: block;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    width: 0px;
-    height: 0px;
-}
+/* Non animated Star (Background) */
 
-.star {
+.bgStar {
 width: 1px;
 height: 1px;
 position: absolute;
 background-color: #fff;
 border-radius: 100%;
 opacity: 0.6;
+filter: blur(1.5px);
 transition: box-shadow 0.2s ease-in-out;
 will-change: transform, box-shadow;
 }
+
+/* Animated Star (Foreground) */
+
+.fgStar {
+    width: 1px;
+    height: 1px;
+    position: absolute;
+    background-color: #fff;
+    border-radius: 100%;
+    opacity: 0.6;
+    transition: box-shadow 0.2s ease-in-out;
+    will-change: transform, box-shadow;
+    }
 
 /* SEMESTER */
 
