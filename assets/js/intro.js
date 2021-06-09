@@ -4,8 +4,9 @@ function displayIntro(){
     logoBG = document.getElementById("logoFill");
     logoWire = document.getElementById("logoWire");
 
-    starQuantity = 1563;
-    mainsvg = document.getElementById("thmlogo");
+    starQuantity = 2000;
+    logoGroup = document.getElementById("logo");
+    logostars = document.getElementById("logostars");
     starbg = document.getElementById("stars");
     app = document.getElementById("app");
     elements = [];
@@ -14,7 +15,7 @@ function displayIntro(){
     device = {};
     device.width = document.documentElement.clientWidth;
     device.height = document.documentElement.clientHeight;
-
+    logoSafeGap = device.width / device.height * 20;
     safegap = device.width / device.height * 2.5;
 
     //Animation-Settings
@@ -24,54 +25,78 @@ function displayIntro(){
     //animEase = "power3.inOut";
     //animEase = "back.inOut(4)";
 
-    starGrid = 15;
+    starGrid = 5;
 
+    logoBG.addEventListener("load",  resizeLogo);
     logoBG.addEventListener("load",  animateStars);
 }
 
+function resizeLogo(){
+
+  let bg = logoBG.contentDocument.getElementById("LogoLayer");
+  let wire = logoWire.contentDocument.getElementById("LogoLayer");
+
+  let scale = (device.width-logoSafeGap*2) / (bg.getBoundingClientRect().width);    //available/current
+  if(scale > (device.height-logoSafeGap*2) / (bg.getBoundingClientRect().height)){
+    scale = (device.height-logoSafeGap*2) / (bg.getBoundingClientRect().height);
+  }
+  let aligny = (device.height-logoSafeGap*2 - scale*bg.getBoundingClientRect().height) / 2;
+  let alignx = (device.width-logoSafeGap*2 - scale*bg.getBoundingClientRect().width) / 2;
+
+  logoGroup.style.transform = "translate(" + (logoSafeGap + alignx) + "px ," + (logoSafeGap + aligny) + "px)";
+
+  bg.style.transform = "scale(" + scale + ")";
+  wire.style.transform = "scale(" + scale + ")";
+  logostars.style.transform = "scale(" + scale + ")";
+}
+
 function animateStars(){
-    destPositions = getPointsInPath(logoBG.contentDocument.getElementById("T_BG"), starGrid)
-    .concat(getPointsInPath(logoBG.contentDocument.getElementById("H_BG"), starGrid))
-    .concat(getPointsInPath(logoBG.contentDocument.getElementById("M_BG"), starGrid));
 
-    console.log(destPositions.length);
+  destPositions = getPointsInPath(logoWire.contentDocument.getElementById("T_Wireframe"), starGrid)
+  .concat(getPointsInPath(logoWire.contentDocument.getElementById("H_Wireframe"), starGrid))
+  .concat(getPointsInPath(logoWire.contentDocument.getElementById("M_Wireframe"), starGrid));
 
-    for (let i = 0; i < starQuantity; i++) {
-        generateStartPosition();
-    }
+  console.log("Destpositions:" + destPositions.length);
 
-    randomAnimate();
+  for (let i = 0; i < starQuantity; i++) {
+      generateStartPosition();
+  }
+
+  randomAnimate();
 }
 
 function randomAnimate() {
   let tmp = elements;
 
-  console.log(tmp.length);
-
   let scale = 1.5;
 
-  for(let i=0; i < destPositions.length; i++) {
-    // ohne sterne brauchen wir nicht weitermachen
-    if(tmp.length <= 0) {
-      return;
-    }
+  let originalLength = tmp.length;
 
-    if(Math.random() < 1) { //default 0.3 -- 1 just for testing
-      let index = randomBetween(0, tmp.length);
-      let e = tmp[index];
+  //resize translate hier berechnen um startpos nicht zu beeinflussen
+  let xOffset = logoGroup.getBoundingClientRect().x;
+  let yOffset = logoGroup.getBoundingClientRect().y;
 
-      if(e) {
-        // array bereinigen, damit wir keinen stern doppelt treffen
-        if (index > -1) {
-          tmp.splice(index, 1);
-        }
-        gsap.to(e, {
-          x: destPositions[i].x,
-          y: destPositions[i].y,
-          duration: animDuration,
-          ease: animEase,
-          delay: animDelay
-        })
+  while(destPositions.length>0 && tmp.length>0 && tmp.length>originalLength*0.3) {
+    let starindex = randomBetween(0, tmp.length);
+    let destindex = randomBetween(0, destPositions.length);
+    let e = tmp[starindex];
+
+    if(e && destPositions[destindex]) {
+      // array bereinigen, damit wir keinen stern doppelt treffen
+      if (starindex > -1) {
+        tmp.splice(starindex, 1);
+      }
+      logostars.appendChild(e);
+      gsap.to(e, {
+        x: destPositions[destindex].x + xOffset,
+        y: destPositions[destindex].y + yOffset,
+        duration: animDuration,
+        ease: animEase,
+        delay: animDelay
+      })
+      // array bereinigen, damit wir keinen destPoint doppelt treffen
+      if (destindex > -1) {
+        destPositions.splice(destindex, 1);
       }
     }
   }
@@ -79,23 +104,23 @@ function randomAnimate() {
 
 function getPointsInPath(path, gridSize) {
 
-let boundRec = path.getBoundingClientRect();
+    let boundRec = path.getBoundingClientRect();
 
-let pointList = [];
-const svgtmp = document.getElementById("tmp");
+    let pointList = [];
+    const svgtmp = document.getElementById("tmp");
 
-for (let x = boundRec.x; x <= (boundRec.x + boundRec.width); x += gridSize) {
-    for (let y = boundRec.y; y <= (boundRec.y + boundRec.height); y += gridSize) {
-    let point = svgtmp.createSVGPoint();
-    point.x = Math.floor(x);
-    point.y = Math.floor(y);
+    for (let x = boundRec.x; x <= (boundRec.x + boundRec.width); x += gridSize) {
+        for (let y = boundRec.y; y <= (boundRec.y + boundRec.height); y += gridSize) {
+        let point = svgtmp.createSVGPoint();
+        point.x = Math.floor(x);
+        point.y = Math.floor(y);
 
-    if(path.isPointInStroke(point) || path.isPointInFill(point)) {
-        pointList.push(point);
+        if(path.isPointInFill(point)) {
+            pointList.push(point);
+        }
+        }
     }
-    }
-}
-return pointList;
+    return pointList;
 }
 
 
