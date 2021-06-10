@@ -29,7 +29,7 @@ function displayIntro(){
 
     starGrid = 4;
 
-    logoBG.addEventListener("load",  animateStars);
+    window.addEventListener("load",  animateStars);
 }
 
 function initialiseLogo(){
