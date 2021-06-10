@@ -4,7 +4,7 @@ function displayIntro(){
     logoBG = document.getElementById("logoFill");
     logoWire = document.getElementById("logoWire");
 
-    starQuantity = 3000;
+    starQuantity = 2000;
     logoGroup = document.getElementById("logo");
     logoSvg = document.getElementById("logosvg");
     logobase = document.getElementById("logobase");
@@ -18,7 +18,7 @@ function displayIntro(){
     device.height = document.documentElement.clientHeight;
     logoSafeGap = 50;
     safegap = device.width / device.height * 2.5;
-    starSizeMax = Math.floor((device.width * device.height) / (10*37000));
+    starSizeMax = Math.floor((device.width * device.height) / (10*35000));
 
     //Animation-Settings
     animDelay = 0.5;
@@ -159,14 +159,13 @@ function getPointsInPath(path, gridSize) {
 
     let pointList = [];
 
-
+    let point = logoSvg.createSVGPoint();
     for (let x = boundRec.x; x <= (boundRec.x + boundRec.width); x += gridSize) {
         for (let y = boundRec.y; y <= (boundRec.y + boundRec.height); y += gridSize) {
-          let point = logoSvg.createSVGPoint();
           point.x = x;
           point.y = y;
           if(path.isPointInFill(point)) {
-              pointList.push(point);
+              pointList.push({x: point.x, y:point.y});
           }
         }
     }
