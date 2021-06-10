@@ -19,6 +19,72 @@ section {
 
 /* FONT */
 
+
+/* INTRO */
+
+#logo {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    display: block;
+    top: 0;
+    left: 0;
+    bottom: 0;
+}
+
+#logo > object {
+    opacity: 0%;
+}
+
+#logosvg {
+    display: flex;
+}
+
+#logosvg #outline{
+    opacity: 5%;
+}
+
+#logosvg #wireframe{
+    opacity: 8%;
+}
+
+#stars,#logobase {
+    position: absolute;
+    display: block;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* Non animated Star (Background) */
+
+.bgStar {
+width: 1px;
+height: 1px;
+position: absolute;
+background-color: #fff;
+border-radius: 100%;
+opacity: 0.6;
+filter: blur(1.5px);
+transition: box-shadow 0.2s ease-in-out;
+will-change: transform, box-shadow;
+}
+
+/* Animated Star (Foreground) */
+
+.fgStar {
+width: 1px;
+height: 1px;
+position: absolute;
+background-color: #fff;
+border-radius: 100%;
+opacity: 0.6;
+transition: box-shadow 0.2s ease-in-out;
+will-change: transform, box-shadow;
+}
+
 /* SEMESTER */
 #planets {
     position: absolute;

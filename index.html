@@ -27,20 +27,14 @@
   <body>
     <main id="app" class="container"></main>
     <section id="intro">
-      <svg id="logo" viewBox="0 0 1700 600" width="1100" height="575" version="1.1" xmlns="http://www.w3.org/2000/svg"
-        xmlns:xlink="http://www.w3.org/1999/xlink">
-        <g fill="#000000">
-          <polygon id="logoT"
-            points="272.558 104.54 272.558 574.887 156.041 574.887 156.041 104.54 0 104.54 0 0 428.599 0 428.599 104.54">
-          </polygon>
-          <polygon id="logoH"
-            points="877.957 574.887 877.957 334.666 675.834 334.666 675.834 574.887 559.26 574.887 559.26 0 675.834 0 675.834 231.437 877.957 231.437 877.957 0 994.531 0 994.531 574.887">
-          </polygon>
-          <polygon id="logoM"
-            points="1549.57 574.887 1549.57 249.118 1438.19 470.346 1353.89 470.346 1241.77 249.118 1241.77 574.887 1125.19 574.887 1125.19 0 1240.11 0 1396.1 322.974 1551.22 0 1666.14 0 1666.14 574.887">
-          </polygon>
-        </g>
-      </svg>
+      <div id="logo">
+        <object data="./assets/svg/ThmLogo/FontOutline.svg" id="logoFill"></object>
+        <object data="./assets/svg/ThmLogo/Wireframe.svg" id="logoWire"></object>
+      </div>
+      <div id="logobase">
+        <svg id="logosvg" xmlns="http://www.w3.org/2000/svg"></svg>
+      </div>
+      <g id="stars"></g>
     </section>
     <section id="semester">
       <g id="sunSystem">
@@ -58,6 +52,7 @@
 
     <!-- Custom Scripts -->
     <script src="./assets/js/semester.js"></script>
+    <script src="./assets/js/intro.js"></script>
     <script src="./assets/js/script.js"></script>
   </body>
 </html>
