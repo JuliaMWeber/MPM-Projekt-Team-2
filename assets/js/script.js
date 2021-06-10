@@ -8,16 +8,19 @@
 document.getElementById("app").innerHTML = document.getElementById("intro").innerHTML;
 displayIntro();
 
+reactToHash();
+
 // Checken ob onHashChange möglich ist
 if ("onhashchange" in window) {
   // Event darauf setzen auf, ob der Url-Hash geändert wurde
-  window.onhashchange = function () {
-    // Daten werden neu reingeladen
-    let hash = window.location.hash.substr(1);
-    if(hash.includes("sem")){
-      console.log(hash);
-      animateToSemester(getSemesterNumberByHash());
-    }
+  window.onhashchange = reactToHash;
+}
+
+function reactToHash(){
+  // Daten werden neu reingeladen
+  let hash = window.location.hash.substr(1);
+  if(hash.includes("sem")){
+    animateToSemester(getSemesterNumberByHash());
   }
 }
 
