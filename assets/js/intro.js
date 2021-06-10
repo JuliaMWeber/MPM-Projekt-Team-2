@@ -1,35 +1,35 @@
 //contentDocument.firstChild.children
 
 function displayIntro(){
-    logoBG = document.getElementById("logoFill");
-    logoWire = document.getElementById("logoWire");
+  logoBG = document.getElementById("logoFill");
+  logoWire = document.getElementById("logoWire");
 
-    starQuantity = 2000;
-    logoGroup = document.getElementById("logo");
-    logoSvg = document.getElementById("logosvg");
-    logobase = document.getElementById("logobase");
-    starbg = document.getElementById("stars");
-    app = document.getElementById("app");
-    elements = [];
-    positions = [];
+  starQuantity = 2000;
+  logoGroup = document.getElementById("logo");
+  logoSvg = document.getElementById("logosvg");
+  logobase = document.getElementById("logobase");
+  starbg = document.getElementById("stars");
+  app = document.getElementById("app");
+  elements = [];
+  positions = [];
 
-    device = {};
-    device.width = document.documentElement.clientWidth;
-    device.height = document.documentElement.clientHeight;
-    logoSafeGap = 50;
-    safegap = device.width / device.height * 2.5;
-    starSizeMax = Math.floor((device.width * device.height) / (10*35000));
+  device = {};
+  device.width = document.documentElement.clientWidth;
+  device.height = document.documentElement.clientHeight;
+  logoSafeGap = 50;
+  safegap = device.width / device.height * 2.5;
+  starSizeMax = safegap;
 
-    //Animation-Settings
-    animDelay = 0.5;
-    animDuration = 3;
-    animEase = "back.inOut(1)";
-    //animEase = "power3.inOut";
-    //animEase = "back.inOut(4)";
+  //Animation-Settings
+  animDelay = 0.5;
+  animDuration = 3;
+  animEase = "back.inOut(1)";
+  //animEase = "power3.inOut";
+  //animEase = "back.inOut(4)";
 
-    starGrid = 4;
+  starGrid = 4;
 
-    window.addEventListener("load",  animateStars);
+  window.addEventListener("load",  animateStars);
 }
 
 function initialiseLogo(){
@@ -82,7 +82,7 @@ function animateStars(){
   }
 
   for(let i=0;i<destPositions.length;i++){ 
-    if(Math.random()>0.8){ //reducing destpoints for optimization
+    if(Math.random()>0.4){ //reducing destpoints for optimization
       destPositions.splice(i,1);
       i--;
     }
