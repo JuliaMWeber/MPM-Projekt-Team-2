@@ -13,6 +13,7 @@ if ("onhashchange" in window) {
   // Event darauf setzen auf, ob der Url-Hash geändert wurde
   window.onhashchange = function () {
     // Daten werden neu reingeladen
+    let hash = window.location.hash.substr(1);
     if(hash.includes("sem")){
       console.log(hash);
       animateToSemester(getSemesterNumberByHash());
