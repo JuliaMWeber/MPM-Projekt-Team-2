@@ -150,33 +150,23 @@ function startIntro(section) {
 function loadLetters(letters) {
 
   $.each(letters, function(index, value) {
-
     value.element = $(app).find(value.selector).first().children()[0];
 
-    if(typeof value.element !== 'undefined') {
+    $(value.element).on("ready load loaded", function() {
+      console.log(index + ": SVG LOADED");
 
-      // Timeout sonst noch nicht gerendert...
-      setTimeout(() => {
-        $(value.element).ready(function() {
-          console.log(index + ": SVG LOADED");
-    
-          value.content = value.element.contentDocument;
-          let points = getPoints($(value.content).find("circle"));
-  
-          setTimeout(() => {
-            $.each(points, function() {
-              koords[index].push( getPositionOfElement($(this)[0]) );
-            });
-            let options = {
-              index: index,
-            };
-            animateStars(value.element, koords[index], options);
-          }, 100);
-    
-        });
-      }, 100);
+      value.content = value.element.contentDocument;
+      let points = getPoints($(value.content).find("circle"));
 
-    }
+      $.each(points, function() {
+        koords[index].push( getPositionOfElement($(this)[0]) );
+      });
+      let options = {
+        index: index,
+      };
+      animateStars(value.element, koords[index], options);
+
+    });
 
   });
 }
@@ -188,7 +178,6 @@ function animateStars(target, coords, options) {
 
   let letterPos = getPositionOfElement($(target)[0]);
 
-  //console.log(tmp);
 
   let guid = generateGUID();
   $(target).parent().attr('id', guid);
