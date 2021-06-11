@@ -1,5 +1,16 @@
 /* nicht der schnellste aber übersichtlichste Weg ohne Compiler */
 @import url("reset.css");
+html {
+    background: rgb(12, 10, 23);
+}
+
+body {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: rgb(29, 24, 53);
+    background: radial-gradient(circle, rgba(29, 24, 53, 1) 0%, rgba(37, 20, 68, 1) 22%, rgba(32, 27, 30, 1) 50%, rgba(43, 31, 39, 1) 100%);
+}
 
 /* STYLES */
 #app {
@@ -11,8 +22,6 @@
     left: 0;
     bottom: 0;
     overflow: hidden;
-    background: rgb(29, 24, 53);
-    background: radial-gradient(circle, rgba(29, 24, 53, 1) 0%, rgba(37, 20, 68, 1) 22%, rgba(32, 27, 30, 1) 50%, rgba(43, 31, 39, 1) 100%);
 }
 
 section {
@@ -204,22 +213,31 @@ section {
     display: flex;
     flex-wrap: nowrap;
     flex-direction: row;
-    align-content: center;
     justify-content: center;
     z-index: 100;
     position: relative;
     margin: auto;
+    max-height: calc(100vh/3);
+    max-width: 900px;
+    padding-right: 1rem;
 }
+
 
 .letter {
     opacity: 0;
     transition: opacity 0.8s linear, transform 0.4s ease-in-out;
-    margin: 0 2rem;
+    margin: 0 1rem;
+}
+
+@media (max-width: 400px) {
+    .letter {
+        margin: 0 0.5rem;
+    }
 }
 
 .letter object {
-    max-width: 33vw;
-    max-height: 50vh;
+    width: 100%;
+    max-height: 100%;
 }
 
 /* Hack für onClick-Event */
