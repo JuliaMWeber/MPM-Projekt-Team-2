@@ -33,7 +33,7 @@ function randomBetween(min, max) {
 function getPoints(elements) {
   let points = [];
 
-  elements.each(function(){
+  $.each(elements, function() {
     points.push($(this));
   });
 
@@ -150,27 +150,32 @@ function startIntro(section) {
 function loadLetters(letters) {
 
   $.each(letters, function(index, value) {
-    console.log(value.content);
 
     value.element = $(app).find(value.selector).first().children()[0];
 
     if(typeof value.element !== 'undefined') {
-      $(value.element).ready(function() {
-        console.log(index + ": SVG LOADED");
+
+      // Timeout sonst noch nicht gerendert...
+      setTimeout(() => {
+        $(value.element).ready(function() {
+          console.log(index + ": SVG LOADED");
+    
+          value.content = value.element.contentDocument;
   
-        value.content = value.element.contentDocument;
+          let points = getPoints($(value.content).find("circle"));
   
-        let points = getPoints($(value.content).find("circle"));
-        $.each(points, function() {
-          koords[index].push( getPositionOfElement($(this)[0]) );
+          $.each(points, function() {
+            koords[index].push( getPositionOfElement($(this)[0]) );
+          });
+    
+          let options = {
+            index: index,
+          };
+    
+          animateStars(value.element, koords[index], options);
         });
-  
-        let options = {
-          index: index,
-        };
-  
-        animateStars(value.element, koords[index], options);
-      });
+      }, 50);
+
     }
 
   });
