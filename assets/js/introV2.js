@@ -161,20 +161,20 @@ function loadLetters(letters) {
           console.log(index + ": SVG LOADED");
     
           value.content = value.element.contentDocument;
-  
           let points = getPoints($(value.content).find("circle"));
   
-          $.each(points, function() {
-            koords[index].push( getPositionOfElement($(this)[0]) );
-          });
+          setTimeout(() => {
+            $.each(points, function() {
+              koords[index].push( getPositionOfElement($(this)[0]) );
+            });
+            let options = {
+              index: index,
+            };
+            animateStars(value.element, koords[index], options);
+          }, 100);
     
-          let options = {
-            index: index,
-          };
-    
-          animateStars(value.element, koords[index], options);
         });
-      }, 50);
+      }, 100);
 
     }
 
