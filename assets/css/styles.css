@@ -6,13 +6,15 @@
     position: absolute;
     height: 100%;
     width: 100%;
-    display: block;
+    display: flex;
     top: 0;
     left: 0;
     bottom: 0;
     overflow: hidden;
-    background-color: #222121;
+    background: rgb(29, 24, 53);
+    background: radial-gradient(circle, rgba(29, 24, 53, 1) 0%, rgba(37, 20, 68, 1) 22%, rgba(32, 27, 30, 1) 50%, rgba(43, 31, 39, 1) 100%);
 }
+
 section {
     display: none;
 }
@@ -32,7 +34,7 @@ section {
     bottom: 0;
 }
 
-#logo > object {
+#logo>object {
     opacity: 0%;
 }
 
@@ -40,15 +42,16 @@ section {
     display: flex;
 }
 
-#logosvg #outline{
+#logosvg #outline {
     opacity: 5%;
 }
 
-#logosvg #wireframe{
+#logosvg #wireframe {
     opacity: 8%;
 }
 
-#stars,#logobase {
+#stars,
+#logobase {
     position: absolute;
     display: block;
     top: 0;
@@ -61,28 +64,28 @@ section {
 /* Non animated Star (Background) */
 
 .bgStar {
-width: 1px;
-height: 1px;
-position: absolute;
-background-color: #fff;
-border-radius: 100%;
-opacity: 0.6;
-filter: blur(1.5px);
-transition: box-shadow 0.2s ease-in-out;
-will-change: transform, box-shadow;
+    width: 1px;
+    height: 1px;
+    position: absolute;
+    background-color: #fff;
+    border-radius: 100%;
+    opacity: 0.6;
+    filter: blur(1.5px);
+    transition: box-shadow 0.2s ease-in-out;
+    will-change: transform, box-shadow;
 }
 
 /* Animated Star (Foreground) */
 
 .fgStar {
-width: 1px;
-height: 1px;
-position: absolute;
-background-color: #fff;
-border-radius: 100%;
-opacity: 0.6;
-transition: box-shadow 0.2s ease-in-out;
-will-change: transform, box-shadow;
+    width: 1px;
+    height: 1px;
+    position: absolute;
+    background-color: #fff;
+    border-radius: 100%;
+    opacity: 0.6;
+    transition: box-shadow 0.2s ease-in-out;
+    will-change: transform, box-shadow;
 }
 
 /* SEMESTER */
@@ -159,6 +162,119 @@ will-change: transform, box-shadow;
     font-family: Times, "Times New Roman", Georgia, serif;
     fill: #6C070F;
     opacity: 70%;
+}
+
+#stars {
+    top: 0;
+    position: absolute;
+}
+
+.element {
+    width: 1px;
+    height: 1px;
+    position: absolute;
+    background-color: #fff;
+    border-radius: 100%;
+    opacity: 0.6;
+    transition: box-shadow 0.2s ease-in-out;
+    will-change: transform, box-shadow;
+}
+
+.color-1 {
+    background-color: #1c7674;
+}
+
+.color-2 {
+    background-color: #478888;
+}
+
+.color-3 {
+    background-color: #607cac;
+}
+
+.color-4 {
+    background-color: #74b0d8;
+}
+
+.element.moved {
+    opacity: 1;
+}
+
+.letters {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    align-content: center;
+    justify-content: center;
+    z-index: 100;
+    position: relative;
+    margin: auto;
+}
+
+.letter {
+    opacity: 0;
+    transition: opacity 0.8s linear, transform 0.4s ease-in-out;
+    margin: 0 2rem;
+}
+
+.letter object {
+    max-width: 33vw;
+    max-height: 50vh;
+}
+
+/* Hack für onClick-Event */
+.letter::before {
+    content: "";
+    position: absolute;
+    background-color: transparent;
+    width: 100%;
+    height: 100%;
+}
+
+.group {
+    transition: transform 0.4s ease-in-out;
+}
+
+.rotate180 {
+    transform: rotate(180deg);
+}
+
+.rotate180n {
+    transform: rotate(-180deg);
+}
+
+.zoomInto {
+    transform: scale(200%);
+}
+
+.wiggle {
+    animation: wiggleAnimation 0.5s linear infinite;
+}
+
+@keyframes wiggleAnimation {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+
+    20% {
+        -webkit-transform: rotate(3deg);
+    }
+
+    40% {
+        -webkit-transform: rotate(0deg);
+    }
+
+    60% {
+        -webkit-transform: rotate(-3deg);
+    }
+
+    80% {
+        -webkit-transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(3deg);
+    }
 }
 
 

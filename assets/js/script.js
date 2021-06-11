@@ -6,7 +6,7 @@
 *
 */
 document.getElementById("app").innerHTML = document.getElementById("intro").innerHTML;
-displayIntro();
+startIntro(document.getElementById("app"));
 
 reactToHash();
 
