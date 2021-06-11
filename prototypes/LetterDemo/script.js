@@ -134,16 +134,11 @@ let selected = [];
 
 let safegap = device.width / device.height * 2.5;
 
-
 startIntro();
 
-
-function startIntro() {
-  generateStars(quantity);
-
+function loadLetters(letters) {
   $.each(letters, function(index, value) {
-
-    $(value.element).on("load", function() {
+    $(value.element).ready(function() {
       console.log(index + ": SVG LOADED");
 
       value.content = value.element.contentDocument;
@@ -153,16 +148,18 @@ function startIntro() {
         koords[index].push( getPositionOfElement($(this)[0]) );
       });
 
-      let options = {};
-      if(index == 'm') {
-        options.wiggle = true;
-      }
+      let options = {
+        index: index,
+      };
 
       animateStars(value.element, koords[index], options);
-
     });
-
   });
+}
+
+function startIntro() {
+  generateStars(quantity);
+  loadLetters(letters);
 }
 
 
@@ -177,9 +174,40 @@ function animateStars(target, coords, options) {
   let guid = generateGUID();
   $(target).parent().attr('id', guid);
 
+  // EventHandlers
   $(target).parent().on("click", function() {
-    $('[data-ref=' + guid +']').toggleClass("rotate180n");
-    $(this).toggleClass("rotate180n");
+
+    if(options.index == 't') {
+
+      $('[data-ref=' + guid +']').toggleClass("zoomInto");
+      $(this).toggleClass("zoomInto");
+
+      let url_original = new URL(document.URL);
+      url_original.hash = '#sem1';
+      // new url
+      let new_url = url_original.href;
+      // change the current url
+      document.location.href = new_url;
+    }
+    if(options.index == 'h') {
+      let url_original = new URL(document.URL);
+      url_original.hash = '#sem2';
+      // new url
+      let new_url = url_original.href;
+      // change the current url
+      document.location.href = new_url;
+    }
+    if(options.index == 'm') {
+      $('[data-ref=' + guid +']').toggleClass("rotate180n");
+      $(this).toggleClass("rotate180n");
+
+      let url_original = new URL(document.URL);
+      url_original.hash = '#schwerpunktwahl';
+      // new url
+      let new_url = url_original.href;
+      // change the current url
+      document.location.href = new_url;
+    }
   });
 
   let center = getCenterOfElement(target);
