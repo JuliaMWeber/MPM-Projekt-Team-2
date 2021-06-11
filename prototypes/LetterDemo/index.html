@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="description" class="no-js">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>MIB-MPM-SS21 | Starfield Demo v2</title>
+    <link rel="stylesheet" href="./styles.css">
+
+    <style>
+      #app {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        display: flex;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        overflow: hidden;
+        background: rgb(29,24,53);
+        background: radial-gradient(circle, rgba(29,24,53,1) 0%, rgba(37,20,68,1) 22%, rgba(32,27,30,1) 50%, rgba(43,31,39,1) 100%);
+      }
+
+      #stars {
+        top: 0;
+        position: absolute;
+      }
+
+      .element {
+        width: 1px;
+        height: 1px;
+        position: absolute;
+        background-color: #fff;
+        border-radius: 100%;
+        opacity: 0.6;
+        transition: box-shadow 0.2s ease-in-out;
+        will-change: transform, box-shadow;
+      }
+
+      .color-1 {
+        background-color: #1c7674;
+      }
+      .color-2 {
+        background-color: #478888;
+      }
+      .color-3 {
+        background-color: #607cac;
+      }
+      .color-4 {
+        background-color: #74b0d8;
+      }
+      .shine {
+        box-shadow: 0 0 10px 2px #36dcd9;
+      }
+      .color-1.move {
+        box-shadow: 0 0 20px 10px rgba(28, 118, 116, 0.7);
+      }
+      .color-2.move {
+        box-shadow: 0 0 20px 10px rgba(71, 136, 136, 0.7);
+      }
+      .color-3.move {
+        box-shadow: 0 0 20px 10px rgba(96, 124, 172, 0.7);
+      }
+      .color-4.move {
+        box-shadow: 0 0 20px 10px rgba(116, 176, 216, 0.7);
+      }
+
+      .letters {
+        display: flex;
+        flex-wrap: nowrap;
+        flex-direction: row;
+        align-content: center;
+        justify-content: center;
+        z-index: 100;
+        position: relative;
+        margin: auto;
+      }
+
+      .letter {
+        opacity: 0;
+        transition: opacity 0.8s linear, transform 0.4s ease-in-out;
+        margin: 0 2rem;
+      }
+      .letter object {
+        max-width: 33vw;
+        max-height: 50vh;
+      }
+      /* Hack für onClick-Event */
+      .letter::before {
+        content: "";
+        position: absolute;
+        background-color: transparent;
+        width: 100%;
+        height: 100%;
+      }
+
+      .group {
+        transition: transform 0.4s ease-in-out;
+      }
+
+      .rotate180 {
+        transform: rotate(180deg);
+      }
+      .rotate180n {
+        transform: rotate(-180deg);
+      }
+
+      .wiggle {
+        animation: wiggleAnimation 0.5s linear infinite;
+      }
+
+      @keyframes wiggleAnimation{
+        0% {
+          -webkit-transform: rotate(0deg);
+        }
+        20% {
+          -webkit-transform: rotate(3deg);
+        }
+        40% {
+          -webkit-transform: rotate(0deg);
+        }
+        60% {
+          -webkit-transform: rotate(-3deg);
+        }
+        80% {
+          -webkit-transform: rotate(0deg);
+        }
+        100%{
+          -webkit-transform: rotate(3deg);
+        }
+      }
+
+    </style>
+
+  </head>
+  <body>
+    <main id="app">
+      <div class="letters">
+        <div class="letter letterT">
+          <object data="./../../assets/svg/ThmLogo/letter-t.svg" height="700px" style="margin: 2rem auto; display: block;" type="image/svg+xml"></object>
+        </div>
+        <div class="letter letterH">
+          <object data="./../../assets/svg/ThmLogo/letter-h.svg" height="700px" style="margin: 2rem auto; display: block;" type="image/svg+xml"></object>
+        </div>
+        <div class="letter letterM">
+          <object data="./../../assets/svg/ThmLogo/letter-m.svg" height="700px" style="margin: 2rem auto; display: block;" type="image/svg+xml"></object>
+        </div>
+      </div>
+      <section id="stars"></section>
+    </main>
+
+    <!-- jQuery -->
+    <script src="./../../assets/js/jquery/jquery-3.6.0.min.js"></script>
+    <!-- GSAP Libraries-->
+    <script src="./../../assets/js/GSAP/dist/gsap.min.js"></script>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
