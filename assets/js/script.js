@@ -5,8 +5,9 @@
 * Semesterauswahl ist bestimmbar anhand des Anchor (#sem1, #sem2, ...)
 *
 */
-document.getElementById("app").innerHTML = document.getElementById("intro").innerHTML;
-startIntro(document.getElementById("app"));
+
+// Url speichern für späteren Wechsel
+sessionStorage.setItem("current_url", window.location);
 
 reactToHash();
 
@@ -16,12 +17,37 @@ if ("onhashchange" in window) {
   window.onhashchange = reactToHash;
 }
 
-function reactToHash(){
+function reactToHash() {
   // Daten werden neu reingeladen
   let hash = window.location.hash.substr(1);
-  if(hash.includes("sem")){
-    animateToSemester(getSemesterNumberByHash());
+
+  // Schauen ob wir eine passende Section haben
+  let section = null;
+  $("section").each(function() {
+    if($(this).attr('id') == hash) {
+      section = $(this);
+      return;
+    }
+  });
+
+  if(section) {
+
+  } else {
+    if(hash.includes("sem")) {
+      // Urls speichern/überschreiben für Browser Prev/Next Buttons
+      sessionStorage.setItem("last_url", sessionStorage.getItem("current_url"));
+      sessionStorage.setItem("current_url", window.location);
+
+      animateToSemester(getSemesterNumberByHash());
+    } else if(hash === "") {
+      document.getElementById("app").innerHTML = document.getElementById("intro").innerHTML;
+      startIntro(document.getElementById("app"));
+    } else {
+      // Kein Match?
+      console.log("Keine passende Section gefunden");
+    }
   }
+
 }
 
 function getSemesterNumberByHash() {
@@ -32,7 +58,6 @@ function getSemesterNumberByHash() {
   }
   return 1;
 }
-
 
 function animateToSemester(semester){
   document.getElementById("app").innerHTML = document.getElementById("semester").innerHTML;
