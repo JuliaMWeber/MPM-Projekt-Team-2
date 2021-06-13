@@ -46,8 +46,8 @@
     "modules": ["MIB9","MIB20","MIB33"]
   },
   {
-    "name": "Planet_v4_1.svg",
-    "path": "./assets/svg/Planets/Planet_v4_1.svg",
+    "name": "Planet_v6_1.svg",
+    "path": "./assets/svg/Planets/Planet_v6_1.svg",
     "modules": ["MIB10","MIB21","MIB34"]
   },
   {
