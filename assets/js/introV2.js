@@ -263,24 +263,32 @@ function animateStars(target, coords, options) {
   // Events
   if(options.index == 't') {
     $(target).parent().on("click", function() {
-      // $('[data-ref=' + guid +']').toggleClass("zoomInto");
-      // $(this).toggleClass("zoomInto");
       zoomIntoAndLoad(target, '#sem1');
     });
   }
   if(options.index == 'h') {
     $(target).parent().on("click", function() {
-      // $('[data-ref=' + guid +']').toggleClass("zoomInto");
-      // $(this).toggleClass("zoomInto");
       zoomIntoAndLoad(target, '#sem2');
     });
   }
   // Drag 
   if(options.index == 'm') {
 
-    // console.log(target);
-    // console.log($(target));
-    // console.log($('[data-ref=' + guid +']'));
+
+    // Wiggle-Animation
+    var wiggle = new TimelineMax({
+      repeat:-1,
+      repeatDelay: 4,
+      delay: 10,
+    })
+    .to([ $(target).parent(), $('[data-ref=' + guid +']') ], 0.7,{
+      rotation: -45,
+    })
+    .to([ $(target).parent(), $('[data-ref=' + guid +']') ], 6,{
+      rotation: 0,
+      ease: "elastic.out(4, 0.1)",
+    });
+
 
     let drag = Draggable.create( $(target).parent(), {
       type: "rotation",
@@ -302,12 +310,15 @@ function animateStars(target, coords, options) {
         console.log("onDragEnd");
 
         // eigener Snapper auf 180Grad
-        gsap.set($(target).parent(), {rotation: (Math.round(drag[0].rotation / 180) * 180) });
-        gsap.set($('[data-ref=' + guid +']'), {rotation: (Math.round(drag[0].rotation / 180) * 180) });
+        gsap.set([$(target).parent(), $('[data-ref=' + guid +']')], {rotation: (Math.round(drag[0].rotation / 180) * 180) });
 
         drag[0].update();
+
+        // Wiggle deaktivieren
+        wiggle.pause();
       }
     });
+
   }
 
 }
