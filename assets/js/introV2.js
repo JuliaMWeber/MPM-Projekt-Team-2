@@ -1,34 +1,8 @@
 // Global Variables
 let app = "";
 
-let device = {};
-device.width = document.documentElement.clientWidth;
-device.height = document.documentElement.clientHeight;
-
-/**
- * Liefert zufälligen Wert aus einer bestimmten Range
- *
- * @param int min
- * @param int max
- * @return int 
- */
-function randomBetween(min, max) {
-  return Math.floor(Math.random() * (max - min + 1) + min);
-}
-
-/**
- * Liefert X & Y Koordinaten eines Elements als Object zurück
- *
- * @param Node element
- * @return Object 
- */
- function getPositionOfElement(element) {
-
-  let rect = element.getBoundingClientRect();
-  return {x: rect.left, y: rect.top};
-}
-
-
+// GSAP Plugins aktivieren/registrieren
+gsap.registerPlugin(MotionPathPlugin, Draggable, SnapPlugin); 
 
 function getPoints(elements) {
   let points = [];
@@ -36,34 +10,9 @@ function getPoints(elements) {
   $.each(elements, function() {
     points.push($(this));
   });
-
   return points;
 }
 
-function sumArray(array) {
-  let sum = 0;
-  for (let i = 0; i < array.length; i++) {
-    sum += array[i];
-  }
-  return sum;
-}
-
-
-function generateGUID() {
-  return 'guid_xxxxxxxx'.replace(/[xy]/g, function(c) {
-    var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-    return v.toString(16);
-  });
-}
-
-function rotate(cx, cy, x, y, angle) {
-  var radians = (Math.PI / 180) * angle,
-      cos = Math.cos(radians),
-      sin = Math.sin(radians),
-      nx = (cos * (x - cx)) + (sin * (y - cy)) + cx,
-      ny = (cos * (y - cy)) - (sin * (x - cx)) + cy;
-  return [nx, ny];
-}
 
 function getCenterOfPoints(points) {
   let x = [];
@@ -85,18 +34,12 @@ function getCenterOfPoints(points) {
   return center;
 }
 
-function getCenterOfElement(element) {
-  let coords = getPositionOfElement(element);
-
-  return {
-    x: coords.x + ($(element).width() / 2),
-    y: coords.y + ($(element).height() / 2)
-  }
-}
-
-
-
 let quantity = 1000;
+// Minimum 300
+quantity = (Math.log(device.width * device.height) - 10) * (quantity * 0.2);
+console.log(quantity);
+
+let baseStarSize = "100"; // Anfangs groß - wird über scale() reduziert
 
 // Animation-Settings
 let animDelay = 0.5;
@@ -104,6 +47,7 @@ let animDuration = 3;
 let animEase = "back.inOut(1)";
 //animEase = "power3.inOut";
 //animEase = "back.inOut(4)";
+  
 
 
 let letters = {
@@ -137,7 +81,6 @@ let selected = [];
 
 let safegap = device.width / device.height * 2.5;
 
-
 function startIntro(section) {
   app = section;
   starbg = $(app).find('#stars').first();
@@ -145,7 +88,6 @@ function startIntro(section) {
   generateStars(quantity);
   loadLetters(letters);
 }
-
 
 function loadLetters(letters) {
 
@@ -157,6 +99,7 @@ function loadLetters(letters) {
 
       value.content = value.element.contentDocument;
       let points = getPoints($(value.content).find("circle"));
+      console.log(points.length);
 
       $.each(points, function() {
         koords[index].push( getPositionOfElement($(this)[0]) );
@@ -171,7 +114,6 @@ function loadLetters(letters) {
   });
 }
 
-
 function animateStars(target, coords, options) {
 
   let tmp = elements;
@@ -181,42 +123,6 @@ function animateStars(target, coords, options) {
 
   let guid = generateGUID();
   $(target).parent().attr('id', guid);
-
-  // EventHandlers
-  $(target).parent().on("click", function() {
-
-    if(options.index == 't') {
-
-      $('[data-ref=' + guid +']').toggleClass("zoomInto");
-      $(this).toggleClass("zoomInto");
-
-      let url_original = new URL(document.URL);
-      url_original.hash = '#sem1';
-      // new url
-      let new_url = url_original.href;
-      // change the current url
-      document.location.href = new_url;
-    }
-    if(options.index == 'h') {
-      let url_original = new URL(document.URL);
-      url_original.hash = '#sem2';
-      // new url
-      let new_url = url_original.href;
-      // change the current url
-      document.location.href = new_url;
-    }
-    if(options.index == 'm') {
-      $('[data-ref=' + guid +']').toggleClass("rotate180n");
-      $(this).toggleClass("rotate180n");
-
-      let url_original = new URL(document.URL);
-      url_original.hash = '#schwerpunktwahl';
-      // new url
-      let new_url = url_original.href;
-      // change the current url
-      document.location.href = new_url;
-    }
-  });
 
   let center = getCenterOfElement(target);
 
@@ -238,30 +144,173 @@ function animateStars(target, coords, options) {
 
       tmp.splice(i, 1);
 
-      gsap.to(e, {
+      let tmp_ease = "back.out(4)";
+      //tmp_ease = animEase;
+
+      let random_coords = {
         x: coords[i].x + letterPos.x,
-        y: coords[i].y + letterPos.y,
-        scaleX: 1.5,
-        scaleY: 1.5,
-        duration: animDuration,
-        ease: animEase,
-        delay: animDelay
+        y: coords[i].y + letterPos.y
+      }
+      let tmp_duration = animDuration;
+
+      animEase = "power3.out";
+
+      
+      let tl = new TimelineMax({onComplete: function() {
+        //$(e).addClass("moved");
+        $(target).parent().css('opacity', 0.2);
+      }});
+      let bounds = {
+        min: 0,
+        max: 50,
+      }
+
+      let ownSize = baseStarSize/2;
+
+      tl.to(e, {
+        motionPath: {
+          path: [
+            {
+              x: device.width/2 + randomBetween(0, 3) - ownSize, 
+              y: device.height/2 + randomBetween(0, 3) - ownSize, 
+            },
+            {
+              x: device.width/2 + randomBetween(-50,50) - ownSize, 
+              y: device.height/2 + randomBetween(-50,50) - ownSize, 
+            },
+            {
+              x: device.width/2 + randomBetween(0, 3) - ownSize, 
+              y: device.height/2 + randomBetween(0, 3) - ownSize, 
+            },
+            {
+              x: device.width/2 + randomBetween(-100,100) - ownSize, 
+              y: device.height/2 + randomBetween(-100,100) - ownSize, 
+            },
+            {
+              x: device.width/2 + randomBetween(0, 3) - ownSize, 
+              y: device.height/2 + randomBetween(0, 3) - ownSize, 
+            },
+            {
+              x: device.width/2 + randomBetween(-150,150) - ownSize, 
+              y: device.height/2 + randomBetween(-150,150) - ownSize, 
+            },
+            {
+              x: device.width/2 + randomBetween(0, 3) - ownSize, 
+              y: device.height/2 + randomBetween(0, 3) - ownSize, 
+            },
+            {
+              x: device.width/2 + randomBetween(-100,100) - ownSize, 
+              y: device.height/2 + randomBetween(-100,100) - ownSize, 
+            },
+            {
+              x: device.width/2 + randomBetween(0, 3) - ownSize, 
+              y: device.height/2 + randomBetween(0, 3) - ownSize, 
+            },
+            {
+              x: device.width/2 + randomBetween(-50,50) - ownSize, 
+              y: device.height/2 + randomBetween(-50,50) - ownSize, 
+            },
+            {
+              x: device.width/2 + randomBetween(-25,25) - ownSize, 
+              y: device.height/2 + randomBetween(-25,25) - ownSize, 
+            },
+            {
+              x: device.width/2 - ownSize, 
+              y: device.height/2 - ownSize, 
+            },
+          ],
+          curviness: 2,
+        },
+        scale: scaleByBaseSize(randomFloatBetween(1, 5, 2)),
+        duration: 2,
+        delay: 1,
       });
 
-      $(e).addClass("moved");
+      tl.to(e, {
+        scale: scaleByBaseSize(1),
+        duration: 0.5,
+        ease: Circ.easeOut,
+      });
 
-      setTimeout(function(){
-
-        $(target).parent().css('opacity', 0.2);
-
-      }, (animDuration * 1000) + 1000 );
+      tl.to(e, {
+        motionPath: {
+          path: [
+            {
+              x:coords[i].x + letterPos.x + randomBetween(-bounds.max, bounds.max) - ownSize, 
+              y:coords[i].y + letterPos.y + randomBetween(-bounds.max, bounds.max) - ownSize,
+            },
+            {
+              x:coords[i].x + letterPos.x - ownSize, 
+              y:coords[i].y + letterPos.y - ownSize,
+            }
+          ],
+          curviness: 1,
+        },
+        scale: scaleByBaseSize(randomFloatBetween(3, 6, 2)),
+        duration: 1.5,
+        ease: animEase,
+        delay: 0.5,
+      });
+      tl.set(e, { className: e.getAttribute('class') + " moved"});
 
     }
   }
 
   $(starbg).append(starGroup);
-}
 
+
+
+  // Events
+  if(options.index == 't') {
+    $(target).parent().on("click", function() {
+      // $('[data-ref=' + guid +']').toggleClass("zoomInto");
+      // $(this).toggleClass("zoomInto");
+      zoomIntoAndLoad(target, '#sem1');
+    });
+  }
+  if(options.index == 'h') {
+    $(target).parent().on("click", function() {
+      // $('[data-ref=' + guid +']').toggleClass("zoomInto");
+      // $(this).toggleClass("zoomInto");
+      zoomIntoAndLoad(target, '#sem2');
+    });
+  }
+  // Drag 
+  if(options.index == 'm') {
+
+    // console.log(target);
+    // console.log($(target));
+    // console.log($('[data-ref=' + guid +']'));
+
+    let drag = Draggable.create( $(target).parent(), {
+      type: "rotation",
+
+      onPress:function(e) {
+        console.log("onPress");
+      },
+      onDrag:function(e) {
+        console.log("onDrag");
+
+        // Referenzierende Element mit drehen
+        gsap.set($('[data-ref=' + guid +']'), {rotation: drag[0].rotation });
+
+      },
+      onClick:function(e) {
+        console.log("onClick");
+      },
+      onDragEnd:function(e) {
+        console.log("onDragEnd");
+
+        // eigener Snapper auf 180Grad
+        gsap.set($(target).parent(), {rotation: (Math.round(drag[0].rotation / 180) * 180) });
+        gsap.set($('[data-ref=' + guid +']'), {rotation: (Math.round(drag[0].rotation / 180) * 180) });
+
+        drag[0].update();
+      }
+    });
+  }
+
+}
 
 function generateStars(quantity) {
   for (let i = 0; i < quantity; i++) {
@@ -271,19 +320,21 @@ function generateStars(quantity) {
 
 function generateStartPosition() {
   let e = document.createElement("div");
-  e.classList.add('element');
+  e.classList.add('star');
 
   let position = generatePosition(device.width - safegap, device.height - safegap);
 
-  let x = position.left + "px";
-  let y = position.top + "px";
-  e.style.transform = "translate(" + x + ", " + y + ")";
+  let x = position.left - (baseStarSize/2) + "px";
+  let y = position.top - (baseStarSize/2) + "px";
+
+  let scale = scaleByBaseSize(randomFloatBetween(1, 5, 2));
+
+  e.style.transform = "translate(" + x + ", " + y + ") scale(" + scale + ")";
 
   positions.push([position.left, position.top]);
+  e.style.width = baseStarSize + "px";
+  e.style.height = baseStarSize + "px";
 
-  let size = randomBetween(1, safegap) + "px";
-  e.style.width = size;
-  e.style.height = size;
 
   let random = Math.random();
 
@@ -322,4 +373,73 @@ function generatePosition(viewWidth, viewHeight) {
   }
 
   return pos;
+}
+
+function zoomInto(destination) {
+
+  let tl = new TimelineMax();
+  let transformOrigin = getCenterOfElement(destination);
+
+  tl.to($(app), {
+    duration: 2,
+    //ease: Power1.easeOut,
+    ease: Sine.easeInOut,
+    css: {
+      opacity: 0, 
+      scale: 200, 
+      transformOrigin: transformOrigin.x + "px " + transformOrigin.y + "px"
+    }
+  });
+
+  return tl;
+}
+
+function zoomIntoAndLoad(destination, hash) {
+  
+  zoomInto(destination).then(function(){
+    loadSectionByHash(hash);
+    resetAppStyle();
+  });
+
+}
+
+function loadSectionByHash(hash) {
+  let url_original = new URL(document.URL);
+  url_original.hash = hash;
+
+  // new url
+  let new_url = url_original.href;
+  document.location.href = new_url;
+}
+
+function resetAppStyle() {
+  let tl = new TimelineMax();
+  tl.to($(app), {
+    duration: 1,
+    ease: Sine.easeInOut,
+    css: {
+      scale: 1, 
+      transformOrigin: "center"
+    }
+  });
+  tl.to($(app), {
+    duration: 0.2,
+    ease: Sine.easeInOut,
+    css: {
+      opacity: 1, 
+    }
+  }).then(function(){
+    $(app).attr('style', '');
+  });
+
+}
+
+function scaleByBaseSize(scale) {
+  let length = (Math.log10(baseStarSize) + 1);
+
+  if(baseStarSize == 0) {
+    baseStarSize = 1;
+  }
+
+  return scale / baseStarSize; 
 }
