@@ -134,7 +134,6 @@ section {
     top: 0;
     left: 0;
     bottom: 0;
-    transition: transform 1.5s;
 }
 
 .planet {
@@ -176,7 +175,17 @@ section {
     top: 0;
     left: 0;
     bottom: 0;
-    transition: transform 1.5s;
+    transition: opacity 1s;
+}
+
+#orbitSvg * {
+    opacity: 100%;
+    transition: opacity 1s;
+}
+
+#orbitSvg.clicked * {
+    opacity: 0%;
+    transition: opacity 1s;
 }
 
 .orbit {
@@ -184,11 +193,6 @@ section {
     stroke-width: 2px;
     fill-opacity: 0%;
     animation: fade-in 1s ease;
-}
-
-#orbitSvg.clicked * {
-    opacity: 0%;
-    transition: opacity 1s;
 }
 
 #sun {

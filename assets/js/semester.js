@@ -194,10 +194,12 @@ function planetClick(event){
     y += zoomPositionOffsety;
 
     if(paused){
-        pauseAnimation(false);
-        planetZoom(0, 0, 1);
-        focusedPlanet.classList.remove("clicked");
+        let tween = planetZoom(0, 0, 1)
         svg.classList.remove("clicked");
+        tween.eventCallback("onComplete", function() {
+            pauseAnimation(false);
+            focusedPlanet.classList.remove("clicked");
+        });
     } else {
         pauseAnimation(true);
         planetZoom(x, y, zoomFactor);
@@ -208,16 +210,17 @@ function planetClick(event){
 
 function planetZoom(x, y, zoomlvl){
     var sunSystem = document.getElementById("sunSystem").children;
-
+    var tween;
     for(let i=0; i<sunSystem.length;i++) {
         var zoomTranslate;
         if(zoomlvl==1){
-            zoomTranslate = "";
+            gsap.to(sunSystem[i], {x: 0 + "px",y: 0 + "px" , duration: 1.5, ease: "power1.inOut"});
         } else {
-            zoomTranslate = " translate(" + x + "px, " + y + "px)"
+            gsap.to(sunSystem[i], {x: x*zoomlvl + "px",y: y*zoomlvl + "px" , duration: 1.5, ease: "power1.inOut"});
         }
-        sunSystem[i].style.transform = "scale(" + zoomlvl + "," + zoomlvl + ")" + zoomTranslate;
+        tween = gsap.to(sunSystem[i], {scale: zoomlvl, duration: 1.5, ease: "power1.inOut"});
     }
+    return tween;
 }
 
 function sleep(milliseconds) {
