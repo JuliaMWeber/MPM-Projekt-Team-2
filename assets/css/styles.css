@@ -180,12 +180,12 @@ section {
 
 #orbitSvg * {
     opacity: 100%;
-    transition: opacity 1s;
+    transition: opacity 1s ease-in-out;
 }
 
 #orbitSvg.clicked * {
     opacity: 0%;
-    transition: opacity 1s;
+    transition: opacity 1s ease-in-out;
 }
 
 .orbit {
@@ -203,6 +203,24 @@ section {
     font-family: Times, "Times New Roman", Georgia, serif;
     fill: #6C070F;
     opacity: 70%;
+}
+
+#portal {
+    position: absolute;
+    bottom: 10%;
+    right: 10%;
+    height: 15vmin;
+    width: 15vmin;
+}
+
+/* Hack für onClick-Event */
+#portal * {
+    pointer-events: none;
+}
+
+#portal.clicked {
+    bottom: 0%;
+    right: 0%;
 }
 
 

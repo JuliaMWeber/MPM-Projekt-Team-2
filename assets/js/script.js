@@ -40,6 +40,9 @@ function reactToHash() {
 
       switchToSemester(getSemesterNumberByHash());
     } else if(hash === "") {
+      // Just to be safe
+      resetOrbit();
+
       document.getElementById("app").innerHTML = document.getElementById("intro").innerHTML;
       startIntro(document.getElementById("app"));
     } else {

@@ -22,6 +22,7 @@ var orbits = [];
 var modules = [];
 
 function resetOrbit(){
+    gsap.ticker.add(animateOrbits);
     orbits.length = 0;
     modules.length = 0;
 }
@@ -36,6 +37,8 @@ function displayOrbit(semesterNum) {
 
     svg = document.getElementById("orbitSvg");
     planetGroup = document.getElementById("planets");
+    portal = document.getElementById("portal");
+    portal.onclick = animateToIntro;
     clientWidth = document.documentElement.clientWidth;
     clientHeight = document.documentElement.clientHeight;
 
@@ -140,6 +143,14 @@ function displayOrbit(semesterNum) {
     gsap.ticker.add(animateOrbits);
 }
 
+function animateToIntro(){
+    gsap.fromTo("#app", {opacity: "100%"}, {scale: 0.1, opacity: "0%", duration: 2, onComplete: function(){
+        gsap.set("#app", {clearProps: "scale"});
+        gsap.to("#app", {opacity: "100%", duration: 1, clearProps: "opacity"});
+        loadIntro();
+    }});
+}
+
 function animateOrbits(){
     for(let i=0;i<orbits.length;i++){
 
@@ -174,25 +185,6 @@ function pauseAnimation(state){
 
 function planetClick(event){
 
-    var planet = event.srcElement;
-    focusedPlanet = planet;
-    var centerx = parseFloat(planet.style.left.replace("px", "")) + parseFloat(planet.style.width.replace("px", ""))/2;
-    var centery = parseFloat(planet.style.top.replace("px", "")) + parseFloat(planet.style.height.replace("px", ""))/2;
-    var zoomFactor = clientHeight / parseInt(planet.style.width.replace("px", ""),10);
-
-    var sun = document.getElementById("sun");
-    var x = parseFloat(sun.getAttribute("cx").replace("px", "")) - centerx;
-    var y = parseFloat(sun.getAttribute("cy").replace("px", "")) - centery;
-
-    //Settings
-    var zoomOffset = 10;
-    var zoomPositionOffsetx = -1*parseFloat(planet.style.width.replace("px", ""))/2.5;
-    var zoomPositionOffsety = 0;
-
-    zoomFactor += zoomOffset;
-    x += zoomPositionOffsetx;
-    y += zoomPositionOffsety;
-
     if(paused){
         let tween = planetZoom(0, 0, 1)
         svg.classList.remove("clicked");
@@ -201,6 +193,25 @@ function planetClick(event){
             focusedPlanet.classList.remove("clicked");
         });
     } else {
+        var planet = event.srcElement;
+        var centerx = parseFloat(planet.style.left.replace("px", "")) + parseFloat(planet.style.width.replace("px", ""))/2;
+        var centery = parseFloat(planet.style.top.replace("px", "")) + parseFloat(planet.style.height.replace("px", ""))/2;
+        var zoomFactor = clientHeight / parseInt(planet.style.width.replace("px", ""),10);
+
+        var sun = document.getElementById("sun");
+        var x = parseFloat(sun.getAttribute("cx").replace("px", "")) - centerx;
+        var y = parseFloat(sun.getAttribute("cy").replace("px", "")) - centery;
+
+        //Settings
+        var zoomOffset = 10;
+        var zoomPositionOffsetx = -1*parseFloat(planet.style.width.replace("px", ""))/2.5;
+        var zoomPositionOffsety = 0;
+
+        zoomFactor += zoomOffset;
+        x += zoomPositionOffsetx;
+        y += zoomPositionOffsety;
+
+        focusedPlanet = planet;
         pauseAnimation(true);
         planetZoom(x, y, zoomFactor);
         planet.classList.add("clicked");
@@ -209,22 +220,37 @@ function planetClick(event){
 }
 
 function planetZoom(x, y, zoomlvl){
+    var duration = 1.5;
     var sunSystem = document.getElementById("sunSystem").children;
     var tween;
     for(let i=0; i<sunSystem.length;i++) {
         var zoomTranslate;
         if(zoomlvl==1){
-            gsap.to(sunSystem[i], {x: 0 + "px",y: 0 + "px" , duration: 1.5, ease: "power1.inOut"});
+            gsap.to(sunSystem[i], {x: 0 + "px",y: 0 + "px" , duration: duration, ease: "power1.inOut"});
+            gsap.set(portal, {className: "", delay: duration/2, onComplete: function() {
+                portal.onclick = animateToIntro;
+            }});
         } else {
-            gsap.to(sunSystem[i], {x: x*zoomlvl + "px",y: y*zoomlvl + "px" , duration: 1.5, ease: "power1.inOut"});
+            gsap.to(sunSystem[i], {x: x*zoomlvl + "px",y: y*zoomlvl + "px" , duration: duration, ease: "power1.inOut"});
+            gsap.set(portal, {className: "clicked", delay: duration/2, onComplete: function() {
+                portal.onclick = planetClick;
+            }});
         }
-        tween = gsap.to(sunSystem[i], {scale: zoomlvl, duration: 1.5, ease: "power1.inOut"});
+        tween = gsap.to(sunSystem[i], {scale: zoomlvl, duration: duration, ease: "power1.inOut"});
     }
-    return tween;
+    let tl = gsap.timeline();
+    tl.fromTo(portal, {opacity: "100%"}, {opacity: "0%", duration: duration/3})
+    .to(portal, {opacity: "100%", duration: duration/3}, ">" + (duration/3));
+
+    return tl;
 }
 
 function sleep(milliseconds) {
     return new Promise(resolve => setTimeout(resolve, milliseconds));
+}
+
+function loadIntro() {
+    document.location.hash = "";
 }
 
 /**
