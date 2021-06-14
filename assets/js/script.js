@@ -38,7 +38,7 @@ function reactToHash() {
       sessionStorage.setItem("last_url", sessionStorage.getItem("current_url"));
       sessionStorage.setItem("current_url", window.location);
 
-      animateToSemester(getSemesterNumberByHash());
+      switchToSemester(getSemesterNumberByHash());
     } else if(hash === "") {
       document.getElementById("app").innerHTML = document.getElementById("intro").innerHTML;
       startIntro(document.getElementById("app"));
@@ -59,7 +59,7 @@ function getSemesterNumberByHash() {
   return 1;
 }
 
-function animateToSemester(semester){
+function switchToSemester(semester){
   document.getElementById("app").innerHTML = document.getElementById("semester").innerHTML;
   displayOrbit(semester);
 }
