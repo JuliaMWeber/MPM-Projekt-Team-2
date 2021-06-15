@@ -201,9 +201,8 @@ function planetClick(event){
         var centery = parseFloat(planet.style.top.replace("px", "")) + parseFloat(planet.style.height.replace("px", ""))/2;
         var zoomFactor = clientHeight / parseInt(planet.style.width.replace("px", ""),10);
 
-        var sun = document.getElementById("sun");
-        var x = parseFloat(sun.getAttribute("cx").replace("px", "")) - centerx;
-        var y = parseFloat(sun.getAttribute("cy").replace("px", "")) - centery;
+        var x = sun.getBoundingClientRect().x + sunSize/2 - centerx;
+        var y = sun.getBoundingClientRect().y + sunSize/2 - centery;
 
         //Settings
         var zoomOffset = 10;
