@@ -211,7 +211,10 @@ function planetClick(event){
 
         focusedPlanet = planet;
         pauseAnimation(true);
-        planetZoom(x, y, zoomFactor);
+        let tl = planetZoom(x, y, zoomFactor);
+        tl.eventCallback("onComplete", function(){
+            displayOverlay();
+        });
         planet.classList.add("clicked");
         svg.classList.add("clicked");
     }
@@ -241,6 +244,16 @@ function planetZoom(x, y, zoomlvl){
     .to(portal, {opacity: "100%", duration: duration/3}, ">" + (duration/3));
 
     return tl;
+}
+
+function displayOverlay(){
+    let animDiv = document.getElementById("moduleanim");
+    let txtDiv = document.getElementById("moduletxt");
+
+    let animWidth = focusedPlanet.getBoundingClientRect().width + focusedPlanet.getBoundingClientRect().x;
+    
+    gsap.set(animDiv, {width: animWidth, height: clientHeight});
+    gsap.set(txtDiv, {x: animWidth, y: 0, width: clientWidth - animWidth, height: clientHeight - portal.getBoundingClientRect().height});
 }
 
 function sleep(milliseconds) {
