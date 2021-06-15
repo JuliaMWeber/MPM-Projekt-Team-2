@@ -107,9 +107,9 @@
     <circle id="AugeL" class="cls-5" cx="746" cy="434.84" r="11"/>
     <circle id="AugeR" class="cls-5" cx="809" cy="434.84" r="11"/>
     <rect id="Nase" class="cls-2" x="768" y="448.84" width="20" height="61" rx="10"/>
-    <g id="mund_happy" style="opacity:0">
-      <path id="Mund" class="cls-6" d="M1048.06,704.62a50,50,0,1,1-89.13-45.28Z" transform="translate(-219.5 -126.66)"/>
-      <path id="Zunge" class="cls-7" d="M1017.9,730.85a50,50,0,0,1-64.48-40.5,50,50,0,0,1,64.48,40.5Z" transform="translate(-219.5 -126.66)"/>
+    <g id="mund_happy">
+      <path id="Mund" class="cls-6" d="M1048.51,685a50,50,0,1,1-99.71-7.26Z" transform="translate(-219.5 -126.66)"/>
+      <path id="Zunge" class="cls-7" d="M1030.85,720.83a50,50,0,0,1-75.14-12.39,50,50,0,0,1,75.14,12.39Z" transform="translate(-219.5 -126.66)"/>
     </g>
     <g id="mund_traurig">
       <path id="Mund-2" data-name="Mund" class="cls-6" d="M949.64,698.67c2.42-7.76,10.59-14.69,22-19.25a82.62,82.62,0,0,1,25.6-5.44c21-1.19,39.31,4.91,47.27,14.58a17.26,17.26,0,0,1,4.21,10.08,16.1,16.1,0,0,1-1.24,7.09Z" transform="translate(-219.5 -126.66)"/>
@@ -117,16 +117,16 @@
     <ellipse id="Haar3" class="cls-1" cx="720.5" cy="327.84" rx="47.5" ry="52"/>
     <ellipse id="Haar2" class="cls-1" cx="777.5" cy="345.84" rx="47.5" ry="52"/>
     <ellipse id="Haar1" class="cls-1" cx="827.5" cy="351.84" rx="47.5" ry="52"/>
-    <g id="traehne" style="opacity:0">
+    <g id="traehne">
       <path id="tear" class="cls-8" d="M956.51,591c-3,.3-1,9-8,23.22-2.06,4.19-4.06,7.16-3.63,11.61.05.48.81,7.36,6.17,10.16,6.43,3.36,15.52-1.23,18.14-7.26,1.1-2.53.95-5.07-1.82-13.79C962.82,600.54,959.68,590.69,956.51,591Z" transform="translate(-219.5 -126.66)"/>
     </g>
   </g>
   <g id="denkblase">
     <g id="gedankenblase1">
-      <circle id="blase1" class="cls-9" cx="908.5" cy="257.34" r="18.5"/>
+      <ellipse id="blase1" class="cls-9" cx="908.5" cy="260.59" rx="18.5" ry="15.25"/>
     </g>
     <g id="gedankenblase2">
-      <circle id="blase2" class="cls-9" cx="962.5" cy="214.34" r="35.5"/>
+      <ellipse id="blase2" class="cls-9" cx="962.5" cy="222.09" rx="35.5" ry="27.75"/>
     </g>
     <g id="gedankenblase">
       <ellipse class="cls-9" cx="1156" cy="130.84" rx="182" ry="83"/>
@@ -145,12 +145,12 @@
     <rect id="blase-3" data-name="blase" class="cls-11" x="0.5" y="156.84" width="305.5" height="81.5" rx="40.75"/>
     <text id="formel-3" data-name="formel" class="cls-12" transform="translate(79.01 210.92)"><tspan class="cls-13">A</tspan><tspan x="17.07" y="0" xml:space="preserve"> = a * b</tspan></text>
   </g>
-  <g id="gluehbirne" style="opacity:0">
+  <g id="gluehbirne">
     <path id="glas" class="cls-14" d="M1021,211.65a44.25,44.25,0,1,0-78.08,28.51,33.19,33.19,0,0,1,7.89,21.42v26.05h50.66V263a32.73,32.73,0,0,1,8.27-21.85A44.1,44.1,0,0,0,1021,211.65Z" transform="translate(-219.5 -126.66)"/>
     <circle id="leuchte" class="cls-15" cx="757.25" cy="82.55" r="30.82"/>
     <polyline id="draht" class="cls-16" points="742.82 160.97 729.78 77.66 736.5 82.55 740.77 77.66 746.87 82.55 754.2 77.66 759.69 82.55 767.02 77.66 771.9 82.55 782.27 77.66 771.48 160.97"/>
     <g id="fassung_2" data-name="fassung 2">
-      <path class="cls-17" d="M739.71,177.82h33.47a0,0,0,0,1,0,0v2.91a16.61,16.61,0,0,1-16.61,16.61h-.25a16.61,16.61,0,0,1-16.61-16.61v-2.91A0,0,0,0,1,739.71,177.82Z"/>
+      <path class="cls-17" d="M739.71,177.82h33.47a0,0,0,0,1,0,0v2.91a16.61,16.61,0,0,1-16.61,16.61h-.25a16.61,16.61,0,0,1-16.61-16.61v-2.91a0,0,0,0,1,0,0Z"/>
       <path class="cls-18" d="M729.41,153.57h54.07a0,0,0,0,1,0,0V168.5a16.61,16.61,0,0,1-16.61,16.61H746a16.61,16.61,0,0,1-16.61-16.61V153.57A0,0,0,0,1,729.41,153.57Z"/>
     </g>
     <g id="fassung1">
@@ -159,7 +159,7 @@
       <rect class="cls-19" x="725.55" y="174.17" width="63.08" height="7.08" rx="3.54"/>
     </g>
     <path id="spiegelung" class="cls-20" d="M981.09,172.1s24.46,3.22,32.83,27" transform="translate(-219.5 -126.66)"/>
-    <g id="strahlen" style="opacity:0">
+    <g id="strahlen">
       <line id="strahl5" class="cls-21" x1="705.09" y1="81.81" x2="667.91" y2="75.87"/>
       <line id="strahl4" class="cls-21" x1="713.38" y1="51.44" x2="689.62" y2="22.24"/>
       <line id="strahl3" class="cls-21" x1="760.38" y1="0.02" x2="760.62" y2="37.66"/>
