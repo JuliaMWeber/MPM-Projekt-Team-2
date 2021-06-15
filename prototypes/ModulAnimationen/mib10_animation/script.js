@@ -60,13 +60,16 @@ let doAnimations = function (){
                 }
             }},3)
 
-        .to(gluehbirne,{opacity:1,y:-10},5)
+        .to(gluehbirne,{opacity:1,y:-10,ease:"bounce"},5)
         .to(mundSad,{transformOrigin:"50% 50%",rotate:"180deg"},5)
         .to(denkblasen,{opacity:0,stagger:0.25},5)
 
         .to(strahlen,{opacity:1},7)
-        .to(mundSad,{opacity:0},7)
-        .to(mundhappy,{opacity:1},7)
+        .to(mundSad,{opacity:0, ease:"power3"},7)
+        .to(mundhappy,{opacity:1, ease:"power3"},7)
+        .to(mundhappy,{})
+
+
 
 
 
