@@ -1,7 +1,7 @@
 var svg;
 var planetGroup;
-var clientWidth;
-var clientHeight;
+var clientWidth = document.documentElement.clientWidth;
+var clientHeight = document.documentElement.clientHeight;
 var focusedPlanet;
 var paused = false;
 
@@ -22,7 +22,7 @@ var orbits = [];
 var modules = [];
 
 function resetOrbit(){
-    gsap.ticker.add(animateOrbits);
+    gsap.ticker.remove(animateOrbits);
     orbits.length = 0;
     modules.length = 0;
 }
@@ -39,8 +39,6 @@ function displayOrbit(semesterNum) {
     planetGroup = document.getElementById("planets");
     portal = document.getElementById("portal");
     portal.onclick = animateToIntro;
-    clientWidth = document.documentElement.clientWidth;
-    clientHeight = document.documentElement.clientHeight;
 
     $.getJSON("./assets/data/modulhandbuch.json", function (data) {
         var orbitCount = 0;
