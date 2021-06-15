@@ -325,11 +325,11 @@ function animateStars(target, coords, options) {
 
 function generateStars(quantity) {
   for (let i = 0; i < quantity; i++) {
-    generateStartPosition();
+    generateStartPosition(starbg);
   }
 }
 
-function generateStartPosition() {
+function generateStartPosition(parent) {
   let e = document.createElement("div");
   e.classList.add('star');
 
@@ -362,7 +362,7 @@ function generateStartPosition() {
     e.classList.add('color-4');
   }
 
-  $(starbg).append(e);
+  $(parent).append(e);
 
   elements.push(e);
 }
