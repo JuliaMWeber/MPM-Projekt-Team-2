@@ -12,6 +12,7 @@ var borderSpace = 5;
 var aspectRatio = 0.8; //Compress Orbit y-Size by this Value
 
 var sunSize = 120;
+var StarCount = 500;
 
 //Orbit Speed = baseSpeed + (numberOfOrbit * distanceImpact)
 var baseSpeed = 0.7;
@@ -40,6 +41,11 @@ function displayOrbit(semesterNum) {
     portal = document.getElementById("portal");
     sun = document.getElementById("sun");
     portal.onclick = animateToIntro;
+
+    let starbg = document.getElementById("stars");
+    for(let i=0;i<StarCount;i++){
+        generateStartPosition(starbg);
+    }
 
     $.getJSON("./assets/data/modulhandbuch.json", function (data) {
         var orbitCount = 0;
