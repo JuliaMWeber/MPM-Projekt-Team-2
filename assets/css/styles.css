@@ -196,7 +196,12 @@ section {
 }
 
 #sun {
-    fill: #DE950D;
+    position: absolute;
+}
+
+#sun *{
+    width: 100%;
+    height: 100%;
 }
 
 #semNumber {
@@ -216,6 +221,8 @@ section {
 /* Hack für onClick-Event */
 #portal * {
     pointer-events: none;
+    width: 100%;
+    height: 100%;
 }
 
 #portal.clicked {

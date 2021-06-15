@@ -38,6 +38,7 @@ function displayOrbit(semesterNum) {
     svg = document.getElementById("orbitSvg");
     planetGroup = document.getElementById("planets");
     portal = document.getElementById("portal");
+    sun = document.getElementById("sun");
     portal.onclick = animateToIntro;
 
     $.getJSON("./assets/data/modulhandbuch.json", function (data) {
@@ -62,12 +63,10 @@ function displayOrbit(semesterNum) {
                 }
                 
                 //Sun
-                let sun = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-                sun.setAttribute("r", sunSize/2);
-                sun.setAttribute("id", "sun");
-                sun.setAttribute("cx", clientWidth/2 + "px");
-                sun.setAttribute("cy", clientHeight/2 + "px");        
-                svg.appendChild(sun);
+                let sunSvg = document.createElement("object");
+                sunSvg.setAttribute("data", "./assets/svg/sonne.svg");
+                gsap.set(sun, {left: clientWidth/2 - sunSize/2, top: clientHeight/2 - sunSize/2, width: sunSize, height:sunSize}); 
+                sun.appendChild(sunSvg);
 
                 let sunCaption = document.createElementNS("http://www.w3.org/2000/svg", "text");
                 sunCaption.id = "semNumber";
