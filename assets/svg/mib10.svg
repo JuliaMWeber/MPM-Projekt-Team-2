@@ -1,0 +1,99 @@
+<svg id="Ebene_1" data-name="Ebene 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1338.5 906.5">
+  <defs>
+    <style>
+      .cls-1, .cls-5 {
+        fill: #161616;
+      }
+
+      .cls-2 {
+        fill: #f4af89;
+      }
+
+      .cls-3 {
+        fill: #db5d5d;
+      }
+
+      .cls-4 {
+        fill: #fbd7bf;
+      }
+
+      .cls-5, .cls-8 {
+        stroke: #000;
+      }
+
+      .cls-10, .cls-5, .cls-8 {
+        stroke-miterlimit: 10;
+      }
+
+      .cls-10, .cls-6, .cls-8 {
+        fill: #fff;
+      }
+
+      .cls-7 {
+        fill: #f23833;
+      }
+
+      .cls-9 {
+        font-size: 116.82px;
+      }
+
+      .cls-11, .cls-9 {
+        font-family: ArialNarrow, Arial;
+      }
+
+      .cls-10 {
+        stroke: #050505;
+      }
+
+      .cls-11 {
+        font-size: 34px;
+      }
+
+      .cls-12 {
+        letter-spacing: -0.04em;
+      }
+    </style>
+  </defs>
+  <g id="typ">
+    <circle id="Haar6" class="cls-1" cx="775" cy="298.5" r="70"/>
+    <circle id="Haar5" class="cls-1" cx="705" cy="328.5" r="70"/>
+    <circle id="Haar4" class="cls-1" cx="848" cy="317.5" r="70"/>
+    <rect id="Hals" class="cls-2" x="746" y="549.5" width="63" height="102"/>
+    <path class="cls-3" d="M1138.57,1080.5H851.07c0-1,.09-2,.2-3l22.88-212.77A36.5,36.5,0,0,1,908,832.2a98,98,0,0,1,72.26-31.7h34a99.44,99.44,0,0,1,14.21,1,97.89,97.89,0,0,1,52.25,24.9,35,35,0,0,1,4.37-.58,36.5,36.5,0,0,1,38.93,33.9l14.73,213.49A37.39,37.39,0,0,1,1138.57,1080.5Z" transform="translate(-219.5 -174)"/>
+    <rect id="Gesicht" class="cls-4" x="679.57" y="263.5" width="196.43" height="332" rx="98.21"/>
+    <circle id="AugeL" class="cls-5" cx="746" cy="387.5" r="11"/>
+    <circle id="AugeR" class="cls-5" cx="809" cy="387.5" r="11"/>
+    <rect id="Nase" class="cls-2" x="768" y="401.5" width="20" height="61" rx="10"/>
+    <g id="Mund">
+      <path id="Mund-2" data-name="Mund" class="cls-6" d="M1048.06,704.62a50,50,0,1,1-89.13-45.28Z" transform="translate(-219.5 -174)"/>
+      <path id="Zunge" class="cls-7" d="M1017.9,730.85a50,50,0,0,1-64.48-40.5,50,50,0,0,1,64.48,40.5Z" transform="translate(-219.5 -174)"/>
+    </g>
+    <ellipse id="Haar3" class="cls-1" cx="720.5" cy="280.5" rx="47.5" ry="52"/>
+    <ellipse id="Haar2" class="cls-1" cx="777.5" cy="298.5" rx="47.5" ry="52"/>
+    <ellipse id="Haar1" class="cls-1" cx="827.5" cy="304.5" rx="47.5" ry="52"/>
+  </g>
+  <g id="denkblase">
+    <g id="gedankenblase1">
+      <circle id="blase1" class="cls-8" cx="908.5" cy="210" r="18.5"/>
+    </g>
+    <g id="gedankenblase2">
+      <circle id="blase2" class="cls-8" cx="962.5" cy="167" r="35.5"/>
+    </g>
+    <g id="gedankenblase">
+      <ellipse class="cls-8" cx="1156" cy="83.5" rx="182" ry="83"/>
+      <text class="cls-9" transform="translate(1121.64 120.18)">?</text>
+    </g>
+  </g>
+  <g id="formel1">
+    <rect id="blase" class="cls-10" x="0.5" y="335.5" width="305.5" height="81.5" rx="40.75"/>
+    <text id="formel" class="cls-11" transform="translate(38.01 389.58)">a^2 + b^2 = c^2</text>
+  </g>
+  <g id="formel2">
+    <rect id="blase-2" data-name="blase" class="cls-10" x="0.5" y="222.5" width="305.5" height="81.5" rx="40.75"/>
+    <text id="formel-2" data-name="formel" class="cls-11" transform="translate(38.01 276.58)">24 = 2a + 3b</text>
+  </g>
+  <g id="formel3">
+    <rect id="blase-3" data-name="blase" class="cls-10" x="0.5" y="109.5" width="305.5" height="81.5" rx="40.75"/>
+    <text id="formel-3" data-name="formel" class="cls-11" transform="translate(79.01 163.58)"><tspan class="cls-12">A</tspan><tspan x="17.07" y="0" xml:space="preserve"> = a * b</tspan></text>
+  </g>
+</svg>
