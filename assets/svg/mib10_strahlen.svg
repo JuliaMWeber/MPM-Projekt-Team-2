@@ -1,0 +1,21 @@
+<svg id="Ebene_2" data-name="Ebene 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke: #d6b40b;
+        stroke-miterlimit: 10;
+        stroke-width: 6px;
+      }
+    </style>
+  </defs>
+  <g id="gluehbirne">
+    <g id="strahlen">
+      <line id="strahl5" class="cls-1" x1="924.59" y1="208.47" x2="887.41" y2="202.53"/>
+      <line id="strahl4" class="cls-1" x1="932.88" y1="178.1" x2="909.12" y2="148.9"/>
+      <line id="strahl3" class="cls-1" x1="979.88" y1="126.68" x2="980.12" y2="164.32"/>
+      <line id="strahl2" class="cls-1" x1="1045.1" y1="148.99" x2="1018.9" y2="176.01"/>
+      <line id="strahl1" class="cls-1" x1="1065.11" y1="202.39" x2="1028.89" y2="212.61"/>
+    </g>
+  </g>
+</svg>
