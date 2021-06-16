@@ -57,7 +57,10 @@ function displayOrbit(semesterNum) {
                 // Module durchlaufen auf Basis des Semesters
                 for(var i=0; i < data.length;i++){
                     if(data[i].Semester == semesterNum) {
-                        orbitCount++;
+                        //Dont need Space for separated Modules
+                        if(!data[i].Kuerzel.endsWith("b")){
+                            orbitCount++;
+                        }
                         // Planeten-Zuweisung an Module anhängen
                         for(var j=0; j < planetData.length; j++) {
                             if(planetData[j]['modules'].indexOf(data[i]['Kuerzel']) >= 0) {
@@ -96,11 +99,12 @@ function displayOrbit(semesterNum) {
                 planetSize = orbitSpacing*aspectRatio-planetSpacing;
                 
                 for(let i=0;i < modules.length;i++){
+                    let plus = "";
                     let ellipse = document.createElementNS("http://www.w3.org/2000/svg", "ellipse");
                     ellipse.setAttribute("class", "orbit");
                     ellipse.setAttribute("cx", clientWidth/2 + "px");
                     ellipse.setAttribute("cy", clientHeight/2 + "px");
-                    ellipse.setAttribute("rx", (sunSize/2)+(orbitSpacing*(i+1)));
+                    ellipse.setAttribute("rx", (sunSize/2)+(orbitSpacing*(orbits.length+1)));
                     ellipse.setAttribute("ry", ellipse.getAttribute("rx")*aspectRatio);
                     svg.appendChild(ellipse);
                 
@@ -135,7 +139,15 @@ function displayOrbit(semesterNum) {
 
                     planetGroup.appendChild(planet);
                     let orbit = {"orbit": ellipse, "planet": planet, "pos": startLength};
-                    orbits[i] = orbit;
+                    orbits.push(orbit);
+
+                    //Skip Part b of module
+                    if(modules[i]['Kuerzel'].endsWith("a")){
+                        planet.id = "planet" + i + "+";
+                        i++;
+                    } else {
+                        planet.id = "planet" + i;
+                    }
 
                     await sleep(250);
                 }
@@ -191,6 +203,7 @@ function planetClick(event){
     if(paused){
         let tween = planetZoom(0, 0, 1)
         svg.classList.remove("clicked");
+        displayOverlay(false);
         tween.eventCallback("onComplete", function() {
             pauseAnimation(false);
             focusedPlanet.classList.remove("clicked");
@@ -217,7 +230,7 @@ function planetClick(event){
         pauseAnimation(true);
         let tl = planetZoom(x, y, zoomFactor);
         tl.eventCallback("onComplete", function(){
-            displayOverlay();
+            displayOverlay(true);
         });
         planet.classList.add("clicked");
         svg.classList.add("clicked");
@@ -250,14 +263,61 @@ function planetZoom(x, y, zoomlvl){
     return tl;
 }
 
-function displayOverlay(){
+function displayOverlay(status){
     let animDiv = document.getElementById("moduleanim");
     let txtDiv = document.getElementById("moduletxt");
 
-    let animWidth = focusedPlanet.getBoundingClientRect().width + focusedPlanet.getBoundingClientRect().x;
-    
-    gsap.set(animDiv, {width: animWidth, height: clientHeight});
-    gsap.set(txtDiv, {x: animWidth, y: 0, width: clientWidth - animWidth, height: clientHeight - portal.getBoundingClientRect().height});
+    if(status){ //display Text and Animation
+
+        let animWidth = focusedPlanet.getBoundingClientRect().width + focusedPlanet.getBoundingClientRect().x;
+        
+        gsap.set(animDiv, {width: animWidth, height: clientHeight});
+        gsap.set(txtDiv, {x: animWidth, y: 0, width: clientWidth - animWidth, height: clientHeight - portal.getBoundingClientRect().height});
+
+        let id = [];
+        id.push(focusedPlanet.id.replace("planet", ""));
+
+        if(id[0].endsWith("+")){ //Separated Module
+            id[0] = id[0].substring(0,id[0].length-1);
+            id.push(parseInt(id[0])+1);
+        }
+        let displayInfo = ["Creditpoints", "Pruefungsform", "SWS", "SWS Aufteilung", "Semesterart", "Lernziele"];
+        let modulInfo = document.createElement("div");
+        modulInfo.classList.add("modulinfo");
+        gsap.set(modulInfo, {width: "100%", height: "100%", overflowY: "auto"});
+
+        for(let i=0;i<id.length;i++){
+            if(i>0){
+                modulInfo.appendChild(document.createElement("br"));
+            }
+            let modul = document.createElement("div");
+            modul.classList.add("modultxt");
+            let title = document.createElement("h1");
+            title.textContent = modules[id[i]]["Kuerzel"] + " " + modules[id[i]]["Modulname"];
+            modul.appendChild(title);
+            modul.appendChild(document.createElement("br"));
+            for(let d=0;d<displayInfo.length;d++){
+                let caption = document.createElement("h2");
+                let content = document.createElement("p");
+
+                caption.textContent = displayInfo[d] + ":";
+                content.textContent = modules[id[i]][displayInfo[d]];
+
+                modul.appendChild(caption);
+                modul.appendChild(content);
+                modul.appendChild(document.createElement("br"));
+            }
+            gsap.fromTo(modul, {transformOrigin: "top left", scale: 0}, {scale: 1});
+            modulInfo.appendChild(modul);
+        }
+
+        txtDiv.appendChild(modulInfo);
+    } else { //stop displaying text and Animation
+        animDiv.style = "";
+        txtDiv.style = "";
+        animDiv.innerHTML = "";
+        txtDiv.innerHTML = "";
+    }
 }
 
 function sleep(milliseconds) {
