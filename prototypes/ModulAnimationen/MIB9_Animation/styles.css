@@ -1,0 +1,12 @@
+/* Nicht Löschen oder verschieben! */
+@import url("./reset.css");
+
+/* Custom Style */
+
+  #mib9{
+    position: relative;
+    top: 250px;
+    left: 100px;
+    width: 35%;
+    height: 50%;
+  }
