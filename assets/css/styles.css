@@ -167,6 +167,17 @@ section {
     transform: scale(1);
 }
 
+.moon {
+    pointer-events: none;
+    opacity: 100%;
+    transition: opacity 1s;
+}
+
+.planet.clicked > .moon {
+    opacity: 0%;
+    transition: opacity 1s;
+}
+
 #orbitSvg {
     position: absolute;
     height: 100%;

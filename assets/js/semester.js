@@ -100,6 +100,7 @@ function displayOrbit(semesterNum) {
                 planetSize = orbitSpacing*aspectRatio-planetSpacing;
                 
                 for(let i=0;i < modules.length;i++){
+                    let rotateSetter = [];
                     let plus = "";
                     let ellipse = document.createElementNS("http://www.w3.org/2000/svg", "ellipse");
                     ellipse.setAttribute("class", "orbit");
@@ -122,6 +123,7 @@ function displayOrbit(semesterNum) {
 
                     // Planeten Schatten erstellen
                     let shadowSVG = document.createElement("object");
+                    rotateSetter.push(gsap.quickSetter(shadowSVG, "rotation", "deg"));
                     shadowSVG.data = "./assets/svg/Schatten.svg";
                     shadowSVG.style.height = planetSize + "px";
                     shadowSVG.style.width = planetSize + "px";
@@ -138,17 +140,30 @@ function displayOrbit(semesterNum) {
                     planet.setAttribute('title', modules[i]['Modulname']);
                     planet.onclick = planetClick;
 
-                    planetGroup.appendChild(planet);
-                    let orbit = {"orbit": ellipse, "planet": planet, "pos": startLength};
-                    orbits.push(orbit);
-
                     //Skip Part b of module
                     if(modules[i]['Kuerzel'].endsWith("a")){
                         planet.id = "planet" + i + "+";
                         i++;
+
+                        let moon = document.createElement("object");
+                        moon.data = "./assets/svg/Moons/MoonV1.svg";
+                        moon.style.width = (planetSize/3) + "px";
+                        moon.style.height = (planetSize/3) + "px";
+
+                        let moonDiv = document.createElement("div");
+                        rotateSetter.push(gsap.quickSetter(moonDiv, "rotation", "deg"));
+                        moonDiv.classList.add("moon");
+                        moonDiv.style.width = planetSize + "px";
+                        moonDiv.style.height = planetSize + "px";
+                        moonDiv.appendChild(moon);
+                        planet.appendChild(moonDiv);
                     } else {
                         planet.id = "planet" + i;
                     }
+
+                    planetGroup.appendChild(planet);
+                    let orbit = {"orbit": ellipse, "planet": planet, "pos": startLength, "rotateSetter": rotateSetter};
+                    orbits.push(orbit);
 
                     await sleep(250);
                 }
@@ -183,9 +198,11 @@ function animateOrbits(){
         orbits[i].planet.style.left = nextPos.x-planetSize/2 + "px";
         orbits[i].planet.style.top = nextPos.y-planetSize/2 + "px";
 
-        let rotate = (nextLength/orbits[i].orbit.getTotalLength())*360 + "deg";+
+        let rotate = (nextLength/orbits[i].orbit.getTotalLength())*360;
 
-        gsap.set(orbits[i].planet.lastChild, {rotation: rotate})
+        for(let s=0; s<orbits[i].rotateSetter.length; s++){
+            orbits[i].rotateSetter[s](rotate);
+        }
     }
 }
 
