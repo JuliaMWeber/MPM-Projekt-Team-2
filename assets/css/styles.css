@@ -239,10 +239,29 @@ section {
     position: absolute;
 }
 
+#overlay * {
+    pointer-events: none;
+}
+
+#planetWire {
+    width: 100%;
+    height: 100%;
+}
+
 .modulinfo {
     display: flex;
     justify-content: center;
     flex-direction: column;
+}
+
+#overlaySvg {
+    width: 100%;
+    height: 100%;
+}
+
+#overlaySvg > line{
+    stroke-width: 2px;
+    stroke: #f6f6f6;
 }
 
 .modultxt {
@@ -252,6 +271,7 @@ section {
     margin-right: 5%;
     padding: 2%;
     background-color: #607cac1a;
+    border: 1px solid #f6f6f6;
 }
 
 .modultxt > h1 {

@@ -4,6 +4,7 @@ var clientWidth = document.documentElement.clientWidth;
 var clientHeight = document.documentElement.clientHeight;
 var focusedPlanet;
 var paused = false;
+var overlayAnims = [];
 
 //System Settings
 //let semester = 2; // obsulet (wird nun als Parameter in displayOrbit() übergeben)
@@ -244,17 +245,18 @@ function planetZoom(x, y, zoomlvl){
     for(let i=0; i<sunSystem.length;i++) {
         var zoomTranslate;
         if(zoomlvl==1){
-            gsap.to(sunSystem[i], {x: 0 + "px",y: 0 + "px" , duration: duration, ease: "power1.inOut"});
-            gsap.set(portal, {className: "", delay: duration/2, onComplete: function() {
+            gsap.to(sunSystem[i], {x: 0 + "px",y: 0 + "px" , duration: duration, ease: "power1.inOut", delay: 1});
+            gsap.set(portal, {className: "", delay: duration/2 + 1, onComplete: function() {
                 portal.onclick = animateToIntro;
             }});
+            tween = gsap.to(sunSystem[i], {scale: zoomlvl, duration: duration, ease: "power1.inOut", delay: 1});
         } else {
             gsap.to(sunSystem[i], {x: x*zoomlvl + "px",y: y*zoomlvl + "px" , duration: duration, ease: "power1.inOut"});
             gsap.set(portal, {className: "clicked", delay: duration/2, onComplete: function() {
                 portal.onclick = planetClick;
             }});
+            tween = gsap.to(sunSystem[i], {scale: zoomlvl, duration: duration, ease: "power1.inOut"});
         }
-        tween = gsap.to(sunSystem[i], {scale: zoomlvl, duration: duration, ease: "power1.inOut"});
     }
     let tl = gsap.timeline();
     tl.fromTo(portal, {opacity: "100%"}, {opacity: "0%", duration: duration/3})
@@ -264,8 +266,10 @@ function planetZoom(x, y, zoomlvl){
 }
 
 function displayOverlay(status){
+    let overlay = document.getElementById("overlay");
     let animDiv = document.getElementById("moduleanim");
     let txtDiv = document.getElementById("moduletxt");
+    let overlaySvg = document.getElementById("overlaySvg");
 
     if(status){ //display Text and Animation
 
@@ -284,6 +288,7 @@ function displayOverlay(status){
         let displayInfo = ["Creditpoints", "Pruefungsform", "SWS", "SWS Aufteilung", "Semesterart", "Lernziele"];
         let modulInfo = document.createElement("div");
         modulInfo.classList.add("modulinfo");
+        txtDiv.appendChild(modulInfo);
         gsap.set(modulInfo, {width: "100%", height: "100%", overflowY: "auto"});
 
         for(let i=0;i<id.length;i++){
@@ -292,6 +297,7 @@ function displayOverlay(status){
             }
             let modul = document.createElement("div");
             modul.classList.add("modultxt");
+            modul.style.opacity = 0;
             let title = document.createElement("h1");
             title.textContent = modules[id[i]]["Kuerzel"] + " " + modules[id[i]]["Modulname"];
             modul.appendChild(title);
@@ -307,16 +313,62 @@ function displayOverlay(status){
                 modul.appendChild(content);
                 modul.appendChild(document.createElement("br"));
             }
-            gsap.fromTo(modul, {transformOrigin: "top left", scale: 0}, {scale: 1});
             modulInfo.appendChild(modul);
         }
 
-        txtDiv.appendChild(modulInfo);
+        // create Planet Wireframe
+        new Vivus(document.getElementById("planetWire"), {
+            delay: 20,
+            duration: 200,
+            animTimingFunction: Vivus.EASE,
+            file: "./assets/svg/PlanetWireframe.svg",
+            onReady: function(vivus) {
+                overlayAnims.push(vivus);
+                let wireSvg = vivus.el;
+                wireSvg.className = "wireframe";
+                wireSvg.style.height = focusedPlanet.getBoundingClientRect().height + "px";
+                wireSvg.style.width = focusedPlanet.getBoundingClientRect().width + "px";
+                wireSvg.style.transform = "translate(" + focusedPlanet.getBoundingClientRect().x + "px, " + focusedPlanet.getBoundingClientRect().y + "px)";
+                overlay.insertBefore(wireSvg, overlaySvg);
+
+                let wireOutline = document.getElementById("Outline");
+                overlayAnims.push(gsap.fromTo(wireOutline, {fillOpacity: 0}, {fillOpacity: 0.93, duration: 1, delay: 0.7}));
+
+                let children = modulInfo.children;
+
+                for(let i=0;i<children.length;i++){
+                    if(children[i].tagName != "DIV"){
+                        continue;
+                    }
+                    let line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+                    let planetBounds = focusedPlanet.getBoundingClientRect();
+
+                    line.setAttribute("x1", planetBounds.right - planetBounds.width*0.05);
+                    line.setAttribute("y1", children[i].getBoundingClientRect().y + children[i].getBoundingClientRect().height/2);
+                    line.setAttribute("x2", children[i].getBoundingClientRect().x);
+                    line.setAttribute("y2", children[i].getBoundingClientRect().y);
+                    overlaySvg.appendChild(line);
+
+                    overlayAnims.push(gsap.fromTo(line, {scale: 0, transformOrigin: "bottom left"}, {scale: 1, duration: 0.5, delay: 1, ease: "inOut.power1"}));
+                    overlayAnims.push(gsap.fromTo(children[i], {transformOrigin: "top left", scale: 0, opacity: 1}, {scale: 1, duration:0.5, delay: 1.5}));
+                }
+            }
+        });
     } else { //stop displaying text and Animation
-        animDiv.style = "";
-        txtDiv.style = "";
-        animDiv.innerHTML = "";
-        txtDiv.innerHTML = "";
+        while(overlayAnims.length>0) {            
+            let anim = overlayAnims.pop();
+            
+            if(anim.parentEl == undefined){ // Cheating to see if tween or vivus animation
+                anim.reverse();
+            } else {
+                anim.play(-2.5, function(vivus){
+                    vivus.el.remove();
+                    document.getElementById("moduletxt").innerHTML = "";
+
+                    document.getElementById("overlaySvg").innerHTML = "";
+                });
+            }
+        }
     }
 }
 
