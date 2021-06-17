@@ -227,6 +227,14 @@ section {
     right: 10%;
     height: 15vmin;
     width: 15vmin;
+    opacity: 70%;
+    transition: transform 0.5s;
+    will-change: transform;
+}
+
+#portal:hover {
+    transform: scale(1.2) rotate(-180deg);
+    transition: transform 0.5s ease-in-out;
 }
 
 /* Hack für onClick-Event */

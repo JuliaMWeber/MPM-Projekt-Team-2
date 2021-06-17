@@ -74,7 +74,7 @@ function displayOrbit(semesterNum) {
                 
                 //Sun
                 let sunSvg = document.createElement("object");
-                sunSvg.setAttribute("data", "./assets/svg/sonne.svg");
+                sunSvg.setAttribute("data", "./assets/svg/Sonne.svg");
                 gsap.set(sun, {left: clientWidth/2 - sunSize/2, top: clientHeight/2 - sunSize/2, width: sunSize, height:sunSize}); 
                 sun.appendChild(sunSvg);
 
@@ -172,6 +172,7 @@ function displayOrbit(semesterNum) {
     });
 
     gsap.ticker.add(animateOrbits);
+    gsap.ticker.add(animatePortal);
 }
 
 function animateToIntro(){
@@ -180,6 +181,10 @@ function animateToIntro(){
         gsap.to("#app", {opacity: "100%", duration: 1, clearProps: "opacity"});
         loadIntro();
     }});
+}
+
+function animatePortal(){
+    gsap.set(portal.firstElementChild, {rotation: "-=1"});
 }
 
 function animateOrbits(){
@@ -276,8 +281,13 @@ function planetZoom(x, y, zoomlvl){
         }
     }
     let tl = gsap.timeline();
-    tl.fromTo(portal, {opacity: "100%"}, {opacity: "0%", duration: duration/3})
-    .to(portal, {opacity: "100%", duration: duration/3}, ">" + (duration/3));
+    if(zoomlvl==1){
+        tl.fromTo(portal, {opacity: "70%"}, {opacity: "0%", duration: duration/3})
+        .to(portal, {opacity: "70%", duration: duration/3}, ">" + (duration/3 + 1.5));
+    } else {
+        tl.fromTo(portal, {opacity: "70%"}, {opacity: "0%", duration: duration/3})
+        .to(portal, {opacity: "70%", duration: duration/3}, ">" + (duration/3));
+    }
 
     return tl;
 }
