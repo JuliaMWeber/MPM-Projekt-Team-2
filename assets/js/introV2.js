@@ -47,8 +47,11 @@ let animDuration = 3;
 let animEase = "back.inOut(1)";
 //animEase = "power3.inOut";
 //animEase = "back.inOut(4)";
-  
 
+
+$('object').each(function() {
+  $(this).attr('data', $(this).attr('load-data'));
+});
 
 let letters = {
   t: {
@@ -94,7 +97,7 @@ function loadLetters(letters) {
   $.each(letters, function(index, value) {
     value.element = $(app).find(value.selector).first().children()[0];
 
-    $(value.element).on("ready load loaded", function() {
+    $(value.element).on("load", function() {
       console.log(index + ": SVG LOADED");
 
       value.content = value.element.contentDocument;
