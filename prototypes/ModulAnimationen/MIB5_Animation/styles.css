@@ -1,11 +1,11 @@
 /* Nicht Löschen oder verschieben! */
-@import url("./reset.css");
+@import url("../../../assets/css/reset.css");
 
 /* Custom Style */
+
 #mib5{
     position: relative;
-    top: 250px;
-    left: 100px;
-    width: 35%;
-    height: 50%;
-  }
+    width:30%;
+    height: auto;
+    top: 200px;
+}
