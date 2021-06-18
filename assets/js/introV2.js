@@ -93,6 +93,7 @@ function startIntro(section) {
 }
 
 function loadLetters(letters) {
+  let int = 0;
 
   $.each(letters, function(index, value) {
     value.element = $(app).find(value.selector).first().children()[0];
@@ -107,14 +108,25 @@ function loadLetters(letters) {
       $.each(points, function() {
         koords[index].push( getPositionOfElement($(this)[0]) );
       });
-      let options = {
-        index: index,
-      };
-      animateStars(value.element, koords[index], options);
 
+      int++;
+      if(int == Object.keys(letters).length) {
+        // Globale Variable anlegen um darauf reagieren zu können
+        window.lettersCompleteLoaded = true;
+      }
     });
 
   });
+
+  // Timeout zur Sicherheit 
+  setTimeout(function(){
+    waitFor('lettersCompleteLoaded', function() {
+      $.each(letters, function(index, value) {
+        animateStars(value.element, koords[index], {index: index});
+      });
+    }, 50);
+  }, 500);
+
 }
 
 function animateStars(target, coords, options) {

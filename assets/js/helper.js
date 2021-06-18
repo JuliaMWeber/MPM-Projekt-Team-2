@@ -82,3 +82,19 @@ function getCenterOfElement(element) {
     y: coords.y + ($(element).height() / 2)
   }
 }
+
+/**
+ * Wartet auf eine Variable bis sie gesetzt wurde
+ *
+ * @param string variable
+ * @param function callback
+ * @param int delay
+ */
+function waitFor(variable, callback, delay) {
+  var interval = setInterval(function() {
+    if (window[variable]) {
+      clearInterval(interval);
+      callback();
+    }
+  }, delay);
+}
