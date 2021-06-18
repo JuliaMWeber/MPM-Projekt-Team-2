@@ -62,22 +62,6 @@
       .cls-14, .cls-18, .cls-21 {
         font-size: 20px;
       }
-
-      .cls-15 {
-        letter-spacing: -0.04em;
-      }
-
-      .cls-16 {
-        letter-spacing: -0.13em;
-      }
-
-      .cls-17 {
-        letter-spacing: -0.02em;
-      }
-
-      .cls-22 {
-        letter-spacing: -0.09em;
-      }
     </style>
   </defs>
   <g id="Laptop">
@@ -125,7 +109,7 @@
       </g>
       <text class="cls-8" transform="translate(245.1 48.43)">BOS</text>
     </g>
-    <text class="cls-9" transform="translate(180.41 96.17)"><tspan class="cls-10">V</tspan><tspan x="20.24" y="0">ier G</tspan><tspan class="cls-10" x="90.6" y="0">e</tspan><tspan x="108.03" y="0">winnt!</tspan></text>
+    <text class="cls-9" transform="translate(180.41 96.17)"><tspan class="cls-10">Vier Gewinnt!</tspan></text>
   </g>
   <g id="Right">
     <g id="RightScreen">
@@ -168,7 +152,7 @@
         <rect class="cls-6" x="660.15" y="66.5" width="183" height="9" rx="3.91"/>
       </g>
       <rect class="cls-11" x="492.15" y="124.5" width="154" height="34"/>
-      <text class="cls-14" transform="translate(499.16 148.48)">Cont<tspan class="cls-15" x="46.04" y="0">r</tspan><tspan x="54.04" y="0">olle</tspan><tspan class="cls-16" x="88.85" y="0">r</tspan><tspan x="95.11" y="0">.j</tspan><tspan class="cls-17" x="106.79" y="0">a</tspan><tspan class="cls-10" x="118.17" y="0">v</tspan><tspan x="128.75" y="0">a</tspan></text>
+      <text class="cls-14" transform="translate(499.16 148.48)">Controller.java</text>
     </g>
     <g id="Model">
       <g id="ModelCode" class="cls-13">
@@ -192,7 +176,7 @@
         <rect class="cls-7" x="660.15" y="66.5" width="208" height="9" rx="4.17"/>
       </g>
       <rect class="cls-11" x="492.15" y="90.5" width="154" height="34"/>
-      <text class="cls-18" transform="translate(499.16 115.48)">Model.j<tspan class="cls-17" x="70.22" y="0">a</tspan><tspan class="cls-10" x="81.61" y="0">v</tspan><tspan x="92.19" y="0">a</tspan></text>
+      <text class="cls-18" transform="translate(499.16 115.48)">Model.java</text>
     </g>
     <g id="View">
       <g id="ViewCode">
@@ -217,7 +201,7 @@
         <rect class="cls-19" x="660.15" y="66.5" width="208" height="9" rx="4.17"/>
       </g>
       <rect class="cls-20" x="492.15" y="56.5" width="154" height="34"/>
-      <text class="cls-21" transform="translate(499.16 80.48)"><tspan class="cls-10">V</tspan><tspan x="13.5" y="0">i</tspan><tspan class="cls-10" x="18.92" y="0">e</tspan><tspan class="cls-22" x="30.54" y="0">w</tspan><tspan x="45.04" y="0">.j</tspan><tspan class="cls-17" x="56.72" y="0">a</tspan><tspan class="cls-10" x="68.11" y="0">v</tspan><tspan x="78.68" y="0">a</tspan></text>
+      <text class="cls-21" transform="translate(499.16 80.48)"><tspan class="cls-10">View.java</text>
     </g>
   </g>
 </svg>
