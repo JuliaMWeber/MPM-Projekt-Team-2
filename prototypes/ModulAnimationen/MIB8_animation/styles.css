@@ -1,0 +1,13 @@
+/* Nicht Löschen oder verschieben! */
+@import url("./../../../assets/css/reset.css");
+
+/* Custom Style */
+#testContainer {
+    width: 50%;
+    overflow: hidden;
+}
+
+#MIB8Obj {
+    width: 100%;
+    height: 100%;
+}

@@ -5,7 +5,7 @@
         fill: #777486;
       }
 
-      .cls-2, .cls-20 {
+      .cls-2 {
         fill: #4a465d;
       }
 
@@ -13,15 +13,19 @@
         fill: #f1f1f1;
       }
 
-      .cls-11, .cls-4 {
+      .cls-11, .cls-4, .cls-20 {
         fill: #1d1835;
+      }
+
+      .cls-6, .cls-5 {
+        fill: #478888;
       }
 
       .cls-5 {
         opacity: 0.2;
       }
 
-      .cls-14, .cls-6 {
+      .cls-14 {
         fill: #478888;
       }
 
@@ -37,12 +41,12 @@
         fill: #f1b075;
       }
 
-      .cls-8 {
+      .cls-8, .cls-12 {
         font-family: GillSansMT-Bold, Gill Sans MT;
         font-weight: 700;
       }
 
-      .cls-12, .cls-14, .cls-18, .cls-21, .cls-9 {
+      .cls-14, .cls-18, .cls-21, .cls-9 {
         font-family: ArialRoundedMTBold, Arial Rounded MT Bold;
       }
 
@@ -78,29 +82,29 @@
       <path class="cls-4" d="M95.86,539.77a17.52,17.52,0,0,1-17.5-17.5V70a17.52,17.52,0,0,1,17.5-17.49H233.5v0h267v487H485.75a19.14,19.14,0,0,1-3,.27Z" transform="translate(-8.35 -33)"/>
       <path class="cls-3" d="M500,53V539H485.59a16.4,16.4,0,0,1-2.85.26H95.86a17,17,0,0,1-17-17V70a17,17,0,0,1,17-17H233l1,0H500m1-1H233v0H95.86a18,18,0,0,0-18,18V522.27a18,18,0,0,0,18,18H482.74a17.55,17.55,0,0,0,3-.27H501V52Z" transform="translate(-8.35 -33)"/>
     </g>
-    <g id="Grid" class="cls-5">
-      <circle class="cls-6" cx="173.46" cy="219.81" r="31.81"/>
-      <circle class="cls-6" cx="173.46" cy="291.73" r="31.81"/>
-      <circle class="cls-6" cx="173.46" cy="363.65" r="31.81"/>
-      <circle class="cls-6" cx="173.46" cy="435.57" r="31.81"/>
-      <circle class="cls-6" cx="245.38" cy="219.81" r="31.81"/>
-      <circle class="cls-6" cx="245.38" cy="291.73" r="31.81"/>
-      <circle class="cls-6" cx="245.38" cy="363.65" r="31.81"/>
-      <circle class="cls-6" cx="245.38" cy="435.57" r="31.81"/>
-      <circle class="cls-6" cx="315.92" cy="219.81" r="31.81"/>
-      <circle class="cls-6" cx="315.92" cy="291.73" r="31.81"/>
-      <circle class="cls-6" cx="315.92" cy="363.65" r="31.81"/>
-      <circle class="cls-6" cx="315.92" cy="435.57" r="31.81"/>
-      <circle class="cls-6" cx="387.84" cy="219.81" r="31.81"/>
-      <circle class="cls-6" cx="387.84" cy="291.73" r="31.81"/>
-      <circle class="cls-6" cx="387.84" cy="363.65" r="31.81"/>
-      <circle class="cls-6" cx="387.84" cy="435.57" r="31.81"/>
+    <g id="Grid">
+      <circle id="14" class="cls-5" cx="173.46" cy="219.81" r="31.81"/>
+      <circle id="13" class="cls-5" cx="173.46" cy="291.73" r="31.81"/>
+      <circle id="12" class="cls-5" cx="173.46" cy="363.65" r="31.81"/>
+      <circle id="11" class="cls-5" cx="173.46" cy="435.57" r="31.81"/>
+      <circle id="24" class="cls-5" cx="245.38" cy="219.81" r="31.81"/>
+      <circle id="23" class="cls-5" cx="245.38" cy="291.73" r="31.81"/>
+      <circle id="22" class="cls-5" cx="245.38" cy="363.65" r="31.81"/>
+      <circle id="21" class="cls-5" cx="245.38" cy="435.57" r="31.81"/>
+      <circle id="34" class="cls-5" cx="315.92" cy="219.81" r="31.81"/>
+      <circle id="33" class="cls-5" cx="315.92" cy="291.73" r="31.81"/>
+      <circle id="32" class="cls-5" cx="315.92" cy="363.65" r="31.81"/>
+      <circle id="31" class="cls-5" cx="315.92" cy="435.57" r="31.81"/>
+      <circle id="44" class="cls-5" cx="387.84" cy="219.81" r="31.81"/>
+      <circle id="43" class="cls-5" cx="387.84" cy="291.73" r="31.81"/>
+      <circle id="42" class="cls-5" cx="387.84" cy="363.65" r="31.81"/>
+      <circle id="41" class="cls-5" cx="387.84" cy="435.57" r="31.81"/>
     </g>
     <g id="Arrows">
-      <path class="cls-7" d="M197.14,188H189V158H175v30h-7.14a2.28,2.28,0,0,0,0,3.24l13,13a2.28,2.28,0,0,0,3.24,0l13-13A2.28,2.28,0,0,0,197.14,188Z" transform="translate(-8.35 -33)"/>
-      <path class="cls-7" d="M268.14,188H260V158H246v30h-7.14a2.28,2.28,0,0,0,0,3.24l13,13a2.28,2.28,0,0,0,3.24,0l13-13A2.28,2.28,0,0,0,268.14,188Z" transform="translate(-8.35 -33)"/>
-      <path class="cls-7" d="M339.14,188H331V158H317v30h-7.14a2.28,2.28,0,0,0,0,3.24l13,13a2.28,2.28,0,0,0,3.24,0l13-13A2.28,2.28,0,0,0,339.14,188Z" transform="translate(-8.35 -33)"/>
-      <path class="cls-7" d="M411.14,188H403V158H389v30h-7.14a2.28,2.28,0,0,0,0,3.24l13,13a2.28,2.28,0,0,0,3.24,0l13-13A2.28,2.28,0,0,0,411.14,188Z" transform="translate(-8.35 -33)"/>
+      <path id="arrow1" class="cls-7" d="M197.14,188H189V158H175v30h-7.14a2.28,2.28,0,0,0,0,3.24l13,13a2.28,2.28,0,0,0,3.24,0l13-13A2.28,2.28,0,0,0,197.14,188Z" transform="translate(-8.35 -33)"/>
+      <path id="arrow2" class="cls-7" d="M268.14,188H260V158H246v30h-7.14a2.28,2.28,0,0,0,0,3.24l13,13a2.28,2.28,0,0,0,3.24,0l13-13A2.28,2.28,0,0,0,268.14,188Z" transform="translate(-8.35 -33)"/>
+      <path id="arrow3" class="cls-7" d="M339.14,188H331V158H317v30h-7.14a2.28,2.28,0,0,0,0,3.24l13,13a2.28,2.28,0,0,0,3.24,0l13-13A2.28,2.28,0,0,0,339.14,188Z" transform="translate(-8.35 -33)"/>
+      <path id="arrow4" class="cls-7" d="M411.14,188H403V158H389v30h-7.14a2.28,2.28,0,0,0,0,3.24l13,13a2.28,2.28,0,0,0,3.24,0l13-13A2.28,2.28,0,0,0,411.14,188Z" transform="translate(-8.35 -33)"/>
     </g>
     <g>
       <g>
@@ -151,7 +155,7 @@
         <rect class="cls-6" x="660.15" y="80.5" width="167" height="9" rx="3.74"/>
         <rect class="cls-6" x="660.15" y="66.5" width="183" height="9" rx="3.91"/>
       </g>
-      <rect class="cls-11" x="492.15" y="124.5" width="154" height="34"/>
+      <rect id="ControllerTab" class="cls-11" x="492.15" y="124.5" width="154" height="34"/>
       <text class="cls-14" transform="translate(499.16 148.48)">Controller.java</text>
     </g>
     <g id="Model">
@@ -175,11 +179,11 @@
         <rect class="cls-7" x="660.15" y="80.5" width="194" height="9" rx="4.03"/>
         <rect class="cls-7" x="660.15" y="66.5" width="208" height="9" rx="4.17"/>
       </g>
-      <rect class="cls-11" x="492.15" y="90.5" width="154" height="34"/>
+      <rect id="ModelTab" class="cls-11" x="492.15" y="90.5" width="154" height="34"/>
       <text class="cls-18" transform="translate(499.16 115.48)">Model.java</text>
     </g>
     <g id="View">
-      <g id="ViewCode">
+      <g id="ViewCode" class="cls-13">
         <rect class="cls-19" x="660.15" y="346.5" width="90" height="9" rx="2.74"/>
         <rect class="cls-19" x="660.15" y="332.5" width="166" height="9" rx="3.73"/>
         <rect class="cls-19" x="660.15" y="318.5" width="111" height="9" rx="3.05"/>
@@ -200,8 +204,8 @@
         <rect class="cls-19" x="660.15" y="80.5" width="194" height="9" rx="4.03"/>
         <rect class="cls-19" x="660.15" y="66.5" width="208" height="9" rx="4.17"/>
       </g>
-      <rect class="cls-20" x="492.15" y="56.5" width="154" height="34"/>
-      <text class="cls-21" transform="translate(499.16 80.48)"><tspan class="cls-10">View.java</text>
+      <rect id="ViewTab" class="cls-20" x="492.15" y="56.5" width="154" height="34"/>
+      <text class="cls-21" transform="translate(499.16 80.48)">View.java</text>
     </g>
   </g>
 </svg>
