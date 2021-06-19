@@ -1,10 +1,6 @@
 // Hier kommt das Custom Script Zeug rein
 //testanimation  
 
-
-
-
-
   $('#mib5').on('load', () => {
     console.log("SVG Loaded");
     let mib5Object = document.getElementById("mib5");
@@ -19,7 +15,6 @@
     .to(iconLeisteYoutube, {opacity: 100, delay: -1})
     ;
 
-      
     const vivus = new Vivus('mib5', {
       type: "scenario",
     }, function(e) {
