@@ -19,9 +19,7 @@
       type: "scenario",
     }, function(e) {
       console.log("Animation done");
-    }); 
-    vivus.play(function(){
       vivus.reset().play();
-    });
+    }); 
   
   });
