@@ -1,10 +1,10 @@
 /* 
-* TEMPORÄRE LÖSUNG!
-*
-* Lädt das Semester als Startelement in APP
-* Semesterauswahl ist bestimmbar anhand des Anchor (#sem1, #sem2, ...)
-*
-*/
+ * TEMPORÄRE LÖSUNG!
+ *
+ * Lädt das Semester als Startelement in APP
+ * Semesterauswahl ist bestimmbar anhand des Anchor (#sem1, #sem2, ...)
+ *
+ */
 
 // Url speichern für späteren Wechsel
 sessionStorage.setItem("current_url", window.location);
@@ -23,23 +23,23 @@ function reactToHash() {
 
   // Schauen ob wir eine passende Section haben
   let section = null;
-  $("section").each(function() {
-    if($(this).attr('id') == hash) {
+  $("section").each(function () {
+    if ($(this).attr('id') == hash) {
       section = $(this);
       return;
     }
   });
 
-  if(section) {
+  if (section) {
 
   } else {
-    if(hash.includes("sem")) {
+    if (hash.includes("sem")) {
       // Urls speichern/überschreiben für Browser Prev/Next Buttons
       sessionStorage.setItem("last_url", sessionStorage.getItem("current_url"));
       sessionStorage.setItem("current_url", window.location);
 
       switchToSemester(getSemesterNumberByHash());
-    } else if(hash === "") {
+    } else if (hash === "") {
       // Just to be safe
       resetOrbit();
 
@@ -55,14 +55,14 @@ function reactToHash() {
 
 function getSemesterNumberByHash() {
   let hash = window.location.hash.substr(1);
-  let number = parseInt( hash.replace("sem", "") ) || 0;
-  if(number > 0 ) {
+  let number = parseInt(hash.replace("sem", "")) || 0;
+  if (number > 0) {
     return number;
   }
   return 1;
 }
 
-function switchToSemester(semester){
+function switchToSemester(semester) {
   document.getElementById("app").innerHTML = document.getElementById("semester").innerHTML;
   displayOrbit(semester);
 }

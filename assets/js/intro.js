@@ -1,6 +1,6 @@
 //contentDocument.firstChild.children
 
-function displayIntro(){
+function displayIntro() {
   logoBG = document.getElementById("logoFill");
   logoWire = document.getElementById("logoWire");
 
@@ -29,10 +29,10 @@ function displayIntro(){
 
   starGrid = 4;
 
-  window.addEventListener("load",  animateStars);
+  window.addEventListener("load", animateStars());
 }
 
-function initialiseLogo(){
+function initialiseLogo() {
   let bg = logoBG.contentDocument.getElementById("outline");
   let wire = logoWire.contentDocument.getElementById("wireframe");
 
@@ -46,44 +46,44 @@ function initialiseLogo(){
   logoGroup.remove();
 }
 
-function resizeLogo(){
+function resizeLogo() {
   let targetwidth = logobase.getBoundingClientRect().width;
   let targetheight = logobase.getBoundingClientRect().height;
-  targetwidth -= logoSafeGap*2;
-  targetheight -= logoSafeGap*2;
+  targetwidth -= logoSafeGap * 2;
+  targetheight -= logoSafeGap * 2;
 
   let currentwidth = logoSvg.getBoundingClientRect().width;
   let currentheight = logoSvg.getBoundingClientRect().height;
 
   let scale = targetwidth / currentwidth;
-  if(scale > targetheight / currentheight){
+  if (scale > targetheight / currentheight) {
     scale = targetheight / currentheight;
   }
 
   logobase.style.transform = "scale(" + scale + ")";
   logobase.style.transformOrigin = "top left";
 
-  let xOffset = (device.width - logoSvg.getBoundingClientRect().width)/2;
-  let yOffset = (device.height - logoSvg.getBoundingClientRect().height)/2;
+  let xOffset = (device.width - logoSvg.getBoundingClientRect().width) / 2;
+  let yOffset = (device.height - logoSvg.getBoundingClientRect().height) / 2;
 
   logobase.style.transform = "translate(" + xOffset + "px, " + yOffset + "px)scale(" + scale + ") ";
 
 }
 
-function animateStars(){
+function animateStars() {
   initialiseLogo();
 
   let letters = logoSvg.children;
 
   destPositions = [];
 
-  for(let i=0;i<letters[0].children.length;i++){
+  for (let i = 0; i < letters[0].children.length; i++) {
     destPositions = destPositions.concat(getPointsInPath(letters[1].children[i], starGrid));
   }
 
-  for(let i=0;i<destPositions.length;i++){ 
-    if(Math.random()>0.4){ //reducing destpoints for optimization
-      destPositions.splice(i,1);
+  for (let i = 0; i < destPositions.length; i++) {
+    if (Math.random() > 0.4) { //reducing destpoints for optimization
+      destPositions.splice(i, 1);
       i--;
     }
   }
@@ -94,17 +94,17 @@ function animateStars(){
   tmp.setAttribute("width", logoSvg.getBoundingClientRect().width);
   tmp.setAttribute("height", logoSvg.getBoundingClientRect().height);
   logobase.appendChild(tmp);
-  for(let i=0;i<destPositions.length;i++){
+  for (let i = 0; i < destPositions.length; i++) {
     tmp.appendChild(document.createElement("div"));
     tmp.lastChild.style = "transform: translate(" + destPositions[i].x + "px, " + destPositions[i].y + "px);";
     tmp.lastChild.className = "point";
   }
 
-  resizeLogo(); 
+  resizeLogo();
 
   destPositions.length = 0;
   let newpoints = tmp.children;
-  for(let i=0;i<newpoints.length;i++){ //get new points after resize
+  for (let i = 0; i < newpoints.length; i++) { //get new points after resize
     destPositions[i] = newpoints[i].getBoundingClientRect();
   }
 
@@ -113,7 +113,7 @@ function animateStars(){
   console.log("Destpositions:" + destPositions.length);
 
   for (let i = 0; i < starQuantity; i++) {
-      generateStartPosition();
+    generateStartPosition();
   }
 
   randomAnimate();
@@ -126,12 +126,12 @@ function randomAnimate() {
 
   let originalLength = tmp.length;
 
-  while(destPositions.length>0 && tmp.length>0 && tmp.length>originalLength*0.3) {
+  while (destPositions.length > 0 && tmp.length > 0 && tmp.length > originalLength * 0.3) {
     let starindex = randomBetween(0, tmp.length);
     let destindex = randomBetween(0, destPositions.length);
     let e = tmp[starindex];
 
-    if(e && destPositions[destindex]) {
+    if (e && destPositions[destindex]) {
       e.classList.remove("bgStar");
       e.classList.add("fgStar");
       // array bereinigen, damit wir keinen stern doppelt treffen
@@ -155,61 +155,64 @@ function randomAnimate() {
 
 function getPointsInPath(path, gridSize) {
 
-    let boundRec = path.getBoundingClientRect();
+  let boundRec = path.getBoundingClientRect();
 
-    let pointList = [];
+  let pointList = [];
 
-    let point = logoSvg.createSVGPoint();
-    for (let x = boundRec.x; x <= (boundRec.x + boundRec.width); x += gridSize) {
-        for (let y = boundRec.y; y <= (boundRec.y + boundRec.height); y += gridSize) {
-          point.x = x;
-          point.y = y;
-          if(path.isPointInFill(point)) {
-              pointList.push({x: point.x, y:point.y});
-          }
-        }
+  let point = logoSvg.createSVGPoint();
+  for (let x = boundRec.x; x <= (boundRec.x + boundRec.width); x += gridSize) {
+    for (let y = boundRec.y; y <= (boundRec.y + boundRec.height); y += gridSize) {
+      point.x = x;
+      point.y = y;
+      if (path.isPointInFill(point)) {
+        pointList.push({
+          x: point.x,
+          y: point.y
+        });
+      }
     }
+  }
 
-    return pointList;
+  return pointList;
 }
 
 
 function generateStartPosition() {
-let e = document.createElement("div");
-e.classList.add('bgStar');
+  let e = document.createElement("div");
+  e.classList.add('bgStar');
 
-let position = generatePosition(device.width - safegap, device.height - safegap);
+  let position = generatePosition(device.width - safegap, device.height - safegap);
 
-let x = position.left + "px";
-let y = position.top + "px";
-e.style.transform = "translate(" + x + ", " + y + ")";
+  let x = position.left + "px";
+  let y = position.top + "px";
+  e.style.transform = "translate(" + x + ", " + y + ")";
 
-positions.push([position.left, position.top]);
+  positions.push([position.left, position.top]);
 
-let size = randomBetween(0, starSizeMax) + "px";
-e.style.width = size;
-e.style.height = size;
+  let size = randomBetween(0, starSizeMax) + "px";
+  e.style.width = size;
+  e.style.height = size;
 
-starbg.appendChild(e);
+  starbg.appendChild(e);
 
-elements.push(e);
+  elements.push(e);
 }
 
 function generatePosition(viewWidth, viewHeight) {
-let pos = {};
+  let pos = {};
 
-pos.left = randomBetween(safegap, viewWidth);
-pos.top = randomBetween(safegap, viewHeight);
+  pos.left = randomBetween(safegap, viewWidth);
+  pos.top = randomBetween(safegap, viewHeight);
 
-for (let i = 0; i < positions.length; i++) {
+  for (let i = 0; i < positions.length; i++) {
     if (positions[i] === pos.left) {
-    for (let j = 0; j < positions.length; j++) {
+      for (let j = 0; j < positions.length; j++) {
         if (positions[i][j] === pos.top) {
-        return generatePosition(viewWidth, viewWidth);
+          return generatePosition(viewWidth, viewWidth);
         }
+      }
     }
-    }
-}
+  }
   return pos;
 }
 

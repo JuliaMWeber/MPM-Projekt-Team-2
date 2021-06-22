@@ -2,12 +2,12 @@
 let app = "";
 
 // GSAP Plugins aktivieren/registrieren
-gsap.registerPlugin(MotionPathPlugin, Draggable, SnapPlugin); 
+gsap.registerPlugin(MotionPathPlugin, Draggable, SnapPlugin);
 
 function getPoints(elements) {
   let points = [];
 
-  $.each(elements, function() {
+  $.each(elements, function () {
     points.push($(this));
   });
   return points;
@@ -18,11 +18,11 @@ function getCenterOfPoints(points) {
   let x = [];
   let y = [];
 
-  $.each(points, function() {
-    x.push( this.x );
-    y.push( this.y );
+  $.each(points, function () {
+    x.push(this.x);
+    y.push(this.y);
   });
-  
+
   let sumX = sumArray(x);
   let sumY = sumArray(y);
 
@@ -30,7 +30,7 @@ function getCenterOfPoints(points) {
     x: sumX / x.length,
     y: sumY / y.length,
   }
-  
+
   return center;
 }
 
@@ -49,7 +49,7 @@ let animEase = "back.inOut(1)";
 //animEase = "back.inOut(4)";
 
 
-$('object').each(function() {
+$('object').each(function () {
   $(this).attr('data', $(this).attr('load-data'));
 });
 
@@ -95,22 +95,22 @@ function startIntro(section) {
 function loadLetters(letters) {
   let int = 0;
 
-  $.each(letters, function(index, value) {
+  $.each(letters, function (index, value) {
     value.element = $(app).find(value.selector).first().children()[0];
 
-    $(value.element).on("load", function() {
+    $(value.element).on("load", function () {
       console.log(index + ": SVG LOADED");
 
       value.content = value.element.contentDocument;
       let points = getPoints($(value.content).find("circle"));
       console.log(points.length);
 
-      $.each(points, function() {
-        koords[index].push( getPositionOfElement($(this)[0]) );
+      $.each(points, function () {
+        koords[index].push(getPositionOfElement($(this)[0]));
       });
 
       int++;
-      if(int == Object.keys(letters).length) {
+      if (int == Object.keys(letters).length) {
         // Globale Variable anlegen um darauf reagieren zu können
         window.lettersCompleteLoaded = true;
       }
@@ -119,15 +119,19 @@ function loadLetters(letters) {
   });
 
   // Timeout zur Sicherheit 
-  setTimeout(function(){
-    waitFor('lettersCompleteLoaded', function() {
-      $.each(letters, function(index, value) {
-        animateStars(value.element, koords[index], {index: index});
+  setTimeout(function () {
+    waitFor('lettersCompleteLoaded', function () {
+      $.each(letters, function (index, value) {
+        animateStars(value.element, koords[index], {
+          index: index
+        });
       });
     }, 50);
   }, 500);
 
 }
+
+
 
 function animateStars(target, coords, options) {
 
@@ -146,15 +150,15 @@ function animateStars(target, coords, options) {
   starGroup.setAttribute('data-ref', guid);
   starGroup.style.transformOrigin = center.x + "px " + center.y + "px";
 
-  for(let i=0; i < coords.length; i++) {
+  for (let i = 0; i < coords.length; i++) {
     // ohne sterne brauchen wir nicht weitermachen
-    if(tmp.length <= 0) {
+    if (tmp.length <= 0) {
       return;
     }
 
     let e = tmp[i];
 
-    if(e) {
+    if (e) {
       starGroup.appendChild(e);
 
       tmp.splice(i, 1);
@@ -170,68 +174,69 @@ function animateStars(target, coords, options) {
 
       animEase = "power3.out";
 
-      
-      let tl = new TimelineMax({onComplete: function() {
-        //$(e).addClass("moved");
-        $(target).parent().css('opacity', 0.2);
-      }});
+
+      let tl = new TimelineMax({
+        onComplete: function () {
+          //$(e).addClass("moved");
+          $(target).parent().css('opacity', 0.2);
+        }
+      });
       let bounds = {
         min: 0,
         max: 50,
       }
 
-      let ownSize = baseStarSize/2;
+      let ownSize = baseStarSize / 2;
 
       tl.to(e, {
         motionPath: {
-          path: [
-            {
-              x: device.width/2 + randomBetween(0, 3) - ownSize, 
-              y: device.height/2 + randomBetween(0, 3) - ownSize, 
+          path: [{
+              x: device.width / 2 + randomBetween(0, 3) - ownSize,
+              y: device.height / 2 + randomBetween(0, 3) - ownSize,
             },
             {
-              x: device.width/2 + randomBetween(-50,50) - ownSize, 
-              y: device.height/2 + randomBetween(-50,50) - ownSize, 
+              x: device.width / 2 + randomBetween(-50, 50) - ownSize,
+              y: device.height / 2 + randomBetween(-50, 50) - ownSize,
             },
             {
-              x: device.width/2 + randomBetween(0, 3) - ownSize, 
-              y: device.height/2 + randomBetween(0, 3) - ownSize, 
+              x: device.width / 2 + randomBetween(0, 3) - ownSize,
+              y: device.height / 2 + randomBetween(0, 3) - ownSize,
             },
             {
-              x: device.width/2 + randomBetween(-100,100) - ownSize, 
-              y: device.height/2 + randomBetween(-100,100) - ownSize, 
+              x: device.width / 2 + randomBetween(-100, 100) - ownSize,
+              y: device.height / 2 + randomBetween(-100, 100) - ownSize,
             },
             {
-              x: device.width/2 + randomBetween(0, 3) - ownSize, 
-              y: device.height/2 + randomBetween(0, 3) - ownSize, 
+              x: device.width / 2 + randomBetween(0, 3) - ownSize,
+              y: device.height / 2 + randomBetween(0, 3) - ownSize,
             },
             {
-              x: device.width/2 + randomBetween(-150,150) - ownSize, 
-              y: device.height/2 + randomBetween(-150,150) - ownSize, 
+              x: device.width / 2 + randomBetween(-150, 150) - ownSize,
+              y: device.height / 2 + randomBetween(-150, 150) - ownSize,
             },
             {
-              x: device.width/2 + randomBetween(0, 3) - ownSize, 
-              y: device.height/2 + randomBetween(0, 3) - ownSize, 
+              x: device.width / 2 + randomBetween(0, 3) - ownSize,
+              y: device.height / 2 + randomBetween(0, 3) - ownSize,
             },
             {
-              x: device.width/2 + randomBetween(-100,100) - ownSize, 
-              y: device.height/2 + randomBetween(-100,100) - ownSize, 
+              x: device.width / 2 + randomBetween(-100, 100) - ownSize,
+              y: device.height / 2 + randomBetween(-100, 100) - ownSize,
             },
             {
-              x: device.width/2 + randomBetween(0, 3) - ownSize, 
-              y: device.height/2 + randomBetween(0, 3) - ownSize, 
+              x: device.width / 2 + randomBetween(0, 3) - ownSize,
+              y: device.height / 2 + randomBetween(0, 3) - ownSize,
             },
             {
-              x: device.width/2 + randomBetween(-50,50) - ownSize, 
-              y: device.height/2 + randomBetween(-50,50) - ownSize, 
+              x: device.width / 2 + randomBetween(-50, 50) - ownSize,
+              y: device.height / 2 + randomBetween(-50, 50) - ownSize,
             },
             {
-              x: device.width/2 + randomBetween(-25,25) - ownSize, 
-              y: device.height/2 + randomBetween(-25,25) - ownSize, 
+              x: device.width / 2 + randomBetween(-25, 25) - ownSize,
+              y: device.height / 2 + randomBetween(-25, 25) - ownSize,
             },
             {
-              x: device.width/2 - ownSize, 
-              y: device.height/2 - ownSize, 
+              x: device.width / 2 - ownSize,
+              y: device.height / 2 - ownSize,
             },
           ],
           curviness: 2,
@@ -249,14 +254,13 @@ function animateStars(target, coords, options) {
 
       tl.to(e, {
         motionPath: {
-          path: [
-            {
-              x:coords[i].x + letterPos.x + randomBetween(-bounds.max, bounds.max) - ownSize, 
-              y:coords[i].y + letterPos.y + randomBetween(-bounds.max, bounds.max) - ownSize,
+          path: [{
+              x: coords[i].x + letterPos.x + randomBetween(-bounds.max, bounds.max) - ownSize,
+              y: coords[i].y + letterPos.y + randomBetween(-bounds.max, bounds.max) - ownSize,
             },
             {
-              x:coords[i].x + letterPos.x - ownSize, 
-              y:coords[i].y + letterPos.y - ownSize,
+              x: coords[i].x + letterPos.x - ownSize,
+              y: coords[i].y + letterPos.y - ownSize,
             }
           ],
           curviness: 1,
@@ -266,7 +270,9 @@ function animateStars(target, coords, options) {
         ease: animEase,
         delay: 0.5,
       });
-      tl.set(e, { className: e.getAttribute('class') + " moved"});
+      tl.set(e, {
+        className: e.getAttribute('class') + " moved"
+      });
 
     }
   }
@@ -276,56 +282,60 @@ function animateStars(target, coords, options) {
 
 
   // Events
-  if(options.index == 't') {
-    $(target).parent().on("click", function() {
+  if (options.index == 't') {
+    $(target).parent().on("click", function () {
       zoomIntoAndLoad(target, '#sem1');
     });
   }
-  if(options.index == 'h') {
-    $(target).parent().on("click", function() {
+  if (options.index == 'h') {
+    $(target).parent().on("click", function () {
       zoomIntoAndLoad(target, '#sem2');
     });
   }
   // Drag 
-  if(options.index == 'm') {
+  if (options.index == 'm') {
 
 
     // Wiggle-Animation
     var wiggle = new TimelineMax({
-      repeat:-1,
-      repeatDelay: 4,
-      delay: 10,
-    })
-    .to([ $(target).parent(), $('[data-ref=' + guid +']') ], 0.7,{
-      rotation: -45,
-    })
-    .to([ $(target).parent(), $('[data-ref=' + guid +']') ], 6,{
-      rotation: 0,
-      ease: "elastic.out(4, 0.1)",
-    });
+        repeat: -1,
+        repeatDelay: 4,
+        delay: 10,
+      })
+      .to([$(target).parent(), $('[data-ref=' + guid + ']')], 0.7, {
+        rotation: -45,
+      })
+      .to([$(target).parent(), $('[data-ref=' + guid + ']')], 6, {
+        rotation: 0,
+        ease: "elastic.out(4, 0.1)",
+      });
 
 
-    let drag = Draggable.create( $(target).parent(), {
+    let drag = Draggable.create($(target).parent(), {
       type: "rotation",
 
-      onPress:function(e) {
+      onPress: function (e) {
         console.log("onPress");
       },
-      onDrag:function(e) {
+      onDrag: function (e) {
         console.log("onDrag");
 
         // Referenzierende Element mit drehen
-        gsap.set($('[data-ref=' + guid +']'), {rotation: drag[0].rotation });
+        gsap.set($('[data-ref=' + guid + ']'), {
+          rotation: drag[0].rotation
+        });
 
       },
-      onClick:function(e) {
+      onClick: function (e) {
         console.log("onClick");
       },
-      onDragEnd:function(e) {
+      onDragEnd: function (e) {
         console.log("onDragEnd");
 
         // eigener Snapper auf 180Grad
-        gsap.set([$(target).parent(), $('[data-ref=' + guid +']')], {rotation: (Math.round(drag[0].rotation / 180) * 180) });
+        gsap.set([$(target).parent(), $('[data-ref=' + guid + ']')], {
+          rotation: (Math.round(drag[0].rotation / 180) * 180)
+        });
 
         drag[0].update();
 
@@ -350,8 +360,8 @@ function generateStartPosition(parent) {
 
   let position = generatePosition(device.width - safegap, device.height - safegap);
 
-  let x = position.left - (baseStarSize/2) + "px";
-  let y = position.top - (baseStarSize/2) + "px";
+  let x = position.left - (baseStarSize / 2) + "px";
+  let y = position.top - (baseStarSize / 2) + "px";
 
   let scale = scaleByBaseSize(randomFloatBetween(1, 5, 2));
 
@@ -364,16 +374,16 @@ function generateStartPosition(parent) {
 
   let random = Math.random();
 
-  if(random < 0.3) {
+  if (random < 0.3) {
     e.classList.add('color-1');
   }
-  if(random > 0.3 && random < 0.5) {
+  if (random > 0.3 && random < 0.5) {
     e.classList.add('color-2');
   }
-  if(random > 0.5 && random < 0.8) {
+  if (random > 0.5 && random < 0.8) {
     e.classList.add('color-3');
   }
-  if(random > 0.8) {
+  if (random > 0.8) {
     e.classList.add('color-4');
   }
 
@@ -411,8 +421,8 @@ function zoomInto(destination) {
     //ease: Power1.easeOut,
     ease: Sine.easeInOut,
     css: {
-      opacity: 0, 
-      scale: 200, 
+      opacity: 0,
+      scale: 200,
       transformOrigin: transformOrigin.x + "px " + transformOrigin.y + "px"
     }
   });
@@ -421,8 +431,8 @@ function zoomInto(destination) {
 }
 
 function zoomIntoAndLoad(destination, hash) {
-  
-  zoomInto(destination).then(function(){
+
+  zoomInto(destination).then(function () {
     loadSectionByHash(hash);
     resetAppStyle();
   });
@@ -444,7 +454,7 @@ function resetAppStyle() {
     duration: 1,
     ease: Sine.easeInOut,
     css: {
-      scale: 1, 
+      scale: 1,
       transformOrigin: "center"
     }
   });
@@ -452,9 +462,9 @@ function resetAppStyle() {
     duration: 0.2,
     ease: Sine.easeInOut,
     css: {
-      opacity: 1, 
+      opacity: 1,
     }
-  }).then(function(){
+  }).then(function () {
     $(app).attr('style', '');
   });
 
@@ -463,9 +473,9 @@ function resetAppStyle() {
 function scaleByBaseSize(scale) {
   let length = (Math.log10(baseStarSize) + 1);
 
-  if(baseStarSize == 0) {
+  if (baseStarSize == 0) {
     baseStarSize = 1;
   }
 
-  return scale / baseStarSize; 
+  return scale / baseStarSize;
 }
