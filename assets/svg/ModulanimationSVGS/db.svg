@@ -1,0 +1,35 @@
+<svg id="Ebene_1" data-name="Ebene 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 304 371">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #728fba;
+      }
+
+      .cls-2 {
+        fill: #84a6ce;
+      }
+
+      .cls-3 {
+        fill: #7b9eba;
+      }
+
+      .cls-4 {
+        fill: #9cc1e5;
+      }
+    </style>
+  </defs>
+  <g id="datenbank">
+    <g id="Layer3">
+      <path class="cls-1" d="M500,496.59c0,.11,0,.22,0,.33v97.17C500,618.9,432,639,348,639s-152-20.1-152-44.91V496.92c0-.11,0-.22,0-.33" transform="translate(-196 -268)"/>
+      <path class="cls-1" d="M500,497c0,30.38-68.05,55-152,55s-152-24.62-152-55" transform="translate(-196 -268)"/>
+    </g>
+    <g id="Layer2">
+      <path class="cls-2" d="M500,409.59c0,.11,0,.22,0,.33v97.17C500,531.9,432,552,348,552s-152-20.1-152-44.91V409.92c0-.11,0-.22,0-.33" transform="translate(-196 -268)"/>
+      <ellipse class="cls-2" cx="152" cy="142" rx="152" ry="55"/>
+    </g>
+    <g id="Layer1">
+      <path class="cls-3" d="M500,322.59c0,.11,0,.22,0,.33v97.17C500,444.9,432,465,348,465s-152-20.1-152-44.91V322.92c0-.11,0-.22,0-.33" transform="translate(-196 -268)"/>
+      <ellipse class="cls-4" cx="152" cy="55" rx="152" ry="55"/>
+    </g>
+  </g>
+</svg>

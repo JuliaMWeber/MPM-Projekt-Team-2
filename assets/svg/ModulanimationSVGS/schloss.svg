@@ -1,0 +1,23 @@
+<svg id="Ebene_1" data-name="Ebene 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 401 591">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke: #3a3a3a;
+        stroke-miterlimit: 10;
+        stroke-width: 42px;
+      }
+
+      .cls-2 {
+        fill: #fee87e;
+      }
+
+      .cls-3 {
+        fill: #f2cb2a;
+      }
+    </style>
+  </defs>
+  <path id="verschluss" class="cls-1" d="M230,306V187.54C230,130.6,276.28,84,332.85,84h54.3C443.72,84,490,130.6,490,187.54V306" transform="translate(-159 -63)"/>
+  <path id="koerper" class="cls-2" d="M12,234H389a12,12,0,0,1,12,12V548a43,43,0,0,1-43,43H43A43,43,0,0,1,0,548V246A12,12,0,0,1,12,234Z"/>
+  <path id="loch" class="cls-3" d="M384.13,471.65a51,51,0,1,0-48.25,0h0l-17.24,51.49a4.83,4.83,0,0,0,4.58,6.36h69.32a4.83,4.83,0,0,0,4.69-6l-13.1-51.84Z" transform="translate(-159 -63)"/>
+</svg>
