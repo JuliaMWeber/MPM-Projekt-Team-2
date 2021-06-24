@@ -94,16 +94,4 @@ function animateBos() {
 
     
     
-    
-    
-    
-    
-//let theBoss = content.getElementById("BosAusgabeE");
-     
-    //for (let E of theBoss.children) {
-      //  for (let Echild of E.children) {
-        //    timeLine.setBosColor(Echild, {fill: limeGreen});
-       // }
-    //}
-//}
 
