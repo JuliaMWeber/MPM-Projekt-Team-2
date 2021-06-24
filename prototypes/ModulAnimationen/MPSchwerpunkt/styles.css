@@ -1,0 +1,13 @@
+/* Nicht Löschen oder verschieben! */
+@import url("./../../../assets/css/reset.css");
+
+/* Custom Style */
+
+#container {
+    width: 90vmin;
+    overflow:hidden;
+}
+
+html {
+    background-color: rgb(12, 10, 23);
+}

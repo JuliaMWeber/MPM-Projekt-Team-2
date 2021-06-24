@@ -33,7 +33,7 @@ let doAnimations = function (){
     let typRect = typ.getBoundingClientRect()
     gsap.set('.container',{perspective:500})
 
-    let tl = gsap.timeline()
+    let tl = gsap.timeline({repeat: -1, repeatDelay: 0})
     .from(denkblasen,{opacity:0,stagger:0.3,},1)
 
     .from(formeln[2],{opacity:0},2)
@@ -68,7 +68,6 @@ let doAnimations = function (){
         .to(mundSad,{opacity:0, ease:"power3"},7)
         .to(mundhappy,{opacity:1, ease:"power3"},7)
         .to(mundhappy,{})
-
 
 
 
