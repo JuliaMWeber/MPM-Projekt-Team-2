@@ -79,7 +79,7 @@ function generateQRCode() {
       if(sat[0].contentDocument) {
         let wing = $(sat[0].contentDocument).find('#qrplace')[0];
 
-        let url = document.location;
+        let url = window.location.href;
         let qrcode = new QRCode(wing, {
           text: url,
           width: 250,
