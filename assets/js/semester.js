@@ -146,7 +146,7 @@ function displayOrbit(semesterNum) {
                         i++;
 
                         let moon = document.createElement("object");
-                        moon.data = "./assets/svg/Moons/MoonV1.svg";
+                        moon.data = "./assets/svg/Moons/MondV3.svg";
                         moon.style.width = (planetSize/3) + "px";
                         moon.style.height = (planetSize/3) + "px";
 

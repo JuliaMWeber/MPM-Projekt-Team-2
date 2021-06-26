@@ -1,0 +1,60 @@
+/* Nicht Löschen oder verschieben! */
+@import url("./../../../assets/css/reset.css");
+
+/* Custom Style */
+
+.lock {
+  width: 200px;
+  height: 200px;
+  margin: auto;
+  position: absolute;
+  top: calc(33% - 20vw/2);
+  left: calc(33% - 20vw/2);
+  z-index: 10;
+  text-align: center;
+}
+.db {
+  width: 200px;
+  height: 200px;
+  margin: auto;
+  position: absolute;
+  top: calc(75% - 20vw/2);
+  left: calc(33% - 20vw/2);
+  z-index: 10;
+  text-align: center;
+}
+
+.wrapper object {
+  width: 100%;
+  height: 100vh;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.splitter {
+  z-index: 2;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.char {
+  font-family: Arial, Helvetica, sans-serif;
+  position: absolute;
+  color: black;
+  opacity: 0;
+  padding: 0.5rem 0;
+  border-top: 1px solid transparent;
+  border-bottom: 1px solid transparent;
+  display: inline-block;
+  font-size: 2.5vw;
+}
+
+.selected {
+  border: 1px dashed #000;
+  padding: 5px;
+}
+
+.pos-absolute {
+  position: absolute;
+}
