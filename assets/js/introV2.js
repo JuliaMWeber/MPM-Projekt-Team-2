@@ -90,6 +90,8 @@ function startIntro(section) {
 
   generateStars(quantity);
   loadLetters(letters);
+
+  generateQRCode();
 }
 
 function loadLetters(letters) {
@@ -345,6 +347,10 @@ function animateStars(target, coords, options) {
     });
 
   }
+
+
+  // QR Code einblenden
+  generateQRCode();
 
 }
 

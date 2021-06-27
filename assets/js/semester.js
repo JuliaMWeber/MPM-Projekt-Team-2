@@ -282,11 +282,11 @@ function planetZoom(x, y, zoomlvl){
     }
     let tl = gsap.timeline();
     if(zoomlvl==1){
-        tl.fromTo(portal, {opacity: "70%"}, {opacity: "0%", duration: duration/3})
-        .to(portal, {opacity: "70%", duration: duration/3}, ">" + (duration/3 + 1.5));
+        tl.fromTo(portal, {opacity: "90%"}, {opacity: "0%", duration: duration/3})
+        .to(portal, {opacity: "90%", duration: duration/3}, ">" + (duration/3 + 1.5));
     } else {
-        tl.fromTo(portal, {opacity: "70%"}, {opacity: "0%", duration: duration/3})
-        .to(portal, {opacity: "70%", duration: duration/3}, ">" + (duration/3));
+        tl.fromTo(portal, {opacity: "90%"}, {opacity: "0%", duration: duration/3})
+        .to(portal, {opacity: "90%", duration: duration/3}, ">" + (duration/3));
     }
 
     return tl;
