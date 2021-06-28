@@ -143,7 +143,7 @@ function animateLineup() {
   let tmpWidth = 0;
   let tl = gsap.timeline({delay: 2});
   
-  let laptop = $(svgcontent).find('#Laptop');
+  let laptop = $(svgcontent).find('#CaseTop');
   let laptopPos = getCenterOfElement(laptop[0]);
 
   let status = $(svgcontent).find('#Status').find('#s1')[0];
@@ -252,7 +252,7 @@ function animateEncrypt() {
   let lock = $(svgcontent).find('#Lock').first();
   let lockPos = getCenterOfElement(lock[0]);
 
-  let laptop = $(svgcontent).find('#Laptop');
+  let laptop = $(svgcontent).find('#CaseTop');
   let laptopPos = getCenterOfElement(laptop[0]);
 
   let status = $(svgcontent).find('#Status').find('#s2')[0];
@@ -348,7 +348,7 @@ function animateTransfer() {
   let db = $(svgcontent).find('#DB').first();
   let dbPos = getCenterOfElement(db[0]);
 
-  let laptop = $(svgcontent).find('#Laptop');
+  let laptop = $(svgcontent).find('#CaseTop');
   let laptopPos = getCenterOfElement(laptop[0]);
 
 
