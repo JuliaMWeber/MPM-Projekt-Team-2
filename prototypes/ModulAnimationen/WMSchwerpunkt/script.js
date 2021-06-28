@@ -80,14 +80,14 @@ function svgLoad(svgs) {
   function loadSVGs(resolve, reject) {
     let loaded = 0;
     $.each(svgs, function (index, value) {
-      // Schauen ob im Content des Elements, ob irgend was im content drin ist
-      if ($(value)[0] && $(value)[0].contentDocument) {
-        //console.log($(value));
+      // Schauen ob im Content des Elements, ob ein svg-tag im content drin ist
+      if ($(value)[0] && $(value)[0].contentDocument.getElementsByTagName('svg')[0]) {
         loaded++;
       }
     });
 
     if (loaded == svgs.length) {
+      console.log("All SVGs completely loaded.");
       resolve(true);
     } else if ((Date.now() - start) >= (1000 * 30)) {
       reject(new Error("Couldnt load all SVGs!"));
@@ -417,7 +417,6 @@ function animateTransfer() {
 }
 
 svgLoad(['#svg_swwm']).then(function () {
-  console.log("ready to fight");
   svgcontent = document.getElementById("svg_swwm").contentDocument;
 
   prepare();
