@@ -81,7 +81,7 @@ function svgLoad(svgs) {
     let loaded = 0;
     $.each(svgs, function (index, value) {
       // Schauen ob im Content des Elements, ob ein svg-tag im content drin ist
-      if ($(value)[0] && $(value)[0].contentDocument.getElementsByTagName('svg')[0]) {
+      if ($(value)[0] && $(value)[0].contentDocument && $(value)[0].contentDocument.getElementsByTagName('svg')[0]) {
         loaded++;
       }
     });
