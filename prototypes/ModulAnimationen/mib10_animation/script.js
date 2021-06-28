@@ -29,15 +29,17 @@ function doHitTest(element1,element2){
 }
 
 let doAnimations = function (){
+    
+    let typx = typ.getBBox().x
+    let typy = typ.getBBox().y
 
-    let typRect = typ.getBoundingClientRect()
     gsap.set('.container',{perspective:500})
 
     let tl = gsap.timeline({repeat: -1, repeatDelay: 0})
     .from(denkblasen,{opacity:0,stagger:0.3,},1)
 
     .from(formeln[2],{opacity:0},2)
-    .to(formeln[2],{x:typRect.x,y:typRect.y,duration:1.5,onUpdate:hide => {
+    .to(formeln[2],{x:typx,y:typy,duration:1.5,onUpdate:hide => {
             if (doHitTest(typ,formeln[2])){
                 gsap.to(formeln[2],{opacity:0,ease:"power4",duration:0.25})
                 gsap.to(traehne,{opacity:1,y:10})
@@ -46,14 +48,14 @@ let doAnimations = function (){
         }},2)
 
     .from(formeln[1],{opacity:0},2.5)
-    .to(formeln[1],{x:typRect.x,y:typRect.y,duration:1.5,onUpdate:hide => {
+    .to(formeln[1],{x:typx,y:typy,duration:1.5,onUpdate:hide => {
             if (doHitTest(typ,formeln[1])){
                 gsap.to(formeln[1],{opacity:0,ease:"power4",duration:0.25})
             }
         }},2.5)
 
         .from(formeln[0],{opacity:0},3)
-        .to(formeln[0],{x:typRect.x,y:typRect.y,duration:1.5,onUpdate:hide => {
+        .to(formeln[0],{x:typx,y:typy,duration:1.5,onUpdate:hide => {
                 if (doHitTest(typ,formeln[0])){
 
                     gsap.to(formeln[0],{opacity:0,ease:"power4",duration:0.25})

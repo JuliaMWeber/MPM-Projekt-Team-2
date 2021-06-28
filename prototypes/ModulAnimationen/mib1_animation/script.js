@@ -1,10 +1,15 @@
 // Hier kommt das Custom Script Zeug rein
+
+let overlay = document.getElementById("thm_overlay")
+let thm = document.getElementById("thm")
 let showChecker = function () {
-    let overlay = document.getElementById("thm_overlay")
-    let thm = document.getElementById("thm")
+
 
     gsap.to(overlay,{opacity:1,duration:2})
     gsap.to(thm,{fill:"white",duration:2})
+}
+let hideChecker = function(){
+    gsap.to(overlay,{opacity:0,duration:1})
 }
 
 let tM = document.getElementById("t_m")
@@ -24,11 +29,16 @@ let mML = document.getElementById("m_l")
 let koordSystem = document.getElementById("koord_system")
 
 let doInitAnimation = function () {
-    let buildSystem = new Vivus('koord_system',{type:"sync",duration:250,},startGSAP())
+    let buildSystem = new Vivus('koord_system',{type:"sync",duration:100,},function (e){
+        startGSAP()
+
+    })
 }
 
 let startGSAP = function () {
-    let timeline = gsap.timeline()
+    //gsap.to(thm,{fill:"#4fe084",duration:1})
+    let timeline = gsap.timeline({repeat: -1,repeatDelay:5})
+        .to(thm,{fill:"#4fe084",duration:1})
         .to(tM,{y:-200},1)
         .to(tR,{x:-50},1)
         .to(tL,{x:50},1)
@@ -55,7 +65,9 @@ let startGSAP = function () {
         .to(mM3,{y:0,opacity:1,duration:0.3},4.6)
         .to(mM3,{x:0,duration:0.5,onComplete:checker => {
             showChecker()
+                setTimeout(function (){hideChecker()},3500)
             }},4.9)
+
 }
 
 doInitAnimation()
