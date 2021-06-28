@@ -421,6 +421,15 @@ h6 {
     font-size: 1rem;
 }
 
+#moduleanim {
+    display: flex;
+    justify-content: center;
+}
+
+#moduleanim *{
+    width: 75%;
+}
+
 /* HELPER */
 .rotate180 {
     transform: rotate(180deg);

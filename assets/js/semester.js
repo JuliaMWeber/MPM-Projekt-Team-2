@@ -302,7 +302,7 @@ function displayOverlay(status){
 
         let animWidth = focusedPlanet.getBoundingClientRect().width + focusedPlanet.getBoundingClientRect().x;
         
-        gsap.set(animDiv, {width: animWidth, height: clientHeight});
+        gsap.set(animDiv, {width: animWidth, height: clientHeight, opacity: 0});
         gsap.set(txtDiv, {x: animWidth, y: 0, width: clientWidth - animWidth, height: clientHeight - portal.getBoundingClientRect().height});
 
         let id = [];
@@ -317,6 +317,8 @@ function displayOverlay(status){
         modulInfo.classList.add("modulinfo");
         txtDiv.appendChild(modulInfo);
         gsap.set(modulInfo, {width: "100%", height: "100%", overflowY: "auto"});
+
+        insertAnim(animDiv, modules[id[0]]["Kuerzel"]);
 
         for(let i=0;i<id.length;i++){
             if(i>0){
@@ -359,7 +361,9 @@ function displayOverlay(status){
                 overlay.insertBefore(wireSvg, overlaySvg);
 
                 let wireOutline = document.getElementById("Outline");
-                overlayAnims.push(gsap.fromTo(wireOutline, {fillOpacity: 0}, {fillOpacity: 0.93, duration: 1, delay: 0.7}));
+                overlayAnims.push(gsap.fromTo(wireOutline, {fillOpacity: 0}, {fillOpacity: 0.93, duration: 1, delay: 0.7, onComplete: function(){
+                    gsap.to(animDiv, {opacity: 1, duration: 0.5});
+                }}));
 
                 let children = modulInfo.children;
 
@@ -396,6 +400,9 @@ function displayOverlay(status){
                 });
             }
         }
+        gsap.to(animDiv, {opacity: 0, duration: 0.5, onComplete: function() {
+            animDiv.removeChild(animDiv.firstChild);
+        }});
     }
 }
 

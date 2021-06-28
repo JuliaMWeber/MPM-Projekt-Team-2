@@ -1,0 +1,42 @@
+[
+    {
+        "id" : "MIB1",
+        "svg" : "./assets/svg/ModulanimationSVGS/"
+    },
+    {
+        "id" : "MIB2a",
+        "svg" : "./assets/svg/ModulanimationSVGS/MIB2-Final.svg"
+    },
+    {
+        "id" : "MIB3",
+        "svg" : "./assets/svg/ModulanimationSVGS/MIB3_Final.svg"
+    },
+    {
+        "id" : "MIB4a",
+        "svg" : "./assets/svg/ModulanimationSVGS/MIB4_v2.svg"
+    },
+    {
+        "id" : "MIB5",
+        "svg" : "./assets/svg/ModulanimationSVGS/MIB5.svg"
+    },
+    {
+        "id" : "MIB6",
+        "svg" : "./assets/svg/ModulanimationSVGS/MIB6_v3.svg"
+    },
+    {
+        "id" : "MIB7",
+        "svg" : "./assets/svg/ModulanimationSVGS/MIB7.svg"
+    },
+    {
+        "id" : "MIB8",
+        "svg" : "./assets/svg/ModulanimationSVGS/MIB8.svg"
+    },
+    {
+        "id" : "MIB9",
+        "svg" : "./assets/svg/ModulanimationSVGS/MIB9.svg"
+    },
+    {
+        "id" : "MIB10",
+        "svg" : "./assets/svg/ModulanimationSVGS/mib10.svg"
+    }
+]
