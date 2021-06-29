@@ -111,8 +111,9 @@ function loadLetters(letters) {
       value.content = value.element.contentDocument;
 
       let pl=0;
+      let points;
       while (pl < 50) {
-        let points = getPoints($(value.content).find("circle"));
+        points = getPoints($(value.content).find("circle"));
         pl = points.length;
         console.log(pl);
       }
