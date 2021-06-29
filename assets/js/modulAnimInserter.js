@@ -26,13 +26,13 @@ function insertAnim(container, moduleId) {
 function loadAnimationScript(moduleId, content){
     switch (moduleId) {
         case "MIB1" :
-            //mib1Anim(content); needs Svg
+            mib1Anim(content);
             break;
         case "MIB2a" :
-            //mib2Anim(content); svg is missing ids
+            //mib2Anim(content); //animation script doesnt work with object tag
             break;
         case "MIB3" :
-            //mib3Anim(content); animation script doesnt work with object tag
+            //mib3Anim(content); //animation script doesnt work with object tag
             break;
         case "MIB4a" :
             mib4Anim(content);
@@ -87,7 +87,7 @@ function mib1Anim(content) {
     let koordSystem = content.getElementById("koord_system")
 
     let doInitAnimation = function () {
-        let buildSystem = new Vivus('koord_system',{type:"sync",duration:100,},function (e){
+        let buildSystem = new Vivus(document.getElementById("modulAnimObj") ,{type:"sync",duration:100,},function (e){
             startGSAP()
 
         })
