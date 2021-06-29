@@ -35,6 +35,10 @@ function displaySchwerpunktwahl(id) {
     delay: 0.5
   });
 
+  gsap.ticker.add(function() {
+    gsap.set(data.portal.children().first(), {rotation: "-=1"});
+  });
+
   // Portal Event
   data.portal.on('click', function () {
     let prev;
