@@ -1,199 +1,401 @@
-//contentDocument.firstChild.children
+// Global Variables
+let app = "";
 
-function displayIntro() {
-  logoBG = document.getElementById("logoFill");
-  logoWire = document.getElementById("logoWire");
+// GSAP Plugins aktivieren/registrieren
+gsap.registerPlugin(MotionPathPlugin, Draggable, SnapPlugin);
 
-  starQuantity = 2000;
-  logoGroup = document.getElementById("logo");
-  logoSvg = document.getElementById("logosvg");
-  logobase = document.getElementById("logobase");
-  starbg = document.getElementById("stars");
-  app = document.getElementById("app");
-  elements = [];
-  positions = [];
+function getPoints(elements) {
+  let points = [];
 
-  device = {};
-  device.width = document.documentElement.clientWidth;
-  device.height = document.documentElement.clientHeight;
-  logoSafeGap = 50;
-  safegap = device.width / device.height * 2.5;
-  starSizeMax = safegap;
-
-  //Animation-Settings
-  animDelay = 0.5;
-  animDuration = 3;
-  animEase = "back.inOut(1)";
-  //animEase = "power3.inOut";
-  //animEase = "back.inOut(4)";
-
-  starGrid = 4;
-
-  window.addEventListener("load", animateStars());
+  $.each(elements, function () {
+    points.push($(this));
+  });
+  return points;
 }
 
-function initialiseLogo() {
-  let bg = logoBG.contentDocument.getElementById("outline");
-  let wire = logoWire.contentDocument.getElementById("wireframe");
 
-  logoSvg.appendChild(bg);
-  logoSvg.appendChild(wire);
-  logoSvg.appendChild(logoBG.contentDocument.getElementsByTagName("defs")[0])
+function getCenterOfPoints(points) {
+  let x = [];
+  let y = [];
 
-  logoSvg.setAttribute("width", bg.getBoundingClientRect().width);
-  logoSvg.setAttribute("height", bg.getBoundingClientRect().height);
+  $.each(points, function () {
+    x.push(this.x);
+    y.push(this.y);
+  });
 
-  logoGroup.remove();
+  let sumX = sumArray(x);
+  let sumY = sumArray(y);
+
+  let center = {
+    x: sumX / x.length,
+    y: sumY / y.length,
+  }
+
+  return center;
 }
 
-function resizeLogo() {
-  let targetwidth = logobase.getBoundingClientRect().width;
-  let targetheight = logobase.getBoundingClientRect().height;
-  targetwidth -= logoSafeGap * 2;
-  targetheight -= logoSafeGap * 2;
+let quantity = 1000;
+// Minimum 300
+quantity = Math.floor( (Math.log(device.width * device.height) - 10) * (quantity * 0.2) );
+console.log(quantity);
 
-  let currentwidth = logoSvg.getBoundingClientRect().width;
-  let currentheight = logoSvg.getBoundingClientRect().height;
+let baseStarSize = "100"; // Anfangs groß - wird über scale() reduziert
 
-  let scale = targetwidth / currentwidth;
-  if (scale > targetheight / currentheight) {
-    scale = targetheight / currentheight;
-  }
+// Animation-Settings
+let animDelay = 0.5;
+let animDuration = 3;
+let animEase = "back.inOut(1)";
+//animEase = "power3.inOut";
+//animEase = "back.inOut(4)";
 
-  logobase.style.transform = "scale(" + scale + ")";
-  logobase.style.transformOrigin = "top left";
 
-  let xOffset = (device.width - logoSvg.getBoundingClientRect().width) / 2;
-  let yOffset = (device.height - logoSvg.getBoundingClientRect().height) / 2;
+$('object').each(function () {
+  $(this).attr('data', $(this).attr('load-data'));
+});
 
-  logobase.style.transform = "translate(" + xOffset + "px, " + yOffset + "px)scale(" + scale + ") ";
+let letters = {
+  t: {
+    selector: ".letterT",
+    element: null,
+    content: null,
+  },
+  h: {
+    selector: ".letterH",
+    element: null,
+    content: null,
+  },
+  m: {
+    selector: ".letterM",
+    element: null,
+    content: null,
+  },
+};
+
+
+let starbg = document.getElementById("stars");
+let elements = [];
+let positions = [];
+let koords = {
+  t: [],
+  h: [],
+  m: [],
+};
+let selected = [];
+
+let safegap = device.width / device.height * 2.5;
+
+function startIntro(section) {
+
+  app = section;
+  starbg = $(app).find('#stars');
+
+  generateStars(quantity);
+  loadLetters(letters);
+
+  generateQRCode();
+}
+
+function loadLetters(letters) {
+  let int = 0;
+
+  $.each(letters, function (index, value) {
+    value.element = $(app).find(value.selector).first().children()[0];
+
+    $(value.element).on("load", function () {
+      console.log(index + ": SVG LOADED");
+
+      value.content = value.element.contentDocument;
+      let points = getPoints($(value.content).find("circle"));
+      console.log(points.length);
+
+      $.each(points, function () {
+        koords[index].push(getPositionOfElement($(this)[0]));
+      });
+
+      int++;
+      if (int == Object.keys(letters).length) {
+        // Globale Variable anlegen um darauf reagieren zu können
+        window.lettersCompleteLoaded = true;
+      }
+    });
+
+  });
+
+  // Timeout zur Sicherheit 
+  setTimeout(function () {
+    waitFor('lettersCompleteLoaded', function () {
+      $.each(letters, function (index, value) {
+        animateStars(value.element, koords[index], {
+          index: index
+        });
+      });
+    }, 50);
+  }, 500);
 
 }
 
-function animateStars() {
-  initialiseLogo();
 
-  let letters = logoSvg.children;
 
-  destPositions = [];
+function animateStars(target, coords, options) {
 
-  for (let i = 0; i < letters[0].children.length; i++) {
-    destPositions = destPositions.concat(getPointsInPath(letters[1].children[i], starGrid));
-  }
-
-  for (let i = 0; i < destPositions.length; i++) {
-    if (Math.random() > 0.4) { //reducing destpoints for optimization
-      destPositions.splice(i, 1);
-      i--;
-    }
-  }
-
-  let tmp = document.createElement("div");
-  tmp.id = "destpoints";
-  tmp.style = "position: absolute; display: block; top: 0px; left: 0px;";
-  tmp.setAttribute("width", logoSvg.getBoundingClientRect().width);
-  tmp.setAttribute("height", logoSvg.getBoundingClientRect().height);
-  logobase.appendChild(tmp);
-  for (let i = 0; i < destPositions.length; i++) {
-    tmp.appendChild(document.createElement("div"));
-    tmp.lastChild.style = "transform: translate(" + destPositions[i].x + "px, " + destPositions[i].y + "px);";
-    tmp.lastChild.className = "point";
-  }
-
-  resizeLogo();
-
-  destPositions.length = 0;
-  let newpoints = tmp.children;
-  for (let i = 0; i < newpoints.length; i++) { //get new points after resize
-    destPositions[i] = newpoints[i].getBoundingClientRect();
-  }
-
-  tmp.remove();
-
-  console.log("Destpositions:" + destPositions.length);
-
-  for (let i = 0; i < starQuantity; i++) {
-    generateStartPosition();
-  }
-
-  randomAnimate();
-}
-
-function randomAnimate() {
   let tmp = elements;
 
-  let scale = 1.5;
+  let letterPos = getPositionOfElement($(target)[0]);
 
-  let originalLength = tmp.length;
 
-  while (destPositions.length > 0 && tmp.length > 0 && tmp.length > originalLength * 0.3) {
-    let starindex = randomBetween(0, tmp.length);
-    let destindex = randomBetween(0, destPositions.length);
-    let e = tmp[starindex];
+  let guid = generateGUID();
+  $(target).parent().attr('id', guid);
 
-    if (e && destPositions[destindex]) {
-      e.classList.remove("bgStar");
-      e.classList.add("fgStar");
-      // array bereinigen, damit wir keinen stern doppelt treffen
-      if (starindex > -1) {
-        tmp.splice(starindex, 1);
+  let center = getCenterOfElement(target);
+
+  let starGroup = document.createElement("div");
+  starGroup.classList.add('group');
+  starGroup.setAttribute('data-ref', guid);
+  starGroup.style.transformOrigin = center.x + "px " + center.y + "px";
+
+  for (let i = 0; i < coords.length; i++) {
+    // ohne sterne brauchen wir nicht weitermachen
+    if (tmp.length <= 0) {
+      return;
+    }
+
+    let e = tmp[i];
+
+    if (e) {
+      starGroup.appendChild(e);
+
+      tmp.splice(i, 1);
+
+      let tmp_ease = "back.out(4)";
+      //tmp_ease = animEase;
+
+      let random_coords = {
+        x: coords[i].x + letterPos.x,
+        y: coords[i].y + letterPos.y
       }
-      gsap.to(e, {
-        x: destPositions[destindex].x,
-        y: destPositions[destindex].y,
-        duration: animDuration,
+      let tmp_duration = animDuration;
+
+      animEase = "power3.out";
+
+
+      let tl = new TimelineMax({
+        onComplete: function () {
+          //$(e).addClass("moved");
+          $(target).parent().css('opacity', 0.2);
+        }
+      });
+      let bounds = {
+        min: 0,
+        max: 50,
+      }
+
+      let ownSize = baseStarSize / 2;
+
+      tl.to(e, {
+        motionPath: {
+          path: [{
+              x: device.width / 2 + randomBetween(0, 3) - ownSize,
+              y: device.height / 2 + randomBetween(0, 3) - ownSize,
+            },
+            {
+              x: device.width / 2 + randomBetween(-50, 50) - ownSize,
+              y: device.height / 2 + randomBetween(-50, 50) - ownSize,
+            },
+            {
+              x: device.width / 2 + randomBetween(0, 3) - ownSize,
+              y: device.height / 2 + randomBetween(0, 3) - ownSize,
+            },
+            {
+              x: device.width / 2 + randomBetween(-100, 100) - ownSize,
+              y: device.height / 2 + randomBetween(-100, 100) - ownSize,
+            },
+            {
+              x: device.width / 2 + randomBetween(0, 3) - ownSize,
+              y: device.height / 2 + randomBetween(0, 3) - ownSize,
+            },
+            {
+              x: device.width / 2 + randomBetween(-150, 150) - ownSize,
+              y: device.height / 2 + randomBetween(-150, 150) - ownSize,
+            },
+            {
+              x: device.width / 2 + randomBetween(0, 3) - ownSize,
+              y: device.height / 2 + randomBetween(0, 3) - ownSize,
+            },
+            {
+              x: device.width / 2 + randomBetween(-100, 100) - ownSize,
+              y: device.height / 2 + randomBetween(-100, 100) - ownSize,
+            },
+            {
+              x: device.width / 2 + randomBetween(0, 3) - ownSize,
+              y: device.height / 2 + randomBetween(0, 3) - ownSize,
+            },
+            {
+              x: device.width / 2 + randomBetween(-50, 50) - ownSize,
+              y: device.height / 2 + randomBetween(-50, 50) - ownSize,
+            },
+            {
+              x: device.width / 2 + randomBetween(-25, 25) - ownSize,
+              y: device.height / 2 + randomBetween(-25, 25) - ownSize,
+            },
+            {
+              x: device.width / 2 - ownSize,
+              y: device.height / 2 - ownSize,
+            },
+          ],
+          curviness: 2,
+        },
+        scale: scaleByBaseSize(randomFloatBetween(1, 5, 2)),
+        duration: 2,
+        delay: 1,
+      });
+
+      tl.to(e, {
+        scale: scaleByBaseSize(1),
+        duration: 0.5,
+        ease: Circ.easeOut,
+      });
+
+      tl.to(e, {
+        motionPath: {
+          path: [{
+              x: coords[i].x + letterPos.x + randomBetween(-bounds.max, bounds.max) - ownSize,
+              y: coords[i].y + letterPos.y + randomBetween(-bounds.max, bounds.max) - ownSize,
+            },
+            {
+              x: coords[i].x + letterPos.x - ownSize,
+              y: coords[i].y + letterPos.y - ownSize,
+            }
+          ],
+          curviness: 1,
+        },
+        scale: scaleByBaseSize(randomFloatBetween(3, 6, 2)),
+        duration: 1.5,
         ease: animEase,
-        delay: animDelay
+        delay: 0.5,
+      });
+      tl.set(e, {
+        className: e.getAttribute('class') + " moved"
+      });
+
+    }
+  }
+
+  $(starbg).append(starGroup);
+
+
+
+  // Events
+  if (options.index == 't') {
+    $(target).parent().on("click", function () {
+      zoomIntoAndLoad(target, '#sem1');
+    });
+  }
+  if (options.index == 'h') {
+    $(target).parent().on("click", function () {
+      zoomIntoAndLoad(target, '#sem2');
+    });
+  }
+  // Drag 
+  if (options.index == 'm') {
+
+
+    // Wiggle-Animation
+    var wiggle = new TimelineMax({
+        repeat: -1,
+        repeatDelay: 4,
+        delay: 10,
       })
-      // array bereinigen, damit wir keinen destPoint doppelt treffen
-      if (destindex > -1) {
-        destPositions.splice(destindex, 1);
-      }
-    }
-  }
-}
+      .to([$(target).parent(), $('[data-ref=' + guid + ']')], 0.7, {
+        rotation: -45,
+      })
+      .to([$(target).parent(), $('[data-ref=' + guid + ']')], 6, {
+        rotation: 0,
+        ease: "elastic.out(4, 0.1)",
+      });
 
-function getPointsInPath(path, gridSize) {
 
-  let boundRec = path.getBoundingClientRect();
+    let drag = Draggable.create($(target).parent(), {
+      type: "rotation",
 
-  let pointList = [];
+      onDrag: function (e) {
 
-  let point = logoSvg.createSVGPoint();
-  for (let x = boundRec.x; x <= (boundRec.x + boundRec.width); x += gridSize) {
-    for (let y = boundRec.y; y <= (boundRec.y + boundRec.height); y += gridSize) {
-      point.x = x;
-      point.y = y;
-      if (path.isPointInFill(point)) {
-        pointList.push({
-          x: point.x,
-          y: point.y
+        // Referenzierende Element mit drehen
+        gsap.set($('[data-ref=' + guid + ']'), {
+          rotation: drag[0].rotation
         });
+
+      },
+      onClick: function (e) {
+        if(Math.abs(drag[0].rotation % 360) == 0) {
+          zoomIntoAndLoad(target, '#schwerpunktwahl1');
+          console.log("Schwerpunkt: Medienproduktion");
+        } else {
+          zoomIntoAndLoad(target, '#schwerpunktwahl2');
+          console.log("Schwerpunkt: Web & Mobile");
+        }
+      },
+      onDragEnd: function (e) {
+
+        // eigener Snapper auf 180Grad
+        gsap.set([$(target).parent(), $('[data-ref=' + guid + ']')], {
+          rotation: (Math.round(drag[0].rotation / 180) * 180)
+        });
+
+        drag[0].update();
+
+        // Wiggle deaktivieren
+        wiggle.pause();
       }
-    }
+    });
+
   }
 
-  return pointList;
+
+  // QR Code einblenden
+  generateQRCode();
+
 }
 
+function generateStars(quantity) {
+  for (let i = 0; i < quantity; i++) {
+    generateStartPosition(starbg);
+  }
+}
 
-function generateStartPosition() {
+function generateStartPosition(parent) {
   let e = document.createElement("div");
-  e.classList.add('bgStar');
+  e.classList.add('star');
 
   let position = generatePosition(device.width - safegap, device.height - safegap);
 
-  let x = position.left + "px";
-  let y = position.top + "px";
-  e.style.transform = "translate(" + x + ", " + y + ")";
+  let x = position.left - (baseStarSize / 2) + "px";
+  let y = position.top - (baseStarSize / 2) + "px";
+
+  let scale = scaleByBaseSize(randomFloatBetween(1, 5, 2));
+
+  e.style.transform = "translate(" + x + ", " + y + ") scale(" + scale + ")";
 
   positions.push([position.left, position.top]);
+  e.style.width = baseStarSize + "px";
+  e.style.height = baseStarSize + "px";
 
-  let size = randomBetween(0, starSizeMax) + "px";
-  e.style.width = size;
-  e.style.height = size;
 
-  starbg.appendChild(e);
+  let random = Math.random();
+
+  if (random < 0.3) {
+    e.classList.add('color-1');
+  }
+  if (random > 0.3 && random < 0.5) {
+    e.classList.add('color-2');
+  }
+  if (random > 0.5 && random < 0.8) {
+    e.classList.add('color-3');
+  }
+  if (random > 0.8) {
+    e.classList.add('color-4');
+  }
+
+  $(parent).append(e);
 
   elements.push(e);
 }
@@ -213,10 +415,75 @@ function generatePosition(viewWidth, viewHeight) {
       }
     }
   }
+
   return pos;
 }
 
-function randomBetween(min, max) {
-  let rand = Math.floor(Math.random() * (max - min + 1) + min);
-  return rand;
+function zoomInto(destination) {
+
+  let tl = new TimelineMax();
+  let transformOrigin = getCenterOfElement(destination);
+
+  tl.to($(app), {
+    duration: 2,
+    //ease: Power1.easeOut,
+    ease: Sine.easeInOut,
+    css: {
+      opacity: 0,
+      scale: 200,
+      transformOrigin: transformOrigin.x + "px " + transformOrigin.y + "px"
+    }
+  });
+
+  return tl;
+}
+
+function zoomIntoAndLoad(destination, hash) {
+
+  zoomInto(destination).then(function () {
+    loadSectionByHash(hash);
+    resetAppStyle();
+  });
+
+}
+
+function loadSectionByHash(hash) {
+  let url_original = new URL(document.URL);
+  url_original.hash = hash;
+
+  // new url
+  let new_url = url_original.href;
+  document.location.href = new_url;
+}
+
+function resetAppStyle() {
+  let tl = new TimelineMax();
+  tl.to($(app), {
+    duration: 1,
+    ease: Sine.easeInOut,
+    css: {
+      scale: 1,
+      transformOrigin: "center"
+    }
+  });
+  tl.to($(app), {
+    duration: 0.2,
+    ease: Sine.easeInOut,
+    css: {
+      opacity: 1,
+    }
+  }).then(function () {
+    $(app).attr('style', '');
+  });
+
+}
+
+function scaleByBaseSize(scale) {
+  let length = (Math.log10(baseStarSize) + 1);
+
+  if (baseStarSize == 0) {
+    baseStarSize = 1;
+  }
+
+  return scale / baseStarSize;
 }
