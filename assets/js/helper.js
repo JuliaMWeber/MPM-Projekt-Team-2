@@ -78,8 +78,8 @@ function getCenterOfElement(element) {
   let coords = getPositionOfElement(element);
 
   return {
-    x: coords.x + ($(element).width() / 2),
-    y: coords.y + ($(element).height() / 2)
+    x: coords.x + (element.getBoundingClientRect().width / 2),
+    y: coords.y + (element.getBoundingClientRect().height / 2)
   }
 }
 
@@ -98,3 +98,42 @@ function waitFor(variable, callback, delay) {
     }
   }, delay);
 }
+
+
+/**
+ * Wartet darauf, dass alle übergebenen SVGs geladen sind 
+ *
+ * @param array svgs
+ * @return {object} Promise 
+ */
+ function svgLoad(svgs) {
+  // Zeit für möglichen timeout speichern
+  let start = Date.now();
+
+  // keine Array, dann eine mit einem element bauen
+  if( !Array.isArray(svgs) ) {
+    svgs = svgs.split(",");
+  }
+
+  return new Promise(loadSVGs);
+
+  function loadSVGs(resolve, reject) {
+    let loaded = 0;
+    $.each(svgs, function (index, value) {
+      // Schauen ob im Content des Elements, ob ein svg-tag im content drin ist
+      if ($(value)[0] && $(value)[0].contentDocument && $(value)[0].contentDocument.getElementsByTagName('svg')[0]) {
+        loaded++;
+      }
+    });
+
+    if (loaded == svgs.length) {
+      console.log("All SVGs completely loaded.");
+      resolve(true);
+    } else if ((Date.now() - start) >= (1000 * 30)) {
+      reject(new Error("Couldnt load all SVGs!"));
+    } else {
+      // noch nix da dann probieren wir es noch mal
+      setTimeout(loadSVGs.bind(this, resolve, reject), 10);
+    }
+  }
+};
