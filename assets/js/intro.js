@@ -107,11 +107,15 @@ function loadLetters(letters) {
     console.log("ready");
 
     $.each(letters, function (index, value) {
-      value.element = $(app).find(value.selector).first().children()[0];
-
+      value.element = $(app).find(value.selector).find('object')[0];
       value.content = value.element.contentDocument;
-      let points = getPoints($(value.content).find("circle"));
-      console.log(points.length);
+
+      let pl=0;
+      while (pl < 50) {
+        let points = getPoints($(value.content).find("circle"));
+        pl = points.length;
+        console.log(pl);
+      }
 
       $.each(points, function () {
         koords[index].push(getPositionOfElement($(this)[0]));
