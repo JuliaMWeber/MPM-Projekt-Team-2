@@ -52,6 +52,7 @@ section {
         url('./../fonts/audiowide-v9-latin/audiowide-v9-latin-regular.svg#Audiowide') format('svg');
     /* Legacy iOS */
 }
+
 /* orbitron-regular */
 @font-face {
     font-family: 'Orbitron';
@@ -71,6 +72,7 @@ section {
         url('./../fonts/orbitron-v17-latin/orbitron-v17-latin-regular.svg#Orbitron') format('svg');
     /* Legacy iOS */
 }
+
 /* orbitron-600 */
 @font-face {
     font-family: 'Orbitron';
@@ -90,6 +92,7 @@ section {
         url('./../fonts/orbitron-v17-latin-600.svg#Orbitron') format('svg');
     /* Legacy iOS */
 }
+
 /* orbitron-900 */
 @font-face {
     font-family: 'Orbitron';
@@ -226,6 +229,7 @@ h6 {
     width: 100px;
     height: auto;
 }
+
 #satellite::before {
     content: "";
     position: absolute;
@@ -335,8 +339,8 @@ h6 {
 
 #portal {
     position: absolute;
-    bottom: 10%;
-    right: 10%;
+    bottom: 5%;
+    right: 5%;
     height: 15vmin;
     width: 15vmin;
     opacity: 70%;
@@ -421,13 +425,99 @@ h6 {
     font-size: 1rem;
 }
 
+/* Schwerpunktwahl */
 #moduleanim {
     display: flex;
     justify-content: center;
 }
 
-#moduleanim *{
+#moduleanim * {
     width: 75%;
+}
+
+#sunSystem #animation {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+}
+
+#sunSystem #animation>object {
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    position: absolute;
+}
+
+#sunSystem .sp_headline {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    margin: auto;
+    font-size: 2rem;
+    top: 0;
+    bottom: 0;
+    display: block;
+    height: 2.5rem;
+    opacity: 0;
+}
+
+/* Schwerpunktwahl: Web & Mobile */
+.lock {
+    width: 200px;
+    height: 200px;
+    margin: auto;
+    position: absolute;
+    top: calc(33% - 20vw/2);
+    left: calc(33% - 20vw/2);
+    z-index: 10;
+    text-align: center;
+}
+.db {
+    width: 200px;
+    height: 200px;
+    margin: auto;
+    position: absolute;
+    top: calc(75% - 20vw/2);
+    left: calc(33% - 20vw/2);
+    z-index: 10;
+    text-align: center;
+}
+.wrapper object {
+    width: 100%;
+    height: 100vh;
+    max-width: 100%;
+    max-height: 100%;
+}
+.splitter {
+    z-index: 2;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.char {
+    font-family: Arial, Helvetica, sans-serif;
+    position: absolute;
+    color: black;
+    opacity: 0;
+    padding: 0.5rem 0;
+    border-top: 1px solid transparent;
+    border-bottom: 1px solid transparent;
+    display: inline-block;
+    font-size: 2.5vw;
+}
+.selected {
+    border: 1px dashed #000;
+    padding: 5px;
+}
+.pos-absolute {
+    position: absolute;
 }
 
 /* HELPER */

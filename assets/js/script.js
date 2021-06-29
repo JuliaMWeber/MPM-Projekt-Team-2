@@ -33,10 +33,11 @@ function reactToHash() {
   if (section) {
 
   } else {
+    // Urls speichern/überschreiben für Browser Prev/Next Buttons
+    sessionStorage.setItem("last_url", sessionStorage.getItem("current_url"));
+    sessionStorage.setItem("current_url", window.location);
+
     if (hash.includes("sem")) {
-      // Urls speichern/überschreiben für Browser Prev/Next Buttons
-      sessionStorage.setItem("last_url", sessionStorage.getItem("current_url"));
-      sessionStorage.setItem("current_url", window.location);
 
       switchToSemester(getSemesterNumberByHash());
     } else if (hash === "") {
@@ -45,6 +46,10 @@ function reactToHash() {
 
       document.getElementById("app").innerHTML = document.getElementById("intro").innerHTML;
       startIntro(document.getElementById("app"));
+
+    } else if (hash.includes("schwerpunktwahl")) {
+
+      switchToSchwerpunktwahl(getSchwerpunktNumberByHash());
     } else {
       // Kein Match?
       console.log("Keine passende Section gefunden");
@@ -52,6 +57,7 @@ function reactToHash() {
   }
 
 }
+
 
 function getSemesterNumberByHash() {
   let hash = window.location.hash.substr(1);
@@ -65,6 +71,20 @@ function getSemesterNumberByHash() {
 function switchToSemester(semester) {
   document.getElementById("app").innerHTML = document.getElementById("semester").innerHTML;
   displayOrbit(semester);
+}
+
+function getSchwerpunktNumberByHash() {
+  let hash = window.location.hash.substr(1);
+  let number = parseInt(hash.replace("schwerpunktwahl", "")) || 0;
+  if (number > 0) {
+    return number;
+  }
+  return 1;
+}
+
+function switchToSchwerpunktwahl(id) {
+  document.getElementById("app").innerHTML = document.getElementById("schwerpunktwahl").innerHTML;
+  displaySchwerpunktwahl(id);
 }
 
 

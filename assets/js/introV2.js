@@ -36,7 +36,7 @@ function getCenterOfPoints(points) {
 
 let quantity = 1000;
 // Minimum 300
-quantity = (Math.log(device.width * device.height) - 10) * (quantity * 0.2);
+quantity = Math.floor( (Math.log(device.width * device.height) - 10) * (quantity * 0.2) );
 console.log(quantity);
 
 let baseStarSize = "100"; // Anfangs groß - wird über scale() reduziert
@@ -85,8 +85,9 @@ let selected = [];
 let safegap = device.width / device.height * 2.5;
 
 function startIntro(section) {
+
   app = section;
-  starbg = $(app).find('#stars').first();
+  starbg = $(app).find('#stars');
 
   generateStars(quantity);
   loadLetters(letters);
@@ -316,11 +317,7 @@ function animateStars(target, coords, options) {
     let drag = Draggable.create($(target).parent(), {
       type: "rotation",
 
-      onPress: function (e) {
-        console.log("onPress");
-      },
       onDrag: function (e) {
-        console.log("onDrag");
 
         // Referenzierende Element mit drehen
         gsap.set($('[data-ref=' + guid + ']'), {
@@ -329,10 +326,15 @@ function animateStars(target, coords, options) {
 
       },
       onClick: function (e) {
-        console.log("onClick");
+        if(Math.abs(drag[0].rotation % 360) == 0) {
+          zoomIntoAndLoad(target, '#schwerpunktwahl1');
+          console.log("Schwerpunkt: Medienproduktion");
+        } else {
+          zoomIntoAndLoad(target, '#schwerpunktwahl2');
+          console.log("Schwerpunkt: Web & Mobile");
+        }
       },
       onDragEnd: function (e) {
-        console.log("onDragEnd");
 
         // eigener Snapper auf 180Grad
         gsap.set([$(target).parent(), $('[data-ref=' + guid + ']')], {
