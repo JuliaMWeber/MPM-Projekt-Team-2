@@ -29,7 +29,7 @@ function loadAnimationScript(moduleId, content){
             mib1Anim(content);
             break;
         case "MIB2a" :
-            //mib2Anim(content); //animation script doesnt work with object tag
+            mib2Anim(content);
             break;
         case "MIB3" :
             //mib3Anim(content); //animation script doesnt work with object tag
@@ -131,38 +131,47 @@ function mib1Anim(content) {
 }
 
 function mib2Anim(content) {
+    let firstBtn = content.getElementsByClassName("firstBtn");
+    let secondBtn = content.getElementsByClassName("secondBtn");
+    let thirdBtn = content.getElementsByClassName("thirdBtn");
+    let firstWave = content.getElementsByClassName("firstWave");
+    let secondWave = content.getElementsByClassName("secondWave");
+    let thirdWave = content.getElementsByClassName("thirdWave");
+    let speakerWave = content.getElementsByClassName("speakerWave");
+
     let masterTl = gsap.timeline({
         repeat: -1,
         repeatDelay: 1
     });
 
-    masterTl.to(content.getElementById('firstBtn'), {
+    masterTl.to(firstBtn, {
         y: -10
-    }, '+=0.2').to(content.getElementById('secondBtn'), {
+    }, '+=0.2').to(secondBtn, {
         y: -50
-    }, '+=0.2').to(content.getElementById('thirdBtn'), {
+    }, '+=0.2').to(thirdBtn, {
         y: -90
     }, '+=0.2');
 
-    gsap.to(content.getElementById('firstWave'), {
+
+    gsap.to(firstWave, {
         duration: 2,
         scale: 0.5,
         repeat: -1
     });
-    
-    gsap.to(content.getElementById('secondWave'), {
+
+    gsap.to(secondWave, {
         duration: 1,
         scale: 0.5,
         repeat: -1
     });
-    
-    gsap.to(content.getElementById('thirdWave'), {
+
+    gsap.to(thirdWave, {
         duration: 0.5,
         scale: 0.9,
         repeat: -1
     });
-    
-    gsap.from(content.getElementById('speakerWave'), {
+
+    gsap.from(speakerWave, {
         duration: 1,
         scale: 1.1,
         repeat: -1
