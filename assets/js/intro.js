@@ -98,11 +98,16 @@ function startIntro(section) {
 function loadLetters(letters) {
   let int = 0;
 
-  $.each(letters, function (index, value) {
-    value.element = $(app).find(value.selector).first().children()[0];
+  let tmp = [
+    letters.t.selector + " object",
+    letters.h.selector + " object",
+    letters.m.selector + " object",
+  ];
+  svgLoad(tmp).then(function() {
+    console.log("ready");
 
-    $(value.element).on("load", function () {
-      console.log(index + ": SVG LOADED");
+    $.each(letters, function (index, value) {
+      value.element = $(app).find(value.selector).first().children()[0];
 
       value.content = value.element.contentDocument;
       let points = getPoints($(value.content).find("circle"));
@@ -117,12 +122,9 @@ function loadLetters(letters) {
         // Globale Variable anlegen um darauf reagieren zu können
         window.lettersCompleteLoaded = true;
       }
+
     });
 
-  });
-
-  // Timeout zur Sicherheit 
-  setTimeout(function () {
     waitFor('lettersCompleteLoaded', function () {
       $.each(letters, function (index, value) {
         animateStars(value.element, koords[index], {
@@ -130,7 +132,8 @@ function loadLetters(letters) {
         });
       });
     }, 50);
-  }, 500);
+
+  });
 
 }
 
