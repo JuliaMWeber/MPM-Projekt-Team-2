@@ -378,6 +378,10 @@ h6 {
     pointer-events: none;
 }
 
+#overlay #moduletxt,  #overlay #moduletxt *{
+    pointer-events: all;
+}
+
 #planetWire {
     width: 100%;
     height: 100%;
