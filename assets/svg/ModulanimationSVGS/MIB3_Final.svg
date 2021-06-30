@@ -1405,8 +1405,9 @@
                 <!-- <text class="cls-31" transform="translate(146.06 293.39) scale(1.06 1)">
                     <tspan xml:space="preserve">Designer </tspan>
                 </text> -->
+                
                 <text class="cls-32" transform="translate(146.06 293.39) scale(1.06 1)">
-                    <tspan id="text" xml:space="preserve"> </tspan>
+                    <tspan id="title" class="title" xml:space="preserve"> </tspan>
                     <tspan id="cursor">_</tspan>
                 </text>
             </g>
