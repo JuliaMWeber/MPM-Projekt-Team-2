@@ -337,6 +337,10 @@
         .cls-51 {
           stroke: url(#linear-gradient-31);
         }
+
+        .cls-4 {
+          fill: #618B25;
+        }
       </style>
       <linearGradient id="linear-gradient" x1="964.74" y1="410.39" x2="1277.23" y2="410.39"
         gradientUnits="userSpaceOnUse">
