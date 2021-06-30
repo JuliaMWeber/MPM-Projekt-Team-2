@@ -395,8 +395,8 @@ function displayOverlay(status){
                 anim.play(-2.5, function(vivus){
                     vivus.el.remove();
                     document.getElementById("moduletxt").innerHTML = "";
-
                     document.getElementById("overlaySvg").innerHTML = "";
+                    gsap.set(txtDiv, {width: 0, height: 0});
                 });
             }
         }
