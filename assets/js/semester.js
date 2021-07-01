@@ -27,6 +27,9 @@ function resetOrbit(){
     gsap.ticker.remove(animateOrbits);
     orbits.length = 0;
     modules.length = 0;
+
+    clientWidth = document.documentElement.clientWidth;
+    clientHeight = document.documentElement.clientHeight;
 }
 /**
  * Generiert den Orbit anhand der Semester-Nummer
