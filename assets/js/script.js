@@ -15,6 +15,7 @@ reactToHash();
 if ("onhashchange" in window) {
   // Event darauf setzen auf, ob der Url-Hash geändert wurde
   window.onhashchange = reactToHash;
+  mobiledevice();
 }
 
 function reactToHash() {
@@ -172,3 +173,49 @@ function generateQRCode() {
     });
   }
 }
+
+
+// Mobile-Detection
+function mobiledevice() {
+  let deviceDetect = $(".mobiledevice");
+  let orientation;
+
+  let tl = gsap.timeline({repeat: -1,  yoyo: true, duration: 0.8, repeatDelay: 0.5});
+
+  // desktop
+  if (window.orientation === undefined) {
+    gsap.set(deviceDetect, {
+      display: "none",
+    });
+    return;
+  }
+
+  if (window.matchMedia("(orientation: landscape)").matches) {
+    orientation = 'landscape';
+    gsap.set(deviceDetect, {
+      display: "none",
+    });
+  }
+  if (window.matchMedia("(orientation: portrait)").matches) {
+    orientation = 'portrait';
+    gsap.set(deviceDetect, {
+      display: "block",
+    });
+
+    tl.to(deviceDetect.find(".device"), {
+      rotate: 90,
+    });
+  }
+
+  // reload
+  if(sessionStorage.getItem("orientation") != orientation) {
+    console.log("reload");
+    sessionStorage.setItem("orientation", orientation);
+    window.location.href = window.location;
+  }
+
+}
+
+window.addEventListener("resize", function() {
+  mobiledevice();
+}, false);
