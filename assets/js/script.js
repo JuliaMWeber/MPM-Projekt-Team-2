@@ -209,9 +209,14 @@ function mobiledevice() {
 
   // reload
   if(sessionStorage.getItem("orientation") != orientation) {
-    console.log("reload");
+    updateDeviceSettings();
     sessionStorage.setItem("orientation", orientation);
-    window.location.href = window.location;
+
+    if(window.location.hash.substr(1)) {
+      reactToHash();
+    } else {
+      window.location.href = window.location.href.split('#')[0];
+    }
   }
 
 }
