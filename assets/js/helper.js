@@ -137,3 +137,16 @@ function waitFor(variable, callback, delay) {
     }
   }
 };
+
+
+/**
+ * Liefert zufällige Ganzzahl aus einer bestimmten Range
+ *
+ * @param int min
+ * @param int max
+ * @return int 
+ */
+ function updateDeviceSettings() {
+  device.width = document.documentElement.clientWidth;
+  device.height = document.documentElement.clientHeight;
+}
