@@ -467,7 +467,7 @@ function loadSectionByHash(hash) {
 function resetAppStyle() {
   let tl = new TimelineMax();
   tl.to($(app), {
-    duration: 1,
+    duration: 0,
     ease: Sine.easeInOut,
     css: {
       scale: 1,
