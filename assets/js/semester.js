@@ -358,8 +358,8 @@ function displayOverlay(status){
                 overlayAnims.push(vivus);
                 let wireSvg = vivus.el;
                 wireSvg.className = "wireframe";
-                wireSvg.style.height = focusedPlanet.getBoundingClientRect().height + "px";
-                wireSvg.style.width = focusedPlanet.getBoundingClientRect().width + "px";
+                wireSvg.style.height = (focusedPlanet.getBoundingClientRect().height * 1.01) + "px"; //little safety overlap
+                wireSvg.style.width = (focusedPlanet.getBoundingClientRect().width * 1.01) + "px";
                 wireSvg.style.transform = "translate(" + focusedPlanet.getBoundingClientRect().x + "px, " + focusedPlanet.getBoundingClientRect().y + "px)";
                 overlay.insertBefore(wireSvg, overlaySvg);
 
