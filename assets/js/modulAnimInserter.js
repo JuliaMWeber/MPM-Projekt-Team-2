@@ -735,13 +735,14 @@ function mib9Anim(content) {
     let obj = document.getElementById("modulAnimObj");
     let thmColored = content.getElementById("thm-colored");
     let tl = gsap.timeline({
-        repeat: -1
+        repeat: -1, 
+        onRepeat: function(){
+            vivus.reset().play(); 
+        }
     });
     tl.from(thmColored, {opacity: 0, duration: 3, delay: 3});
     let vivus = new Vivus(obj, {
         type: "scenario", duration: 330
-    }, function(e) {  
-        vivus.reset().play();  
     });
 }
 
