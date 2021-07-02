@@ -77,7 +77,7 @@ function animateMP(data, svgElement) {
   let id = svgElement.replace('#', '');
 
   let object = document.createElement('object');
-  object.setAttribute('data', '/assets/svg/ModulanimationSVGS/MPSchwerpunkt.svg');
+  object.setAttribute('data', './assets/svg/ModulanimationSVGS/MPSchwerpunkt.svg');
   object.setAttribute('id', id);
   let objectsize = device.width < data.sun[0].getBoundingClientRect().width ? device.width : data.sun[0].getBoundingClientRect().width * 0.55;
   object.setAttribute('width', objectsize );
@@ -306,7 +306,7 @@ function animateMP(data, svgElement) {
 function animateWM(data, svgElement) {
 
   let object = document.createElement('object');
-  object.setAttribute('data', '/assets/svg/ModulanimationSVGS/WMSchwerpunkt.svg');
+  object.setAttribute('data', './assets/svg/ModulanimationSVGS/WMSchwerpunkt.svg');
   object.setAttribute('id', svgElement.replace('#', ''));
   let objectsize = device.width < data.sun[0].getBoundingClientRect().width ? device.width : data.sun[0].getBoundingClientRect().width * 0.7;
 
