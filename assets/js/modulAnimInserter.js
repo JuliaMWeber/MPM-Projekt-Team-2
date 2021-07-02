@@ -285,7 +285,10 @@ function mib3Anim(content) {
 }
 
 function mib4Anim(content) {
-    let animateTl = animate();
+
+    setTimeout(function (){
+        animate()
+    },500);
 
     function animate() {
         let darkBlue = "#000039";
@@ -362,15 +365,7 @@ function mib4Anim(content) {
         }
         timeLine.setBosColor(theBos, {fill: bosColor, duration:0})
         .deleteAll(theBos, {duration:1});
-
-
     }
-
-        let timeLine = gsap.timeline({repeat: -1, repeatDelay: 1});
-        
-        let theBos = content.getElementById("Dreieck");
-        timeLine.setBosColor(theBos)
-        .deleteAll(theBos, {duration:1});
 }
 
 function mib5Anim(content) {
