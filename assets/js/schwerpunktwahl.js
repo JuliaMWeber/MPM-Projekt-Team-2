@@ -43,7 +43,7 @@ function displaySchwerpunktwahl(id) {
   data.portal.on('click', function () {
     let prev;
     if (sessionStorage.getItem("last_url") == window.location.href) {
-      prev = '/';
+      prev = './';
     } else {
       prev = sessionStorage.getItem("last_url");
     }
