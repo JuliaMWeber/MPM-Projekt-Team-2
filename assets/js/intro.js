@@ -186,7 +186,7 @@ function animateStars(target, coords, options) {
       animEase = "power3.out";
 
 
-      let tl = new TimelineMax({
+      let tl = gsap.timeline({
         onComplete: function () {
           //$(e).addClass("moved");
           $(target).parent().css('opacity', 0.2);
@@ -308,7 +308,7 @@ function animateStars(target, coords, options) {
 
 
     // Wiggle-Animation
-    var wiggle = new TimelineMax({
+    var wiggle = gsap.timeline({
         repeat: -1,
         repeatDelay: 4,
         delay: 10,
@@ -429,7 +429,7 @@ function generatePosition(viewWidth, viewHeight) {
 
 function zoomInto(destination) {
 
-  let tl = new TimelineMax();
+  let tl = gsap.timeline();
   let transformOrigin = getCenterOfElement(destination);
 
   tl.to($(app), {
@@ -465,7 +465,7 @@ function loadSectionByHash(hash) {
 }
 
 function resetAppStyle() {
-  let tl = new TimelineMax();
+  let tl = gsap.timeline();
   tl.to($(app), {
     duration: 0,
     ease: Sine.easeInOut,
